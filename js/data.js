@@ -53,7 +53,7 @@ window.RO_DATA = {
   }
 };
 
-/* Domenii (secțiuni CAEN agregate). Ponderile pe mari sectoare: INS, populația ocupată 2024. */
+/* Domenii (secțiuni CAEN). Salariul, orele și riscul vin din RO_EXTRA.work; ponderile pe mari sectoare: INS, populația ocupată 2024. */
 window.RO_SECTORS_SPLIT = [
   { k: 'Servicii', v: 56.1 },
   { k: 'Industrie & construcții', v: 32.6 },
@@ -61,18 +61,18 @@ window.RO_SECTORS_SPLIT = [
 ];
 
 window.RO_DOMAINS = [
-  { icon: 'agri',         t: 'Agricultură',           d: 'Peste un angajat din zece lucrează încă în agricultură, de departe cea mai mare pondere din UE. O mare parte e muncă de subzistență sau familială, unde munca nedeclarată e frecventă.', risk: 'ridicat' },
-  { icon: 'metal',        t: 'Industrie prelucrătoare', d: 'Cel mai mare angajator din economie: auto, componente, metalurgie, mobilă, alimentară. Concentrată în vest și centru.', risk: 'mediu' },
-  { icon: 'construction', t: 'Construcții',           d: 'Cel mai expus sector la plata „la plic”: într-un studiu din 2021, 17% dintre muncitori își subdeclarau veniturile reale.', risk: 'ridicat' },
-  { icon: 'retail',       t: 'Comerț',                d: 'Al doilea mare angajator. Mult part-time, unde orele lucrate peste contract contează legal ca muncă nedeclarată.', risk: 'mediu' },
-  { icon: 'logistics',    t: 'Transport & logistică', d: 'În creștere pe axa Ilfov, Constanța, Timiș. Include ride-sharing și livrări, unde Inspecția Muncii găsește frecvent oameni fără contract.', risk: 'mediu' },
-  { icon: 'tourism',      t: 'HoReCa & turism',       d: 'Restaurante, hoteluri, litoral. Muncă sezonieră și plăți în numerar: una dintre țintele obișnuite ale controalelor.', risk: 'ridicat' },
-  { icon: 'it',           t: 'IT & comunicații',      d: 'Salariile cele mai mari din economie, concentrate în București, Cluj, Iași și Timiș. Multe colaborări sunt pe PFA sau SRL.', risk: 'scăzut' },
-  { icon: 'finance',      t: 'Finanțe & asigurări',   d: 'Puțini angajați, salarii mari, aproape exclusiv în marile orașe.', risk: 'scăzut' },
-  { icon: 'energy',       t: 'Energie & utilități',   d: 'Hidro, nuclear (Cernavodă), cărbune în declin în Gorj. Sector cu salarii peste medie și firme mari, multe de stat.', risk: 'scăzut' },
-  { icon: 'health',       t: 'Sănătate & asistență',  d: 'Majoritar feminin. Problema principală e emigrarea personalului, nu lipsa contractelor.', risk: 'scăzut' },
-  { icon: 'public',       t: 'Administrație & educație', d: 'Sectorul public are în jur de 16,6% din populația ocupată.', risk: 'scăzut' },
-  { icon: 'wood',         t: 'Lemn & mobilă',         d: 'Puternic în Maramureș, Suceava, Bihor, Harghita. În 2025, Inspecția Muncii a găsit 295 de angajați cu muncă nedeclarată la o singură fabrică de mobilă din Bihor.', risk: 'mediu' }
+  { icon: 'agri',         k: 'A',    t: 'Agricultură',             d: 'Muncă fizică grea, sezonieră, mult în aer liber. Majoritatea celor din agricultură nu au salariu: lucrează pe cont propriu sau pentru familie. E și cel mai periculos domeniu din România.' },
+  { icon: 'metal',        k: 'C',    t: 'Industrie prelucrătoare', d: 'Cel mai mare angajator: auto, componente, confecții, alimentară. Muncă în ture, la bandă. Salariile diferă enorm: în jur de 3.500 de lei în confecții și peste 6.500 în electronice.' },
+  { icon: 'construction', k: 'F',    t: 'Construcții',             d: 'Muncă fizică, la înălțime, pe orice vreme. Al doilea domeniu ca risc de accidente mortale și unul în care o parte din bani se dau încă „la plic”.' },
+  { icon: 'retail',       k: 'G',    t: 'Comerț',                  d: 'Al doilea mare angajator: casieri, vânzători, depozite. Ture lungi, în picioare, inclusiv în weekend, pentru un salariu sub media economiei.' },
+  { icon: 'logistics',    k: 'H',    t: 'Transport & logistică',   d: 'Șoferi, curieri, depozite. Printre cele mai multe ore lucrate din economie și un risc mare de accidente pe drum.' },
+  { icon: 'tourism',      k: 'I',    t: 'HoReCa & turism',         d: 'Cel mai prost plătit domeniu din economie și cel cu cele mai multe ore. Muncă în ture, seara și în weekend, adesea sezonieră.' },
+  { icon: 'it',           k: 'J',    t: 'IT & comunicații',        d: 'Cele mai mari salarii, concentrate în București, Cluj, Iași și Timiș. Muncă de birou, mai puține ore și aproape niciun risc fizic.' },
+  { icon: 'finance',      k: 'K',    t: 'Finanțe & asigurări',     d: 'Puțini angajați, salarii mari, aproape exclusiv în marile orașe.' },
+  { icon: 'energy',       k: 'D',    t: 'Energie & utilități',     d: 'Hidro, nuclear (Cernavodă), cărbune în declin în Gorj. Salarii peste medie și firme mari, multe de stat.' },
+  { icon: 'health',       k: 'Q',    t: 'Sănătate & asistență',    d: 'Majoritar femei. Ture de 12 ore, nopți și presiune psihică mare, pentru un salariu sub media economiei. Mulți medici și asistente au emigrat.' },
+  { icon: 'public',       k: 'O',    t: 'Administrație publică',   d: 'Primării, ministere, instituții. Salarii peste medie și program stabil. Sectorul public are în jur de 16,6% din cei care muncesc.' },
+  { icon: 'wood',         k: 'wood', t: 'Lemn & mobilă',           d: 'Puternic în Maramureș, Suceava, Bihor și Harghita. Muncă fizică în fabrici și în pădure, cu unele dintre cele mai mici salarii din industrie.' }
 ];
 
 /* Factori care influențează angajarea și salariul: rezultate din studii publicate */

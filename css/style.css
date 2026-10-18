@@ -608,3 +608,31 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; }
 .lang-btn span.on { background: var(--ink); color: var(--bg); }
 .lang-btn:hover span:not(.on) { color: var(--ink); }
 @media (max-width: 720px) { .sound-btn { margin-left: 0; } }
+
+/* ============ CÂT VALOREAZĂ MUNCA ============ */
+.work-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+.work-stats .stat-tile { min-height: 190px; }
+.work-stats .mega { margin: 0 0 14px; padding: 0; }
+.work-stats .label { font-weight: 400; color: var(--mute); }
+.work-stats .accent .label { color: inherit; opacity: .8; }
+.work-card { margin-bottom: 16px; }
+.sub-h { font-size: 22px; font-weight: 600; letter-spacing: -.03em; margin: 44px 0 14px; }
+.rank.pay-bars .rk-bar i.under { background: color-mix(in srgb, var(--hot) 70%, var(--bar)); }
+.rank.pay-bars .rk-bar i.over { background: var(--acc); }
+.pairs { display: grid; gap: 10px; margin-top: 18px; }
+.pr-row { display: grid; grid-template-columns: minmax(0, 250px) 1fr 80px; align-items: center; gap: 10px; font-size: 13px; padding: 3px 6px; margin: 0 -6px; border-radius: 8px; }
+.pr-row:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.pr-bars { display: grid; gap: 3px; }
+.pr-bars i { display: block; height: 9px; width: 0; border-radius: 0 4px 4px 0; transition: width 1.1s var(--ease); }
+.drawn .pr-bars i { width: var(--w); }
+.pa { background: var(--hot); }
+.pb { background: var(--bar); }
+.ch-legend i.pa, .ch-legend i.pb, .tt-row i.pa, .tt-row i.pb { height: 9px; width: 14px; border-radius: 3px; }
+.pr-row .rk-v b { color: var(--ink); font-weight: 600; }
+.dom .pay { position: absolute; top: 22px; right: 22px; font-size: 12px; padding: 4px 10px; border-radius: 999px; color: var(--mute); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.dom .pay b { color: var(--ink); font-weight: 600; }
+.dom .pay.low b { color: var(--hot); }
+.dom .pay.high b { color: var(--acc); }
+.dom-facts { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; color: var(--mute); margin-top: 6px; }
+@media (max-width: 960px) { .work-stats { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { .pr-row { grid-template-columns: minmax(0, 110px) 1fr 64px; font-size: 12px; } }

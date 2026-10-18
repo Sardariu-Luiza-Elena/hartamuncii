@@ -55,12 +55,20 @@
     '<div data-w="' + s.v + '"><b>' + fmt(s.v, 1) + '%</b><span>' + s.k + '</span></div>').join('');
 
   /* ---------- domenii ---------- */
+  const WORK = window.RO_EXTRA.work, WK = {};
+  WORK.rows.forEach(r => { WK[r.k] = r; });
+  const domFacts = k => k === 'wood' ? { net: WORK.wood, h: WK.C.h, perH: WORK.wood / (WK.C.h * 52 / 12) } : WK[k];
+  const payLevel = v => v < WORK.avgPerH * 0.9 ? 'low' : v > WORK.avgPerH * 1.1 ? 'high' : 'avg';
   const domBox = $('#domains');
-  domBox.innerHTML = window.RO_DOMAINS.map((d, i) =>
-    '<button class="dom reveal" style="transition-delay:' + (i % 4) * 60 + 'ms" aria-expanded="false">' +
+  domBox.innerHTML = window.RO_DOMAINS.map((d, i) => {
+    const f = domFacts(d.k);
+    return '<button class="dom reveal" style="transition-delay:' + (i % 4) * 60 + 'ms" aria-expanded="false">' +
       '<span class="di">' + ICONS(d.icon) + '</span>' +
-      '<span class="risk lv' + ({ 'scăzut': 1, mediu: 2, ridicat: 3 })[d.risk] + '" title="' + L('Risc de muncă nedeclarată: ', 'Risk of undeclared work: ') + (d.riskLabel || d.risk) + '"><b><i></i><i></i><i></i></b>' + L('risc ' + d.risk, (d.riskLabel || d.risk) + ' risk') + '</span>' +
-      '<h4>' + d.t + '</h4><p>' + d.d + '</p></button>').join('');
+      '<span class="pay ' + payLevel(f.perH) + '" title="' + L('Salariu net pe oră de muncă', 'Net pay per hour worked') + '"><b>' + fmt(f.perH, 0) + ' lei</b>' + L('/oră', '/hour') + '</span>' +
+      '<h4>' + d.t + '</h4>' +
+      '<span class="dom-facts"><span>' + fmt(f.net) + L(' lei net/lună', ' lei net/month') + '</span><span>' + fmt(f.h, 1) + L(' h/săpt.', ' h/week') + '</span></span>' +
+      '<p>' + d.d + '</p></button>';
+  }).join('');
   domBox.addEventListener('click', e => {
     const b = e.target.closest('.dom'); if (!b) return;
     const was = b.classList.contains('open');
@@ -255,7 +263,37 @@
     growthP = b.dataset.p; renderGrowth();
   }));
 
-  function renderCharts() { renderLife(); renderDias(); renderGrowth(); }
+  /* ---------- cât valorează munca ---------- */
+  function renderWork() {
+    const rows = WORK.rows, avg = WORK.avgPerH;
+    const totEmp = rows.reduce((s, r) => s + (r.emp || 0), 0);
+    const lowEmp = rows.filter(r => r.perH < avg).reduce((s, r) => s + (r.emp || 0), 0);
+    const stats = [
+      [fmt(WK.J.perH / WK.I.perH, 1) + '×', L('câștigă pe oră un angajat din IT față de unul din HoReCa: ', 'is how much more an IT worker earns per hour than someone in hotels and restaurants: ') + fmt(WK.J.perH, 0) + L(' vs. ', ' vs. ') + fmt(WK.I.perH, 0) + L(' lei net.', ' lei net.')],
+      [fmt(lowEmp / totEmp * 100, 0) + '%', L('dintre cei care muncesc sunt în domenii plătite pe oră sub media economiei.', 'of people in work are in sectors that pay less per hour than the economy-wide average.')],
+      [fmt(WK.A.acc / WK.A.accEU, 1) + '×', L('mai multe accidente mortale în agricultura din România decât media UE.', 'as many fatal accidents in Romanian farming as the EU average.')]
+    ];
+    $('#workStats').innerHTML = stats.map((s, i) =>
+      '<div class="card stat-tile' + (i === 0 ? ' accent' : '') + '"><div class="mega">' + s[0] + '</div><span class="label">' + s[1] + '</span></div>').join('');
+    const byPay = rows.slice().sort((a, b) => b.perH - a.perH);
+    C.rank($('#perHour'), {
+      title: L('Cât câștigi pe o oră de muncă', 'What an hour of work pays'),
+      sub: L('Salariul mediu net împărțit la orele lucrate efectiv, pe domenii, 2025. Treci cu mouse-ul peste un domeniu pentru detalii.', 'Average net salary divided by hours actually worked, by sector, 2025. Hover over a sector for details.'),
+      rows: byPay.map(r => [r.t, r.perH, r]), eu: avg, centerLabel: L('media economiei: ', 'economy average: ') + fmt(avg, 1) + ' lei',
+      highlight: null, wideLabels: true, cls: 'pay-bars', labels: r => r[0], fmtv: v => fmt(v, 1) + ' lei',
+      barClass: r => r[1] < avg ? 'under' : 'over',
+      tipv: r => fmt(r[1], 1) + L(' lei net pe oră', ' lei net per hour') + '<br><small>' + fmt(r[2].net) + L(' lei net pe lună · ', ' lei net a month · ') + fmt(r[2].h, 1) + L(' ore pe săptămână · ', ' hours a week · ') + fmt(r[2].emp, 0) + L(' mii de oameni', ' thousand people') + '</small>'
+    });
+    const byRisk = rows.filter(r => r.acc != null && r.accEU != null).sort((a, b) => b.acc - a.acc).slice(0, 8);
+    C.pairs($('#danger'), {
+      title: L('Cât de periculoasă e munca', 'How dangerous the work is'),
+      sub: L('Accidente mortale la 100.000 de lucrători pe an, media 2021–2024. Cele 8 domenii cu cel mai mare risc în România.', 'Fatal accidents per 100,000 workers a year, 2021–2024 average. The 8 riskiest sectors in Romania.'),
+      names: [L('România', 'Romania'), L('Media UE', 'EU average')], dec: 1,
+      rows: byRisk.map(r => [r.t, r.acc, r.accEU])
+    });
+  }
+
+  function renderCharts() { renderLife(); renderDias(); renderGrowth(); renderWork(); }
   renderCharts();
   requestAnimationFrame(moveInk);
 

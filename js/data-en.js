@@ -8,22 +8,21 @@
 
   window.RO_SECTORS_SPLIT.forEach(s => { s.k = tr(s.k); });
 
-  const RISK = { 'scăzut': 'low', mediu: 'medium', ridicat: 'high' };
   const DOM_EN = [
-    ['Agriculture', 'More than one worker in ten is still in farming, by far the highest share in the EU. Much of it is subsistence or family work, where undeclared work is common.'],
-    ['Manufacturing', 'The biggest employer in the economy: cars, car parts, metals, furniture, food. Concentrated in the west and centre of the country.'],
-    ['Construction', 'The sector most exposed to cash-in-hand pay: in a 2021 study, 17% of workers under-reported their real income.'],
-    ['Retail & trade', 'The second-largest employer. Lots of part-time contracts, and hours worked beyond the contract legally count as undeclared work.'],
-    ['Transport & logistics', 'Growing around Bucharest, Constanța and Timiș. Includes ride-sharing and delivery, where inspectors often find people without contracts.'],
-    ['Hotels, restaurants & tourism', 'Restaurants, hotels, the seaside. Seasonal work and cash payments make it a regular target for inspections.'],
-    ['IT & communications', 'The highest salaries in the economy, concentrated in Bucharest, Cluj, Iași and Timiș. Many people work as contractors through their own company.'],
+    ['Agriculture', 'Hard physical work, seasonal and mostly outdoors. Most people in farming have no salary at all: they are self-employed or work for their family. It is also the most dangerous sector in Romania.'],
+    ['Manufacturing', 'The biggest employer: cars, car parts, clothing, food. Shift work on production lines. Pay varies hugely: around 3,500 lei in garment making and over 6,500 in electronics.'],
+    ['Construction', 'Physical work, at height, in all weathers. The second most deadly sector, and one where part of the pay is still handed over in an envelope.'],
+    ['Retail & trade', 'The second-largest employer: cashiers, shop assistants, warehouses. Long shifts on your feet, weekends included, for below-average pay.'],
+    ['Transport & logistics', 'Drivers, couriers, warehouses. Among the longest hours in the economy and a high risk of road accidents.'],
+    ['Hotels, restaurants & tourism', 'The lowest-paid sector in the economy and the one with the longest hours. Shift work, evenings and weekends, often seasonal.'],
+    ['IT & communications', 'The highest salaries, concentrated in Bucharest, Cluj, Iași and Timiș. Office work, fewer hours and almost no physical risk.'],
     ['Finance & insurance', 'Few employees, high salaries, almost entirely in big cities.'],
     ['Energy & utilities', 'Hydro, nuclear (Cernavodă), and coal in decline in Gorj. Above-average pay and large employers, many of them state-owned.'],
-    ['Health & social care', 'Mostly women. The main problem is staff emigrating, not missing contracts.'],
-    ['Public administration & education', 'The public sector employs about 16.6% of everyone in work.'],
-    ['Wood & furniture', 'Strong in Maramureș, Suceava, Bihor and Harghita. In 2025, inspectors found 295 workers doing undeclared work at a single furniture factory in Bihor.']
+    ['Health & social care', 'Mostly women. 12-hour shifts, nights and heavy mental pressure, for below-average pay. Many doctors and nurses have emigrated.'],
+    ['Public administration', 'Town halls, ministries, public bodies. Above-average pay and stable hours. The public sector employs about 16.6% of everyone in work.'],
+    ['Wood & furniture', 'Strong in Maramureș, Suceava, Bihor and Harghita. Physical work in factories and forests, with some of the lowest pay in industry.']
   ];
-  window.RO_DOMAINS.forEach((d, i) => { d.t = DOM_EN[i][0]; d.d = DOM_EN[i][1]; d.riskLabel = RISK[d.risk]; });
+  window.RO_DOMAINS.forEach((d, i) => { d.t = DOM_EN[i][0]; d.d = DOM_EN[i][1]; });
 
   const HIRE_EN = {
     height: ['Height', 'salary per inch (2.54 cm)', 'Each extra inch of height as a teenager was linked to about 1.8% higher pay as an adult. The effect seems to work through confidence and social activities in adolescence, not adult height itself.'],
@@ -46,6 +45,7 @@
 
   const X = window.RO_EXTRA;
   Object.values(X.sect).forEach(p => p.rows.forEach(r => { r[0] = tr(r[0]); }));
+  X.work.rows.forEach(r => { r.t = tr(r.t); });
   X.diaspora.forEach(d => {
     if (!d.note) return;
     d.note = d.id === 'UK' ? 'born in Romania, 2021 census (England and Wales), ONS' : 'Romanian citizens, 2021 census';

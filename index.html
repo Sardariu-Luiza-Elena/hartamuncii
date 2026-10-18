@@ -24,10 +24,10 @@
 
   <nav class="rail" id="rail" aria-label="Capitole">
     <a href="#harta"><i></i><span>Harta</span></a>
-    <a href="#negru"><i></i><span>La negru</span></a>
     <a href="#cine"><i></i><span>Cine muncește</span></a>
     <a href="#viata"><i></i><span>Viața la muncă</span></a>
     <a href="#domenii"><i></i><span>Domenii</span></a>
+    <a href="#negru"><i></i><span>La negru</span></a>
     <a href="#angajare"><i></i><span>Angajarea</span></a>
     <a href="#diaspora"><i></i><span>Diaspora</span></a>
     <b class="rail-fill" id="railFill"></b>
@@ -43,10 +43,10 @@
       <span>Harta<b>Muncii</b></span></a>
     <nav class="nav-links">
       <a href="#harta">Harta</a>
-      <a href="#negru">La negru</a>
       <a href="#viata">Viața la muncă</a>
+      <a href="#domenii">Domenii</a>
+      <a href="#negru">La negru</a>
       <a href="#diaspora">Diaspora</a>
-      <a href="#angajare">Angajarea</a>
     </nav>
     <button class="theme-btn" id="themeBtn" aria-label="Schimbă tema">
       <span class="sun">☀</span><span class="moon">☾</span>
@@ -101,13 +101,108 @@
       <p class="panel-note">Salariu: INS, iunie 2025. Industrii: sinteză după profilul economic al județului, nu un clasament oficial.</p>
     </aside>
 
-    <a href="#negru" class="scroll-cue mono">derulează ↓</a>
+    <a href="#cine" class="scroll-cue mono">derulează ↓</a>
+  </section>
+
+  <!-- ============ CINE MUNCESTE ============ -->
+  <section id="cine" class="sec">
+    <div class="sec-head reveal">
+      <p class="kicker mono">01 · Cine muncește</p>
+      <h2 class="h2">Din 100 de bărbați, <em>71</em> lucrează. Din 100 de femei, doar <em>54</em>.</h2>
+      <p class="lede narrow">În total, 7,69 milioane de oameni aveau un loc de muncă în 2025.</p>
+    </div>
+
+    <div class="gender reveal">
+      <div class="gender-col">
+        <div class="g-head"><span class="g-sym">♂</span><span class="mono">Bărbați 15–64</span></div>
+        <div class="g-num"><span data-count="71.4" data-dec="1">0</span>%</div>
+        <p>lucrează</p>
+        <div class="dots" data-dots="71" data-cls="m"></div>
+      </div>
+      <div class="gender-gap">
+        <div class="gap-num"><span data-count="17">0</span></div>
+        <p>femei din 100 lipsesc de pe piața muncii, comparativ cu bărbații</p>
+      </div>
+      <div class="gender-col">
+        <div class="g-head"><span class="g-sym">♀</span><span class="mono">Femei 15–64</span></div>
+        <div class="g-num"><span data-count="54.4" data-dec="1">0</span>%</div>
+        <p>lucrează</p>
+        <div class="dots" data-dots="54" data-cls="f"></div>
+      </div>
+    </div>
+
+    <div class="mini-grid">
+      <div class="card mini reveal"><span class="mono label">rata de ocupare 20–64 ani</span><div class="mid"><span data-count="69.0" data-dec="1">0</span>%</div><p>Ținta UE pentru 2030: 78%</p></div>
+      <div class="card mini reveal"><span class="mono label">urban vs. rural</span><div class="mid"><span data-count="69.7" data-dec="1">0</span> / <span data-count="56.0" data-dec="1">0</span>%</div><p>Satul rămâne în urmă</p></div>
+      <div class="card mini reveal"><span class="mono label">tineri 15–24 ani ocupați</span><div class="mid"><span data-count="17.6" data-dec="1">0</span>%</div><p>Printre cele mai mici rate din UE</p></div>
+      <div class="card mini reveal"><span class="mono label">șomeri (BIM)</span><div class="mid"><span data-count="500.3" data-dec="1">0</span>k</div><p>din 8,19 mil. de oameni activi</p></div>
+    </div>
+    <p class="src center">Sursa: INS, Forța de muncă în România, ocupare și șomaj, 2025 (date anuale)</p>
+  </section>
+
+  <!-- ============ VIATA LA MUNCA ============ -->
+  <section id="viata" class="sec">
+    <div class="sec-head reveal">
+      <p class="kicker mono">02 · Viața la muncă</p>
+      <h2 class="h2">Muncim mult. Tinerii stau pe <em>tușă</em>. Școala nu garantează un job.</h2>
+      <p class="lede narrow">România comparată cu celelalte 26 de țări din UE. Alege un subiect.</p>
+    </div>
+    <div class="tabs reveal" role="tablist" id="lifeTabs">
+      <button class="on" data-tab="hours" role="tab">Ore pe săptămână</button>
+      <button data-tab="neet" role="tab">Tineri NEET</button>
+      <button data-tab="iwp" role="tab">Săraci deși muncesc</button>
+      <button data-tab="grad" role="tab">După facultate</button>
+      <span class="tab-ink" id="tabInk"></span>
+    </div>
+    <div class="life reveal" id="life">
+      <div class="life-copy" id="lifeCopy"></div>
+      <div class="life-charts">
+        <div class="chart-card" id="lifeRank"></div>
+        <div class="chart-card" id="lifeTrend"></div>
+      </div>
+    </div>
+    <p class="src center" id="lifeSrc"></p>
+  </section>
+
+  <!-- ============ DOMENII ============ -->
+  <section id="domenii" class="sec">
+    <div class="sec-head reveal">
+      <p class="kicker mono">03 · Cât valorează munca</p>
+      <h2 class="h2">Cine muncește cel mai greu <em>nu</em> e și cel mai bine plătit.</h2>
+      <p class="lede narrow">Salariul, orele și riscurile din fiecare domeniu, din datele INS și Eurostat.</p>
+    </div>
+
+    <div class="work-stats" id="workStats"></div>
+
+    <div class="chart-card reveal work-card" id="perHour"></div>
+    <div class="chart-card reveal work-card" id="danger"></div>
+
+    <h3 class="sub-h reveal">Din ce trăiește România</h3>
+    <div class="split reveal" id="split"></div>
+
+    <div class="chart-card growth reveal" id="growthCard">
+      <div class="growth-top">
+        <div>
+          <h4 class="growth-h">Ce industrii au crescut</h4>
+          <p class="growth-sub">Schimbarea numărului de oameni care lucrează în fiecare domeniu</p>
+        </div>
+        <div class="seg" id="growthSeg" role="tablist">
+          <button class="on" data-p="p1" role="tab">2011–2020</button>
+          <button data-p="p2" role="tab">2021–2025</button>
+        </div>
+      </div>
+      <div id="growth"></div>
+      <p class="src">Eurostat, lfsa_egan2. În 2021, INS a schimbat metodologia: cei care lucrează doar pentru consumul propriu (mai ales în agricultură) nu mai sunt numărați ca ocupați. De aceea comparăm separat cele două perioade, fără să le amestecăm.</p>
+    </div>
+
+    <div class="domains" id="domains"></div>
+    <p class="src center">Salarii: INS, câștigul salarial mediu net, media lunilor din 2025 (ancheta lunară). Ore: Eurostat, lfsa_ewhan2, salariați 20–64 de ani, 2025. Accidente: Eurostat, hsw_n2_02, media 2021–2024. Ponderi pe mari sectoare: INS, 2024.</p>
   </section>
 
   <!-- ============ MUNCA LA NEGRU ============ -->
   <section id="negru" class="sec">
     <div class="sec-head reveal">
-      <p class="kicker mono">01 · Munca nedeclarată</p>
+      <p class="kicker mono">04 · Munca nedeclarată</p>
       <h2 class="h2">Aproape <em>1 oră din 5</em> lucrată în sectorul privat nu apare nicăieri.</h2>
     </div>
 
@@ -165,94 +260,6 @@
         </ol>
       </div>
     </div>
-  </section>
-
-  <!-- ============ CINE MUNCESTE ============ -->
-  <section id="cine" class="sec">
-    <div class="sec-head reveal">
-      <p class="kicker mono">02 · Cine muncește</p>
-      <h2 class="h2">Din 100 de bărbați, <em>71</em> lucrează. Din 100 de femei, doar <em>54</em>.</h2>
-      <p class="lede narrow">În total, 7,69 milioane de oameni aveau un loc de muncă în 2025.</p>
-    </div>
-
-    <div class="gender reveal">
-      <div class="gender-col">
-        <div class="g-head"><span class="g-sym">♂</span><span class="mono">Bărbați 15–64</span></div>
-        <div class="g-num"><span data-count="71.4" data-dec="1">0</span>%</div>
-        <p>lucrează</p>
-        <div class="dots" data-dots="71" data-cls="m"></div>
-      </div>
-      <div class="gender-gap">
-        <div class="gap-num"><span data-count="17">0</span></div>
-        <p>femei din 100 lipsesc de pe piața muncii, comparativ cu bărbații</p>
-      </div>
-      <div class="gender-col">
-        <div class="g-head"><span class="g-sym">♀</span><span class="mono">Femei 15–64</span></div>
-        <div class="g-num"><span data-count="54.4" data-dec="1">0</span>%</div>
-        <p>lucrează</p>
-        <div class="dots" data-dots="54" data-cls="f"></div>
-      </div>
-    </div>
-
-    <div class="mini-grid">
-      <div class="card mini reveal"><span class="mono label">rata de ocupare 20–64 ani</span><div class="mid"><span data-count="69.0" data-dec="1">0</span>%</div><p>Ținta UE pentru 2030: 78%</p></div>
-      <div class="card mini reveal"><span class="mono label">urban vs. rural</span><div class="mid"><span data-count="69.7" data-dec="1">0</span> / <span data-count="56.0" data-dec="1">0</span>%</div><p>Satul rămâne în urmă</p></div>
-      <div class="card mini reveal"><span class="mono label">tineri 15–24 ani ocupați</span><div class="mid"><span data-count="17.6" data-dec="1">0</span>%</div><p>Printre cele mai mici rate din UE</p></div>
-      <div class="card mini reveal"><span class="mono label">șomeri (BIM)</span><div class="mid"><span data-count="500.3" data-dec="1">0</span>k</div><p>din 8,19 mil. de oameni activi</p></div>
-    </div>
-    <p class="src center">Sursa: INS, Forța de muncă în România, ocupare și șomaj, 2025 (date anuale)</p>
-  </section>
-
-  <!-- ============ VIATA LA MUNCA ============ -->
-  <section id="viata" class="sec">
-    <div class="sec-head reveal">
-      <p class="kicker mono">03 · Viața la muncă</p>
-      <h2 class="h2">Muncim mult. Tinerii stau pe <em>tușă</em>. Școala nu garantează un job.</h2>
-      <p class="lede narrow">România comparată cu celelalte 26 de țări din UE. Alege un subiect.</p>
-    </div>
-    <div class="tabs reveal" role="tablist" id="lifeTabs">
-      <button class="on" data-tab="hours" role="tab">Ore pe săptămână</button>
-      <button data-tab="neet" role="tab">Tineri NEET</button>
-      <button data-tab="iwp" role="tab">Săraci deși muncesc</button>
-      <button data-tab="grad" role="tab">După facultate</button>
-      <span class="tab-ink" id="tabInk"></span>
-    </div>
-    <div class="life reveal" id="life">
-      <div class="life-copy" id="lifeCopy"></div>
-      <div class="life-charts">
-        <div class="chart-card" id="lifeRank"></div>
-        <div class="chart-card" id="lifeTrend"></div>
-      </div>
-    </div>
-    <p class="src center" id="lifeSrc"></p>
-  </section>
-
-  <!-- ============ DOMENII ============ -->
-  <section id="domenii" class="sec">
-    <div class="sec-head reveal">
-      <p class="kicker mono">04 · Domenii și industrii</p>
-      <h2 class="h2">Din ce trăiește <em>România</em>.</h2>
-    </div>
-
-    <div class="split reveal" id="split"></div>
-
-    <div class="chart-card growth reveal" id="growthCard">
-      <div class="growth-top">
-        <div>
-          <h4 class="growth-h">Ce industrii au crescut</h4>
-          <p class="growth-sub">Schimbarea numărului de oameni care lucrează în fiecare domeniu</p>
-        </div>
-        <div class="seg" id="growthSeg" role="tablist">
-          <button class="on" data-p="p1" role="tab">2011–2020</button>
-          <button data-p="p2" role="tab">2021–2025</button>
-        </div>
-      </div>
-      <div id="growth"></div>
-      <p class="src">Eurostat, lfsa_egan2. În 2021, INS a schimbat metodologia: cei care lucrează doar pentru consumul propriu (mai ales în agricultură) nu mai sunt numărați ca ocupați. De aceea comparăm separat cele două perioade, fără să le amestecăm.</p>
-    </div>
-
-    <div class="domains" id="domains"></div>
-    <p class="src center">Ponderi pe mari sectoare: INS, 2024. Risc de muncă nedeclarată: după ELA și controalele Inspecției Muncii.</p>
   </section>
 
   <!-- ============ ANGAJARE ============ -->

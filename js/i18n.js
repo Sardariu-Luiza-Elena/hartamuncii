@@ -85,7 +85,7 @@
       'Salary: Romanian statistics office (INS), June 2025. Industries: an editorial summary of each county’s economy, not an official ranking.',
     'derulează ↓': 'scroll ↓',
 
-    '01 · Munca nedeclarată': '01 · Undeclared work',
+    '04 · Munca nedeclarată': '04 · Undeclared work',
     'Aproape <em>1 oră din 5</em> lucrată în sectorul privat nu apare nicăieri.': 'Almost <em>1 in 5 hours</em> worked in the private sector is never declared.',
     'Ponderea muncii nedeclarate în totalul muncii din sectorul privat, 2019': 'Undeclared work as a share of all labour in the private sector, 2019',
     'România 2019': 'Romania 2019', 'România 2013': 'Romania 2013', 'Media UE-27': 'EU-27 average',
@@ -107,7 +107,7 @@
     '<span>04</span>Ai contract part-time, dar lucrezi mai multe ore decât scrie în el.': '<span>04</span>You have a part-time contract but work more hours than it says.',
     '<span>05</span><b>Muncă subdeclarată:</b> primești un salariu net mai mare decât cel declarat (OUG 117/2021).': '<span>05</span><b>Under-declared work:</b> you’re paid more than the officially declared net salary (Government Ordinance 117/2021).',
 
-    '02 · Cine muncește': '02 · Who works',
+    '01 · Cine muncește': '01 · Who works',
     'Din 100 de bărbați, <em>71</em> lucrează. Din 100 de femei, doar <em>54</em>.': 'Out of 100 men, <em>71</em> have a job. Out of 100 women, only <em>54</em>.',
     'În total, 7,69 milioane de oameni aveau un loc de muncă în 2025.': 'In total, 7.69 million people had a job in 2025.',
     'Bărbați 15–64': 'Men 15–64', 'Femei 15–64': 'Women 15–64', 'lucrează': 'have a job',
@@ -118,13 +118,17 @@
     'din 8,19 mil. de oameni activi': 'out of 8.19 million in the labour force',
     'Sursa: INS, Forța de muncă în România, ocupare și șomaj, 2025 (date anuale)': 'Source: Romanian statistics office (INS), Labour force: employment and unemployment, 2025 (annual data)',
 
-    '03 · Viața la muncă': '03 · Work life',
+    '02 · Viața la muncă': '02 · Work life',
     'Muncim mult. Tinerii stau pe <em>tușă</em>. Școala nu garantează un job.': 'Romanians work long hours. The young sit on the <em>sidelines</em>. School doesn’t guarantee a job.',
     'România comparată cu celelalte 26 de țări din UE. Alege un subiect.': 'Romania compared with the other 26 EU countries. Pick a topic.',
     'Ore pe săptămână': 'Weekly hours', 'Tineri NEET': 'Young NEETs', 'Săraci deși muncesc': 'Working poor', 'După facultate': 'After university',
 
-    '04 · Domenii și industrii': '04 · Sectors and industries',
-    'Din ce trăiește <em>România</em>.': 'What <em>Romania</em> lives on.',
+    '03 · Cât valorează munca': '03 · What work is worth',
+    'Cine muncește cel mai greu <em>nu</em> e și cel mai bine plătit.': 'Those who work hardest are <em>not</em> the best paid.',
+    'Salariul, orele și riscurile din fiecare domeniu, din datele INS și Eurostat.': 'Pay, hours and risks in every sector, from official Romanian and Eurostat data.',
+    'Din ce trăiește România': 'What Romania lives on',
+    'Salarii: INS, câștigul salarial mediu net, media lunilor din 2025 (ancheta lunară). Ore: Eurostat, lfsa_ewhan2, salariați 20–64 de ani, 2025. Accidente: Eurostat, hsw_n2_02, media 2021–2024. Ponderi pe mari sectoare: INS, 2024.':
+      'Pay: Romanian statistics office (INS), average net earnings, mean of the 2025 monthly surveys. Hours: Eurostat, lfsa_ewhan2, employees aged 20–64, 2025. Accidents: Eurostat, hsw_n2_02, 2021–2024 average. Shares by broad sector: INS, 2024.',
     'Ce industrii au crescut': 'Which industries grew',
     'Schimbarea numărului de oameni care lucrează în fiecare domeniu': 'Change in the number of people working in each sector',
     'Eurostat, lfsa_egan2. În 2021, INS a schimbat metodologia: cei care lucrează doar pentru consumul propriu (mai ales în agricultură) nu mai sunt numărați ca ocupați. De aceea comparăm separat cele două perioade, fără să le amestecăm.':

@@ -43,7 +43,7 @@ window.Charts = (function () {
         const d = (r[1] - o.eu) / maxd * 50;
         bar = '<i class="' + (d < 0 ? 'neg' : 'pos') + '" style="--l:' + (d < 0 ? 50 + d : 50).toFixed(2) + '%;--w:' + Math.abs(d).toFixed(2) + '%"></i>';
       } else {
-        bar = '<i style="--w:' + ((r[1] / max) * 100).toFixed(2) + '%"></i>';
+        bar = '<i class="' + (o.barClass ? o.barClass(r) : '') + '" style="--w:' + ((r[1] / max) * 100).toFixed(2) + '%"></i>';
       }
       h += '<div class="rk-row' + (r[0] === hl ? ' hl' : '') + '" data-i="' + i + '">' +
         '<span class="rk-n">' + (o.labels ? o.labels(r) : name(r[0])) + '</span>' +
@@ -209,5 +209,28 @@ window.Charts = (function () {
     return { select, draw: () => box.classList.add('drawn') };
   }
 
-  return { rank, line, euMap, fmt, name, css };
+  /* ---------- două bare pe rând (România vs. UE) ---------- */
+  function pairs(box, o) {
+    const max = Math.max(...o.rows.flatMap(r => [r[1], r[2] || 0])) * 1.05;
+    let h = '<div class="ch-head"><h4>' + o.title + '</h4>' + (o.sub ? '<p>' + o.sub + '</p>' : '') + '</div>' +
+      '<div class="ch-legend"><span><i class="pa"></i>' + o.names[0] + '</span><span><i class="pb"></i>' + o.names[1] + '</span></div><div class="pairs">';
+    o.rows.forEach((r, i) => {
+      h += '<div class="pr-row" data-i="' + i + '"><span class="rk-n">' + r[0] + '</span><span class="pr-bars">' +
+        '<i class="pa" style="--w:' + (r[1] / max * 100).toFixed(2) + '%"></i><i class="pb" style="--w:' + ((r[2] || 0) / max * 100).toFixed(2) + '%"></i></span>' +
+        '<span class="rk-v"><b>' + fmt(r[1], o.dec) + '</b> / ' + (r[2] != null ? fmt(r[2], o.dec) : '–') + '</span></div>';
+    });
+    box.innerHTML = h + '</div>';
+    box.querySelectorAll('.pr-row').forEach(row => {
+      const r = o.rows[+row.dataset.i];
+      const ratio = r[2] ? r[1] / r[2] : null;
+      row.addEventListener('pointermove', e => showTip('<b>' + r[0] + '</b>' +
+        '<span class="tt-row"><i class="pa"></i>' + o.names[0] + '<b>' + fmt(r[1], o.dec) + '</b></span>' +
+        '<span class="tt-row"><i class="pb"></i>' + o.names[1] + '<b>' + (r[2] != null ? fmt(r[2], o.dec) : '–') + '</b></span>' +
+        (ratio && ratio > 1.15 ? '<small>' + L('de ', '') + fmt(ratio, 1) + L(' ori media UE', '× the EU average') + '</small>' : ''), e.clientX, e.clientY));
+      row.addEventListener('pointerleave', hideTip);
+    });
+    requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add('drawn')));
+  }
+
+  return { rank, line, euMap, pairs, fmt, name, css };
 })();
