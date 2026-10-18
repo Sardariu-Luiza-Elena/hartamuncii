@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HartaMuncii — munca în România, pe date</title>
+  <meta name="description" content="Date oficiale despre muncă în România: salarii pe județe, munca la negru, ocupare pe sexe, domenii și ce influențează angajarea.">
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    var t = null; try { t = localStorage.getItem('hm-theme'); } catch (e) {}
+    document.documentElement.setAttribute('data-theme', t || 'dark');
+  </script>
+</head>
+<body>
+  <div class="bg-art" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span>
+    <span class="topo"></span><span class="grain"></span>
+  </div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <nav class="rail" id="rail" aria-label="Capitole">
+    <a href="#harta"><i></i><span>Harta</span></a>
+    <a href="#negru"><i></i><span>La negru</span></a>
+    <a href="#cine"><i></i><span>Cine muncește</span></a>
+    <a href="#viata"><i></i><span>Viața la muncă</span></a>
+    <a href="#domenii"><i></i><span>Domenii</span></a>
+    <a href="#angajare"><i></i><span>Angajarea</span></a>
+    <a href="#diaspora"><i></i><span>Diaspora</span></a>
+    <b class="rail-fill" id="railFill"></b>
+  </nav>
+
+  <header class="nav">
+    <a href="#harta" class="brand">
+      <svg class="mark" viewBox="0 0 28 28" aria-hidden="true">
+        <path class="l1" d="M14 14.5 26 20.5 14 26.5 2 20.5Z"/>
+        <path class="l2" d="M14 9 23 13.5 14 18 5 13.5Z"/>
+        <path class="l3" d="M14 3.5 20 6.5 14 9.5 8 6.5Z"/>
+      </svg>
+      <span>Harta<b>Muncii</b></span></a>
+    <nav class="nav-links">
+      <a href="#harta">Harta</a>
+      <a href="#negru">La negru</a>
+      <a href="#viata">Viața la muncă</a>
+      <a href="#diaspora">Diaspora</a>
+      <a href="#angajare">Angajarea</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" aria-label="Schimbă tema">
+      <span class="sun">☀</span><span class="moon">☾</span>
+    </button>
+  </header>
+
+  <!-- ============ HERO + HARTA 3D ============ -->
+  <section id="harta" class="hero">
+    <div class="hero-copy">
+      <p class="kicker mono">România · 42 de județe · date INS 2025</p>
+      <h1 class="title">
+        <span class="line"><span>Unde se</span></span>
+        <span class="line"><span>câștigă <em>pâinea</em>.</span></span>
+      </h1>
+      <p class="lede">Fiecare județ e ridicat pe hartă după salariul mediu net. Cu cât e mai înalt, cu atât oamenii de acolo câștigă mai mult. <b>Apasă pe un județ.</b></p>
+      <div class="metric-switch" role="tablist" aria-label="Indicator hartă">
+        <button class="on" data-metric="s" role="tab">Salariu net</button>
+        <button data-metric="g" role="tab">Creștere anuală</button>
+      </div>
+      <button class="sound-btn" id="soundBtn" aria-pressed="false">
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="sound-l">Pornește sunetul</span>
+      </button>
+      <div class="legend">
+        <span class="mono" id="legMin">4.126 lei</span>
+        <span class="legend-bar" id="legBar"></span>
+        <span class="mono" id="legMax">7.051 lei</span>
+      </div>
+    </div>
+
+    <div class="map-wrap" id="mapWrap">
+      <canvas id="map3d"></canvas>
+      <div class="map-tip" id="mapTip"></div>
+      <div class="map-hint mono">trage ↻ rotește · scroll + ctrl ⊕ zoom</div>
+      <div class="map-loading" id="mapLoading">se încarcă harta…</div>
+    </div>
+
+    <aside class="panel" id="panel" aria-live="polite">
+      <button class="panel-close" id="panelClose" aria-label="Închide">✕</button>
+      <p class="mono panel-rank" id="pRank"></p>
+      <h2 class="panel-name" id="pName"></h2>
+      <div class="panel-big">
+        <span class="num" id="pSal">0</span><span class="unit">lei net / lună</span>
+      </div>
+      <div class="panel-row">
+        <div class="chip" id="pGrowth"></div>
+        <div class="chip" id="pVsAvg"></div>
+      </div>
+      <div class="panel-gauge"><span id="pGauge"></span><i class="avg-mark" id="pAvgMark"><b class="mono">media</b></i></div>
+      <h3 class="panel-h mono">Industrii de top</h3>
+      <ul class="panel-ind" id="pInd"></ul>
+      <p class="panel-note">Salariu: INS, iunie 2025. Industrii: sinteză după profilul economic al județului, nu un clasament oficial.</p>
+    </aside>
+
+    <a href="#negru" class="scroll-cue mono">derulează ↓</a>
+  </section>
+
+  <!-- ============ MUNCA LA NEGRU ============ -->
+  <section id="negru" class="sec">
+    <div class="sec-head reveal">
+      <p class="kicker mono">01 · Munca nedeclarată</p>
+      <h2 class="h2">Aproape <em>1 oră din 5</em> lucrată în sectorul privat nu apare nicăieri.</h2>
+    </div>
+
+    <div class="grid-negru">
+      <div class="card big-stat reveal">
+        <p class="mono label">Ponderea muncii nedeclarate în totalul muncii din sectorul privat, 2019</p>
+        <div class="bars" data-bars>
+          <div class="bar-row"><span>România 2019</span><div class="bar"><i style="--w:21.7" class="hot"></i></div><b class="mono" data-count="21.7" data-dec="1">0</b><b class="mono">%</b></div>
+          <div class="bar-row"><span>România 2013</span><div class="bar"><i style="--w:18.9"></i></div><b class="mono" data-count="18.9" data-dec="1">0</b><b class="mono">%</b></div>
+          <div class="bar-row"><span>Media UE-27</span><div class="bar"><i style="--w:11.1" class="cool"></i></div><b class="mono" data-count="11.1" data-dec="1">0</b><b class="mono">%</b></div>
+        </div>
+        <p class="src">Sursa: European Labour Authority, Factsheet Romania (2023), metoda Labour Input (Williams et al.)</p>
+      </div>
+
+      <div class="card stat-tile reveal">
+        <span class="mono label">din munca independentă (PFA, zilieri etc.) e nedeclarată</span>
+        <div class="mega"><span data-count="62.5" data-dec="1">0</span>%</div>
+        <p class="src">ELA 2023, pe baza AMIGO 2019</p>
+      </div>
+      <div class="card stat-tile reveal">
+        <span class="mono label">din munca în familie e nedeclarată</span>
+        <div class="mega"><span data-count="60.1" data-dec="1">0</span>%</div>
+        <p class="src">ELA 2023</p>
+      </div>
+      <div class="card stat-tile reveal">
+        <span class="mono label">dintre muncitorii din construcții își subdeclară venitul real</span>
+        <div class="mega"><span data-count="17">0</span>%</div>
+        <p class="src">Horodnic & Horodnic (2022), FGS Familia</p>
+      </div>
+      <div class="card stat-tile accent reveal">
+        <span class="mono label">salariați primeau parte din bani „la plic” în 2007 (5% în 2019)</span>
+        <div class="mega"><span data-count="23">0</span>%</div>
+        <p class="src">Eurobarometru, prin ELA 2023</p>
+      </div>
+
+      <div class="card checks reveal">
+        <p class="mono label">Ce găsește Inspecția Muncii într-o singură săptămână</p>
+        <div class="check-list">
+          <div><b class="mono" data-count="2055">0</b><span>controale<br>8–12 sept. 2025</span></div>
+          <div><b class="mono" data-count="370">0</b><span>persoane fără forme legale</span></div>
+          <div><b class="mono" data-count="295">0</b><span>la o singură fabrică de mobilă, Bihor</span></div>
+          <div><b class="mono" data-count="95">0</b><span>la o firmă de ride-sharing, Timiș (nov. 2025)</span></div>
+        </div>
+        <p class="src">Sursa: comunicate Inspecția Muncii, 2025</p>
+      </div>
+
+      <div class="card forms reveal">
+        <p class="mono label">Ce înseamnă legal „muncă nedeclarată”</p>
+        <ol class="forms-list">
+          <li><span>01</span>Lucrezi fără contract scris, încheiat cu o zi înainte de început.</li>
+          <li><span>02</span>Contractul nu e trecut în REVISAL/REGES cu o zi înainte.</li>
+          <li><span>03</span>Lucrezi cât timp contractul îți e suspendat.</li>
+          <li><span>04</span>Ai contract part-time, dar lucrezi mai multe ore decât scrie în el.</li>
+          <li><span>05</span><b>Muncă subdeclarată:</b> primești un salariu net mai mare decât cel declarat (OUG 117/2021).</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CINE MUNCESTE ============ -->
+  <section id="cine" class="sec">
+    <div class="sec-head reveal">
+      <p class="kicker mono">02 · Cine muncește</p>
+      <h2 class="h2">Din 100 de bărbați, <em>71</em> lucrează. Din 100 de femei, doar <em>54</em>.</h2>
+      <p class="lede narrow">În total, 7,69 milioane de oameni aveau un loc de muncă în 2025.</p>
+    </div>
+
+    <div class="gender reveal">
+      <div class="gender-col">
+        <div class="g-head"><span class="g-sym">♂</span><span class="mono">Bărbați 15–64</span></div>
+        <div class="g-num"><span data-count="71.4" data-dec="1">0</span>%</div>
+        <p>lucrează</p>
+        <div class="dots" data-dots="71" data-cls="m"></div>
+      </div>
+      <div class="gender-gap">
+        <div class="gap-num"><span data-count="17">0</span></div>
+        <p>femei din 100 lipsesc de pe piața muncii, comparativ cu bărbații</p>
+      </div>
+      <div class="gender-col">
+        <div class="g-head"><span class="g-sym">♀</span><span class="mono">Femei 15–64</span></div>
+        <div class="g-num"><span data-count="54.4" data-dec="1">0</span>%</div>
+        <p>lucrează</p>
+        <div class="dots" data-dots="54" data-cls="f"></div>
+      </div>
+    </div>
+
+    <div class="mini-grid">
+      <div class="card mini reveal"><span class="mono label">rata de ocupare 20–64 ani</span><div class="mid"><span data-count="69.0" data-dec="1">0</span>%</div><p>Ținta UE pentru 2030: 78%</p></div>
+      <div class="card mini reveal"><span class="mono label">urban vs. rural</span><div class="mid"><span data-count="69.7" data-dec="1">0</span> / <span data-count="56.0" data-dec="1">0</span>%</div><p>Satul rămâne în urmă</p></div>
+      <div class="card mini reveal"><span class="mono label">tineri 15–24 ani ocupați</span><div class="mid"><span data-count="17.6" data-dec="1">0</span>%</div><p>Printre cele mai mici rate din UE</p></div>
+      <div class="card mini reveal"><span class="mono label">șomeri (BIM)</span><div class="mid"><span data-count="500.3" data-dec="1">0</span>k</div><p>din 8,19 mil. de oameni activi</p></div>
+    </div>
+    <p class="src center">Sursa: INS, Forța de muncă în România, ocupare și șomaj, 2025 (date anuale)</p>
+  </section>
+
+  <!-- ============ VIATA LA MUNCA ============ -->
+  <section id="viata" class="sec">
+    <div class="sec-head reveal">
+      <p class="kicker mono">03 · Viața la muncă</p>
+      <h2 class="h2">Muncim mult. Tinerii stau pe <em>tușă</em>. Școala nu garantează un job.</h2>
+      <p class="lede narrow">România comparată cu celelalte 26 de țări din UE. Alege un subiect.</p>
+    </div>
+    <div class="tabs reveal" role="tablist" id="lifeTabs">
+      <button class="on" data-tab="hours" role="tab">Ore pe săptămână</button>
+      <button data-tab="neet" role="tab">Tineri NEET</button>
+      <button data-tab="iwp" role="tab">Săraci deși muncesc</button>
+      <button data-tab="grad" role="tab">După facultate</button>
+      <span class="tab-ink" id="tabInk"></span>
+    </div>
+    <div class="life reveal" id="life">
+      <div class="life-copy" id="lifeCopy"></div>
+      <div class="life-charts">
+        <div class="chart-card" id="lifeRank"></div>
+        <div class="chart-card" id="lifeTrend"></div>
+      </div>
+    </div>
+    <p class="src center" id="lifeSrc"></p>
+  </section>
+
+  <!-- ============ DOMENII ============ -->
+  <section id="domenii" class="sec">
+    <div class="sec-head reveal">
+      <p class="kicker mono">04 · Domenii și industrii</p>
+      <h2 class="h2">Din ce trăiește <em>România</em>.</h2>
+    </div>
+
+    <div class="split reveal" id="split"></div>
+
+    <div class="chart-card growth reveal" id="growthCard">
+      <div class="growth-top">
+        <div>
+          <h4 class="growth-h">Ce industrii au crescut</h4>
+          <p class="growth-sub">Schimbarea numărului de oameni care lucrează în fiecare domeniu</p>
+        </div>
+        <div class="seg" id="growthSeg" role="tablist">
+          <button class="on" data-p="p1" role="tab">2011–2020</button>
+          <button data-p="p2" role="tab">2021–2025</button>
+        </div>
+      </div>
+      <div id="growth"></div>
+      <p class="src">Eurostat, lfsa_egan2. În 2021, INS a schimbat metodologia: cei care lucrează doar pentru consumul propriu (mai ales în agricultură) nu mai sunt numărați ca ocupați. De aceea comparăm separat cele două perioade, fără să le amestecăm.</p>
+    </div>
+
+    <div class="domains" id="domains"></div>
+    <p class="src center">Ponderi pe mari sectoare: INS, 2024. Risc de muncă nedeclarată: după ELA și controalele Inspecției Muncii.</p>
+  </section>
+
+  <!-- ============ ANGAJARE ============ -->
+  <section id="angajare" class="sec">
+    <div class="sec-head reveal">
+      <p class="kicker mono">05 · Cine e angajat</p>
+      <h2 class="h2">CV-ul contează. Dar contează și <em>înălțimea</em>, fața și numele tău.</h2>
+      <p class="lede narrow">Ce arată studiile publicate despre factorii care nu țin de competență. Apasă pe un card ca să vezi detaliile și sursa.</p>
+    </div>
+    <div class="hire" id="hire"></div>
+    <p class="src center">Majoritatea studiilor sunt din SUA și Europa de Vest. Efectele sunt medii statistice, nu reguli pentru fiecare om.</p>
+  </section>
+
+  <!-- ============ DIASPORA ============ -->
+  <section id="diaspora" class="sec">
+    <div class="sec-head reveal">
+      <p class="kicker mono">06 · Românii plecați</p>
+      <h2 class="h2"><em>3 milioane</em> de români trăiesc în alt stat al UE. Sunt cea mai mare „diasporă” din Uniune.</h2>
+      <p class="lede narrow">Pe hartă, culoarea arată ce procent din populația fiecărei țări sunt cetățeni români. Apasă pe o țară.</p>
+    </div>
+    <div class="dias reveal">
+      <div class="eu-map chart-card" id="euMap">
+        <div class="eu-legend" id="euLegend"></div>
+      </div>
+      <aside class="eu-side chart-card" id="euSide"></aside>
+    </div>
+    <div class="dias-row">
+      <div class="chart-card reveal" id="diasTrend"></div>
+      <div class="chart-card reveal" id="diasRank"></div>
+    </div>
+    <p class="src center">Cetățeni români rezidenți, 1 ianuarie (Eurostat, migr_pop1ctz; populație: tps00001). Regatul Unit: persoane născute în România, recensământul ONS 2021 (Anglia și Țara Galilor). Cei care au luat cetățenia țării gazdă nu apar în aceste cifre, deci totalul real e mai mare.</p>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-big">Harta<b>Muncii</b></div>
+    <div class="foot-cols">
+      <div>
+        <p class="mono label">Surse</p>
+        <ul>
+          <li><a href="https://insse.ro" target="_blank" rel="noopener">Institutul Național de Statistică (INS)</a>: câștig salarial, forța de muncă</li>
+          <li><a href="https://www.ela.europa.eu/sites/default/files/2024-02/RO-UDW_factsheet-2023-fin.pdf" target="_blank" rel="noopener">ELA, Factsheet on undeclared work: Romania (2023)</a></li>
+          <li><a href="https://www.inspectiamuncii.ro" target="_blank" rel="noopener">Inspecția Muncii</a>: bilanțuri săptămânale 2025</li>
+          <li><a href="https://ec.europa.eu/eurostat/data/database" target="_blank" rel="noopener">Eurostat</a>: diaspora, ore lucrate, NEET, sărăcia celor care muncesc</li>
+          <li><a href="https://www.ons.gov.uk" target="_blank" rel="noopener">ONS</a>: recensământul 2021, Regatul Unit</li>
+          <li><a href="https://www.geoboundaries.org" target="_blank" rel="noopener">geoBoundaries</a> (CC BY 4.0) și <a href="https://www.naturalearthdata.com" target="_blank" rel="noopener">Natural Earth</a>: contururi</li>
+        </ul>
+      </div>
+      <div>
+        <p class="mono label">Metodă</p>
+        <p>Înălțimea fiecărui județ pe hartă e proporțională cu salariul mediu net din iunie 2025. Salariul e un indicator aproximativ al dezvoltării: nu include munca la negru, remitențele sau costul vieții.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/geo.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/data-extra.js"></script>
+  <script src="js/europe.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/map3d.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
