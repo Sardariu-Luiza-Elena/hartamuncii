@@ -648,28 +648,4 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; }
 .reveal.in.card:hover, .reveal.in.dom:hover { transform: translateY(-4px); }
 .sec { overflow-x: clip; }
 
-/* ============ FUNDAL LICHID ============ */
-.bg-art .topo-cv {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  -webkit-mask-image: radial-gradient(ellipse at 60% 40%, #000 25%, transparent 80%);
-          mask-image: radial-gradient(ellipse at 60% 40%, #000 25%, transparent 80%);
-}
-
-/* ============ AVIOANE DE HÂRTIE ============ */
-#diaspora { position: relative; }
-.planes { position: absolute; inset: 0; pointer-events: none; z-index: 4; overflow: hidden; }
-.plane { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; opacity: 0; transition: opacity .3s; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .35)); }
-.plane svg { width: 100%; height: 100%; display: block; overflow: visible; }
-.plane .w1 { fill: #fbfaf6; }
-.plane .w2 { fill: #ddd7c9; }
-.plane .w3 { fill: #b8af9c; }
-.plane.landed svg { animation: land .5s cubic-bezier(.3, 1.6, .5, 1) both; }
-@keyframes land { 0% { transform: translateY(0); } 45% { transform: translateY(3px) scaleY(.92); } 100% { transform: translateY(0); } }
-.plane-hit { position: absolute; width: 40px; height: 10px; margin: -5px 0 0 -20px; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--ink) 35%, transparent), transparent); opacity: 0; }
-.plane-hit.go { animation: hit .9s ease-out; }
-@keyframes hit { 0% { opacity: .8; transform: scale(.5, .5); } 100% { opacity: 0; transform: scale(2.4, 1.2); } }
 @media (prefers-reduced-motion: reduce) { .reveal { transform: none; filter: none; } }
-:root[data-theme="light"] .plane { filter: drop-shadow(0 10px 14px rgba(40, 30, 80, .28)); }
-:root[data-theme="light"] .plane .w1 { fill: #ffffff; }
-:root[data-theme="light"] .plane .w2 { fill: #ddd5ff; }
-:root[data-theme="light"] .plane .w3 { fill: #a99bff; }
