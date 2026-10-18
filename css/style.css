@@ -278,7 +278,7 @@ em { font-style: normal; color: var(--acc); }
 .gap-num { font-size: 22px; font-weight: 600; padding: 14px 18px; border-radius: 999px; background: var(--acc); color: var(--acc-ink); }
 .gender-gap p { font-size: 12px; color: var(--mute); max-width: 120px; margin: 10px auto 0; }
 
-.mini-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+.mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
 .mid { font: 600 38px/1 var(--body); letter-spacing: -.04em; margin: 22px 0 8px; }
 .mini p { font-size: 13px; color: var(--mute); }
 
@@ -356,7 +356,7 @@ em { font-style: normal; color: var(--acc); }
   .big-stat, .checks, .forms { grid-column: span 2; }
   .domains { grid-template-columns: 1fr 1fr; }
   .hire { grid-template-columns: 1fr 1fr; }
-  .mini-grid { grid-template-columns: 1fr 1fr; }
+  .mini-grid { grid-template-columns: repeat(3, 1fr); }
   .gender { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {

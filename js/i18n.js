@@ -127,8 +127,8 @@
     'Cine muncește cel mai greu <em>nu</em> e și cel mai bine plătit.': 'Those who work hardest are <em>not</em> the best paid.',
     'Salariul, orele și riscurile din fiecare domeniu, din datele INS și Eurostat.': 'Pay, hours and risks in every sector, from official Romanian and Eurostat data.',
     'Din ce trăiește România': 'What Romania lives on',
-    'Salarii: INS, câștigul salarial mediu net, media lunilor din 2025 (ancheta lunară). Ore: Eurostat, lfsa_ewhan2, salariați 20–64 de ani, 2025. Accidente: Eurostat, hsw_n2_02, media 2021–2024. Ponderi pe mari sectoare: INS, 2024.':
-      'Pay: Romanian statistics office (INS), average net earnings, mean of the 2025 monthly surveys. Hours: Eurostat, lfsa_ewhan2, employees aged 20–64, 2025. Accidents: Eurostat, hsw_n2_02, 2021–2024 average. Shares by broad sector: INS, 2024.',
+    'Salarii: INS, câștigul salarial mediu net, media lunilor din 2025 (ancheta lunară; media economiei aici e 5.536 lei, față de 5.266 lei, media anuală oficială de pe hartă, calculată de INS dintr-o altă anchetă). Ore: Eurostat, lfsa_ewhan2, doar salariații de 20–64 de ani, 2025. Accidente: Eurostat, hsw_n2_02, media 2021–2024. Ponderi pe mari sectoare: INS, 2024.':
+      'Pay: Romanian statistics office (INS), average net earnings, mean of the 2025 monthly surveys (the economy-wide average here is 5,536 lei, compared with the official annual average of 5,266 lei used on the map, which INS calculates from a different survey). Hours: Eurostat, lfsa_ewhan2, employees only, aged 20–64, 2025. Accidents: Eurostat, hsw_n2_02, 2021–2024 average. Shares by broad sector: INS, 2024.',
     'Ce industrii au crescut': 'Which industries grew',
     'Schimbarea numărului de oameni care lucrează în fiecare domeniu': 'Change in the number of people working in each sector',
     'Eurostat, lfsa_egan2. În 2021, INS a schimbat metodologia: cei care lucrează doar pentru consumul propriu (mai ales în agricultură) nu mai sunt numărați ca ocupați. De aceea comparăm separat cele două perioade, fără să le amestecăm.':

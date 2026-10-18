@@ -278,11 +278,11 @@
     const byPay = rows.slice().sort((a, b) => b.perH - a.perH);
     C.rank($('#perHour'), {
       title: L('Cât câștigi pe o oră de muncă', 'What an hour of work pays'),
-      sub: L('Salariul mediu net împărțit la orele lucrate efectiv, pe domenii, 2025. Treci cu mouse-ul peste un domeniu pentru detalii.', 'Average net salary divided by hours actually worked, by sector, 2025. Hover over a sector for details.'),
+      sub: L('Salariul mediu net împărțit la orele lucrate efectiv de salariați, pe domenii, 2025. Treci cu mouse-ul peste un domeniu pentru detalii.', 'Average net salary divided by hours actually worked by employees, by sector, 2025. Hover over a sector for details.'),
       rows: byPay.map(r => [r.t, r.perH, r]), eu: avg, centerLabel: L('media economiei: ', 'economy average: ') + fmt(avg, 1) + ' lei',
       highlight: null, wideLabels: true, cls: 'pay-bars', labels: r => r[0], fmtv: v => fmt(v, 1) + ' lei',
       barClass: r => r[1] < avg ? 'under' : 'over',
-      tipv: r => fmt(r[1], 1) + L(' lei net pe oră', ' lei net per hour') + '<br><small>' + fmt(r[2].net) + L(' lei net pe lună · ', ' lei net a month · ') + fmt(r[2].h, 1) + L(' ore pe săptămână · ', ' hours a week · ') + fmt(r[2].emp, 0) + L(' mii de oameni', ' thousand people') + '</small>'
+      tipv: r => fmt(r[1], 1) + L(' lei net pe oră', ' lei net per hour') + '<br><small>' + fmt(r[2].net) + L(' lei net pe lună · ', ' lei net a month · ') + fmt(r[2].h, 1) + L(' ore pe săptămână (salariați) · ', ' hours a week (employees) · ') + fmt(r[2].emp, 0) + L(' mii de oameni', ' thousand people') + '</small>'
     });
     const byRisk = rows.filter(r => r.acc != null && r.accEU != null).sort((a, b) => b.acc - a.acc).slice(0, 8);
     C.pairs($('#danger'), {
