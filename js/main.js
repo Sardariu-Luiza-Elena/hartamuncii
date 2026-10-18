@@ -100,7 +100,6 @@
       } else {
         // a ieșit din ecran: pregătim din nou animația, din direcția în care va reveni
         el.classList.remove('in');
-        el.classList.toggle('from-top', en.boundingClientRect.top < 0);
         el.querySelectorAll('[data-count]').forEach(c => { c.dataset.done = ''; c.textContent = fmt(0, +(c.dataset.dec || 0)); });
         if (el.id === 'split') el.querySelectorAll('div').forEach(d => { d.style.flexBasis = '0%'; });
       }
