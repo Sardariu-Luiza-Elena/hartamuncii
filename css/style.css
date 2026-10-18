@@ -428,6 +428,7 @@ em { font-style: normal; color: var(--acc); }
 .life { display: grid; grid-template-columns: 340px 1fr; gap: 16px; align-items: start; }
 .life-copy { position: sticky; top: 110px; padding: 6px 4px; }
 .life-big { font: 600 clamp(64px, 7vw, 104px)/.9 var(--body); letter-spacing: -.06em; color: var(--acc); }
+.life-lead b { color: var(--acc); font-weight: 600; }
 .life-lead { font-size: 19px; line-height: 1.35; margin-top: 14px; letter-spacing: -.01em; }
 .life-facts { margin-top: 24px; display: grid; gap: 2px; }
 .life-facts div { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; }

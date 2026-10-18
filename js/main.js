@@ -117,11 +117,11 @@
       const d = X.hours, ro = d.rows.find(r => r[0] === 'RO')[1], nl = d.rows.find(r => r[0] === 'NL')[1];
       const extraWeeks = (ro - nl) * 46 / ro;
       return {
-        big: fmt(ro, 1) + ' h', lead: 'pe săptămână lucrează în medie un român, la jobul principal.',
-        facts: [['Media UE', fmt(d.eu, 1) + ' h'], ['Locul în UE', rankOf(d.rows, 'RO') + ' din ' + d.rows.length], ['Față de Țările de Jos', '+' + fmt(ro - nl, 1) + ' h / săpt.']],
-        note: 'Diferența față de un neerlandez înseamnă cam <b>' + fmt(extraWeeks, 0) + ' săptămâni de muncă în plus pe an</b> (la 46 de săptămâni lucrate).',
+        big: fmt(ro, 1) + ' h', lead: 'lucrează efectiv un român într-o săptămână obișnuită. Cu ' + fmt(ro - d.eu, 1) + ' ore <b>mai mult</b> decât media UE.',
+        facts: [['Media UE', fmt(d.eu, 1) + ' h'], ['Locul în UE', rankOf(d.rows, 'RO') + ' din ' + d.rows.length + ' (mai sus = mai multe ore)'], ['Față de Olanda', '+' + fmt(ro - nl, 1) + ' h pe săptămână']],
+        note: '<b>De ce nu 40 de ore?</b> Cifra nu e programul din contract, ci media orelor lucrate efectiv. Intră în calcul și cei cu jumătate de normă, și săptămânile cu concediu sau zile libere. În România foarte puțini lucrează cu jumătate de normă, așa că media iese mai mare decât în vest.<br><br>În Olanda, mulți lucrează part-time. Cele ' + fmt(ro - nl, 1) + ' ore în plus pe săptămână ale unui român înseamnă cam <b>' + fmt(extraWeeks, 0) + ' săptămâni de muncă în plus pe an</b>.',
         rank: { title: 'Ore lucrate pe săptămână, ' + d.year, sub: 'Barele arată cât de departe e fiecare țară de media UE', rows: d.rows, eu: d.eu, dec: 1, unit: ' h', diverge: true },
-        trend: { title: 'Cum a evoluat', series: [['RO', 'România', '--acc'], ['EU27_2020', 'Media UE', '--mute', 1], ['NL', 'Țările de Jos', '--s3']], dec: 1, unitShort: ' h' },
+        trend: { title: 'Cum a evoluat', series: [['RO', 'România', '--acc'], ['EU27_2020', 'Media UE', '--mute', 1], ['NL', 'Olanda', '--s3']], dec: 1, unitShort: ' h' },
         src: 'Eurostat, lfsa_ewhan2: ore efectiv lucrate la locul de muncă principal, persoane de 20–64 de ani.'
       };
     },
