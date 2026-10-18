@@ -181,8 +181,11 @@
       const secs = Array.from(document.querySelectorAll('section[id]'));
       const cur = secs.filter(s => s.offsetTop <= window.scrollY + 1).pop() || secs[0];
       try { localStorage.setItem('hm-lang', next); sessionStorage.setItem('hm-scroll', cur.id + ':' + Math.round(window.scrollY - cur.offsetTop)); } catch (e) {}
+      // Dacă adresa are ?lang=..., îl scoatem (asta reîncarcă pagina).
+      // Altfel reîncărcăm explicit: o navigare spre aceeași adresă cu #ancoră doar ar derula pagina, fără reîncărcare.
       const u = new URL(location.href); u.searchParams.delete('lang');
-      location.replace(u.pathname + u.search + u.hash);
+      if (u.search !== location.search) location.replace(u.pathname + u.search + u.hash);
+      else location.reload();
     });
     theme.parentNode.insertBefore(b, theme);
   }
