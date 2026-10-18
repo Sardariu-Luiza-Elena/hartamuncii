@@ -636,3 +636,40 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; }
 .dom-facts { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; color: var(--mute); margin-top: 6px; }
 @media (max-width: 960px) { .work-stats { grid-template-columns: 1fr; } }
 @media (max-width: 720px) { .pr-row { grid-template-columns: minmax(0, 110px) 1fr 64px; font-size: 12px; } }
+
+/* ============ ZBOR LA SCROLL (se repetă) ============ */
+.reveal {
+  opacity: 0;
+  transform: translate3d(var(--fx, 0px), calc(var(--fy, 80px) * var(--sg, 1)), 0) rotate(calc(var(--fr, 0deg) * var(--sg, 1))) scale(var(--fs, .94));
+  filter: blur(var(--fb, 0px));
+  transition: opacity .8s var(--ease), transform 1.15s cubic-bezier(.16, 1, .3, 1), filter .8s var(--ease);
+  will-change: transform, opacity;
+}
+.reveal.from-top { --sg: -1; }
+.reveal.in { opacity: 1; transform: none; filter: none; }
+.reveal.in.card:hover, .reveal.in.dom:hover { transform: translateY(-4px); }
+.sec { overflow-x: clip; }
+
+/* ============ FUNDAL LICHID ============ */
+.bg-art .topo-cv {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  -webkit-mask-image: radial-gradient(ellipse at 60% 40%, #000 25%, transparent 80%);
+          mask-image: radial-gradient(ellipse at 60% 40%, #000 25%, transparent 80%);
+}
+
+/* ============ AVIOANE DE HÂRTIE ============ */
+#diaspora { position: relative; }
+.planes { position: absolute; inset: 0; pointer-events: none; z-index: 4; overflow: hidden; }
+.plane-trails { position: absolute; left: 0; top: 0; overflow: visible; }
+.plane-trail { fill: none; stroke: var(--ink); stroke-opacity: .22; stroke-width: 1.5; stroke-linecap: round; }
+.plane { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; opacity: 0; transition: opacity .3s; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .35)); }
+.plane svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.plane .w1 { fill: #fbfaf6; }
+.plane .w2 { fill: #ddd7c9; }
+.plane .w3 { fill: #b8af9c; }
+.plane.landed svg { animation: land .5s cubic-bezier(.3, 1.6, .5, 1) both; }
+@keyframes land { 0% { transform: scale(1); } 40% { transform: scale(.82) rotate(-6deg); } 100% { transform: scale(.9) rotate(-3deg); } }
+.plane-hit { position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; border: 2px solid var(--hot); opacity: 0; }
+.plane-hit.go { animation: hit .9s ease-out; }
+@keyframes hit { 0% { opacity: .9; transform: scale(.4); } 100% { opacity: 0; transform: scale(5); } }
+@media (prefers-reduced-motion: reduce) { .reveal { transform: none; filter: none; } }

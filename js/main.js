@@ -92,18 +92,27 @@
   /* ---------- reveal la scroll ---------- */
   const io = new IntersectionObserver(entries => {
     entries.forEach(en => {
-      if (!en.isIntersecting) return;
       const el = en.target;
-      el.classList.add('in');
-      el.querySelectorAll('[data-count]').forEach(countUp);
-      if (el.id === 'split') el.querySelectorAll('div').forEach(d => { d.style.flexBasis = d.dataset.w + '%'; });
-      io.unobserve(el);
+      if (en.isIntersecting) {
+        el.classList.add('in');
+        el.querySelectorAll('[data-count]').forEach(countUp);
+        if (el.id === 'split') el.querySelectorAll('div').forEach(d => { d.style.flexBasis = d.dataset.w + '%'; });
+      } else {
+        // a ieșit din ecran: pregătim din nou animația, din direcția în care va reveni
+        el.classList.remove('in');
+        el.classList.toggle('from-top', en.boundingClientRect.top < 0);
+        el.querySelectorAll('[data-count]').forEach(c => { c.dataset.done = ''; c.textContent = fmt(0, +(c.dataset.dec || 0)); });
+        if (el.id === 'split') el.querySelectorAll('div').forEach(d => { d.style.flexBasis = '0%'; });
+      }
     });
-  }, { threshold: 0.18 });
+  }, { threshold: 0.12 });
   $$('.reveal, #split').forEach(el => io.observe(el));
   // numere din titluri (în afara .reveal)
   $$('.h2 [data-count]').forEach(el => {
-    new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { countUp(el); o.disconnect(); } }).observe(el);
+    new IntersectionObserver(es => {
+      if (es[0].isIntersecting) countUp(el);
+      else { el.dataset.done = ''; el.textContent = fmt(0, +(el.dataset.dec || 0)); }
+    }).observe(el);
   });
 
   /* ---------- nav activ ---------- */
@@ -295,6 +304,12 @@
 
   function renderCharts() { renderLife(); renderDias(); renderGrowth(); renderWork(); }
   renderCharts();
+  const drawIO = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting) setTimeout(() => en.target.classList.add('drawn'), 150);
+    else en.target.classList.remove('drawn');
+  }), { threshold: 0.15 });
+  ['#lifeRank', '#lifeTrend', '#perHour', '#danger', '#diasTrend', '#diasRank', '#growth', '#euMap'].forEach(s => { const e = $(s); if (e) drawIO.observe(e); });
+  window.FX && FX.init();
   requestAnimationFrame(moveInk);
 
   /* ---------- sunet de suspans ---------- */
