@@ -601,3 +601,10 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; }
 .rank.growth-bars .rk-bar i.pos { background: var(--acc); }
 .rank.growth-bars .rk-bar i.neg { background: color-mix(in srgb, var(--hot) 70%, var(--bar)); }
 .rank.growth-bars { margin-top: 30px; }
+
+/* ============ BUTON LIMBĂ ============ */
+.lang-btn { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--bg3); font-size: 12px; font-weight: 600; margin-right: -18px; }
+.lang-btn span { padding: 7px 9px; border-radius: 999px; color: var(--mute); transition: background .3s, color .3s; }
+.lang-btn span.on { background: var(--ink); color: var(--bg); }
+.lang-btn:hover span:not(.on) { color: var(--ink); }
+@media (max-width: 720px) { .sound-btn { margin-left: 0; } }

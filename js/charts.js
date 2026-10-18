@@ -1,11 +1,11 @@
 /* Grafice SVG fără biblioteci: clasament, linie în timp, harta Europei */
 window.Charts = (function () {
   const NS = 'http://www.w3.org/2000/svg';
-  const fmt = (n, dec) => n.toLocaleString('ro-RO', { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 });
+  const fmt = (n, dec) => n.toLocaleString(window.LOCALE || 'ro-RO', { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 });
   const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
   const NAMES = {};
   (window.EU_GEO ? EU_GEO.c : []).forEach(c => { NAMES[c.id] = c.n; });
-  NAMES.EU27_2020 = 'Media UE';
+  NAMES.EU27_2020 = L('Media UE', 'EU average');
   const name = id => NAMES[id] || id;
 
   /* ---------- tooltip comun ---------- */
@@ -50,13 +50,13 @@ window.Charts = (function () {
         '<span class="rk-bar">' + bar + '</span>' +
         '<span class="rk-v">' + (o.fmtv ? o.fmtv(r[1]) : fmt(r[1], o.dec)) + '</span></div>';
     });
-    if (o.eu != null) h += '<span class="rk-eu" style="--xr:' + (div ? 0.5 : o.eu / max).toFixed(4) + '"><b>' + (o.centerLabel || 'media UE ' + fmt(o.eu, o.dec) + (o.unit || '')) + '</b></span>';
+    if (o.eu != null) h += '<span class="rk-eu" style="--xr:' + (div ? 0.5 : o.eu / max).toFixed(4) + '"><b>' + (o.centerLabel || L('media UE ', 'EU average ') + fmt(o.eu, o.dec) + (o.unit || '')) + '</b></span>';
     h += '</div>';
     box.innerHTML = h;
     box.querySelectorAll('.rk-row').forEach(row => {
       const r = rows[+row.dataset.i];
-      const diff = div && !o.centerLabel ? ' (' + (r[1] >= o.eu ? '+' : '−') + fmt(Math.abs(r[1] - o.eu), o.dec) + ' față de UE)' : '';
-      row.addEventListener('pointermove', e => showTip('<b>' + (o.labels ? o.labels(r) : name(r[0])) + '</b> ' + (o.tipv ? o.tipv(r) : fmt(r[1], o.dec) + (o.unit || '')) + diff + '<br><small>locul ' + (+row.dataset.i + 1) + ' din ' + rows.length + '</small>', e.clientX, e.clientY));
+      const diff = div && !o.centerLabel ? ' (' + (r[1] >= o.eu ? '+' : '−') + fmt(Math.abs(r[1] - o.eu), o.dec) + L(' față de UE)', ' vs. EU)') : '';
+      row.addEventListener('pointermove', e => showTip('<b>' + (o.labels ? o.labels(r) : name(r[0])) + '</b> ' + (o.tipv ? o.tipv(r) : fmt(r[1], o.dec) + (o.unit || '')) + diff + '<br><small>' + L('locul ', 'rank ') + (+row.dataset.i + 1) + L(' din ', ' of ') + rows.length + '</small>', e.clientX, e.clientY));
       row.addEventListener('pointerleave', hideTip);
     });
     // linia de referință se aliniază la coloana barelor, indiferent de lățimea etichetelor
@@ -147,7 +147,7 @@ window.Charts = (function () {
     // praguri pentru scala secvențială (procent din populație)
     const BINS = [0.1, 0.3, 0.6, 1.0, 1.5];
     const bin = p => BINS.filter(b => p >= b).length; // 0..5
-    const svg = el('svg', { viewBox: '0 0 ' + G.w + ' ' + G.h, class: 'eu-svg', role: 'img', 'aria-label': 'Harta Europei: românii ca procent din populația fiecărei țări' });
+    const svg = el('svg', { viewBox: '0 0 ' + G.w + ' ' + G.h, class: 'eu-svg', role: 'img', 'aria-label': L('Harta Europei: românii ca procent din populația fiecărei țări', 'Map of Europe: Romanians as a share of each country’s population') });
     box.insertBefore(svg, box.firstChild);
     const gC = el('g', {}, svg), gA = el('g', { class: 'eu-arcs' }, svg), gL = el('g', { class: 'eu-labels' }, svg);
     const ro = G.c.find(c => c.id === 'RO');
@@ -160,8 +160,8 @@ window.Charts = (function () {
       if (d || c.id === 'RO') {
         p.addEventListener('pointermove', e => {
           const html = c.id === 'RO'
-            ? '<b>România</b><br><small>punctul de plecare</small>'
-            : '<b>' + c.n + '</b> ' + fmt(d.n) + ' români<br><small>' + fmt(d.pct, 2) + '% din populație · ' + d.y + '</small>';
+            ? '<b>' + L('România', 'Romania') + '</b><br><small>' + L('punctul de plecare', 'where they come from') + '</small>'
+            : '<b>' + c.n + '</b> ' + fmt(d.n) + L(' români', ' Romanians') + '<br><small>' + fmt(d.pct, 2) + L('% din populație · ', '% of the population · ') + d.y + '</small>';
           showTip(html, e.clientX, e.clientY);
         });
         p.addEventListener('pointerleave', hideTip);
@@ -194,9 +194,9 @@ window.Charts = (function () {
     // legendă
     const leg = box.querySelector('.eu-legend');
     if (leg) {
-      const labs = ['< 0,1%', '0,1–0,3%', '0,3–0,6%', '0,6–1%', '1–1,5%', '> 1,5%'];
-      leg.innerHTML = '<span class="eu-leg-t">% din populație</span>' + labs.map((l, i) => '<span><i class="s' + i + '"></i>' + l + '</span>').join('') +
-        '<span><i class="none"></i>fără date</span>';
+      const labs = L(['< 0,1%', '0,1–0,3%', '0,3–0,6%', '0,6–1%', '1–1,5%', '> 1,5%'], ['< 0.1%', '0.1–0.3%', '0.3–0.6%', '0.6–1%', '1–1.5%', '> 1.5%']);
+      leg.innerHTML = '<span class="eu-leg-t">' + L('% din populație', '% of population') + '</span>' + labs.map((l, i) => '<span><i class="s' + i + '"></i>' + l + '</span>').join('') +
+        '<span><i class="none"></i>' + L('fără date', 'no data') + '</span>';
     }
     let cur = null;
     function select(id) {

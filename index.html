@@ -8,8 +8,11 @@
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script>
-    var t = null; try { t = localStorage.getItem('hm-theme'); } catch (e) {}
+    var t = null, l = null; try { t = localStorage.getItem('hm-theme'); l = localStorage.getItem('hm-lang'); } catch (e) {}
     document.documentElement.setAttribute('data-theme', t || 'dark');
+    var q = new URLSearchParams(location.search).get('lang');
+    window.LANG = (q === 'en' || q === 'ro') ? q : (l === 'en' ? 'en' : 'ro');
+    document.documentElement.lang = window.LANG;
   </script>
 </head>
 <body>
@@ -304,11 +307,13 @@
     </div>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="js/geo.js"></script>
   <script src="js/data.js"></script>
   <script src="js/data-extra.js"></script>
   <script src="js/europe.js"></script>
+  <script src="js/data-en.js"></script>
   <script src="js/icons.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/map3d.js"></script>
