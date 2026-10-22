@@ -119,9 +119,11 @@
     'Sursa: INS, Forța de muncă în România, ocupare și șomaj, 2025 (date anuale)': 'Source: Romanian statistics office (INS), Labour force: employment and unemployment, 2025 (annual data)',
 
     '02 · Viața la muncă': '02 · Work life',
-    'Muncim mult. Tinerii stau pe <em>tușă</em>. Școala nu garantează un job.': 'Romanians work long hours. The young sit on the <em>sidelines</em>. School doesn’t guarantee a job.',
+    'Muncim mult. Tinerii stau pe <em>tușă</em>. Și mulți rămân săraci deși au un job.': 'Romanians work long hours. The young sit on the <em>sidelines</em>. And many stay poor despite having a job.',
     'România comparată cu celelalte 26 de țări din UE. Alege un subiect.': 'Romania compared with the other 26 EU countries. Pick a topic.',
-    'Ore pe săptămână': 'Weekly hours', 'Tineri NEET': 'Young NEETs', 'Săraci deși muncesc': 'Working poor', 'După facultate': 'After university',
+    'Ore pe săptămână': 'Weekly hours', 'Tineri NEET': 'Young NEETs', 'Săraci deși muncesc': 'Working poor',
+    'Românii din toată lumea': 'Romanians around the world',
+    'Persoane născute în România care trăiesc în altă țară. Trage de glob ca să-l rotești și apasă pe o țară.': 'People born in Romania who live in another country. Drag the globe to spin it and click a country.',
 
     '03 · Cât valorează munca': '03 · What work is worth',
     'Cine muncește cel mai greu <em>nu</em> e și cel mai bine plătit.': 'Those who work hardest are <em>not</em> the best paid.',
@@ -143,8 +145,8 @@
     '06 · Românii plecați': '06 · Romanians abroad',
     '<em>3 milioane</em> de români trăiesc în alt stat al UE. Sunt cea mai mare „diasporă” din Uniune.': '<em>3 million</em> Romanians live in another EU country, the largest group of EU citizens living abroad within the Union.',
     'Pe hartă, culoarea arată ce procent din populația fiecărei țări sunt cetățeni români. Apasă pe o țară.': 'On the map, colour shows what share of each country’s population are Romanian citizens. Click a country.',
-    'Cetățeni români rezidenți, 1 ianuarie (Eurostat, migr_pop1ctz; populație: tps00001). Regatul Unit: persoane născute în România, recensământul ONS 2021 (Anglia și Țara Galilor). Grecia, Cipru și Malta nu raportează anual: am folosit recensământul din 2021. Cei care au luat cetățenia țării gazdă nu apar în aceste cifre, deci totalul real e mai mare.':
-      'Romanian citizens resident on 1 January (Eurostat, migr_pop1ctz; population: tps00001). United Kingdom: people born in Romania, ONS 2021 census (England and Wales). Greece, Cyprus and Malta don’t report every year, so the 2021 census is used. People who took the host country’s citizenship are not included, so the real total is higher.',
+    'Cetățeni români rezidenți, 1 ianuarie (Eurostat, migr_pop1ctz; populație: tps00001). Regatul Unit: persoane născute în România, recensământul ONS 2021 (Anglia și Țara Galilor). Grecia, Cipru și Malta nu raportează anual: am folosit recensământul din 2021. Cei care au luat cetățenia țării gazdă nu apar în aceste cifre, deci totalul real e mai mare. Globul: persoane născute în România (indiferent de cetățenie), ONU, International Migrant Stock 2024; include și emigrări vechi, de exemplu etnicii germani, maghiari sau evrei plecați înainte de 1990.':
+      'Romanian citizens resident on 1 January (Eurostat, migr_pop1ctz; population: tps00001). United Kingdom: people born in Romania, ONS 2021 census (England and Wales). Greece, Cyprus and Malta don’t report every year, so the 2021 census is used. People who took the host country’s citizenship are not included, so the real total is higher. Globe: people born in Romania (whatever their citizenship), UN International Migrant Stock 2024; it also includes older emigration, for example ethnic Germans, Hungarians or Jews who left before 1990.',
 
     'Surse': 'Sources', 'Metodă': 'Method',
     '<a href="https://insse.ro" target="_blank" rel="noopener">Institutul Național de Statistică (INS)</a>: câștig salarial, forța de muncă': '<a href="https://insse.ro" target="_blank" rel="noopener">Romanian National Institute of Statistics (INS)</a>: earnings, labour force',

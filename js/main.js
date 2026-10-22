@@ -15,10 +15,16 @@
   });
 
   /* ---------- lumină după cursor ---------- */
-  window.addEventListener('pointermove', e => {
-    document.body.style.setProperty('--mx', e.clientX + 'px');
-    document.body.style.setProperty('--my', e.clientY + 'px');
-  }, { passive: true });
+  const glowEl = document.querySelector('.cursor-glow');
+  let glowXY = null;
+  if (glowEl && window.matchMedia('(hover: hover)').matches) {
+    window.addEventListener('pointermove', e => {
+      if (!glowXY) requestAnimationFrame(() => {
+        glowEl.style.setProperty('--mx', glowXY[0] + 'px'); glowEl.style.setProperty('--my', glowXY[1] + 'px'); glowXY = null;
+      });
+      glowXY = [e.clientX, e.clientY];
+    }, { passive: true });
+  }
 
   /* ---------- count-up ---------- */
   function countUp(el) {
@@ -164,29 +170,6 @@
       };
     }
   };
-  LIFE.grad = () => {
-    const d = X.grad, ro = d.rows.find(r => r[0] === 'RO')[1], LV = d.levels;
-    return {
-      big: fmt(ro, 1) + '%', lead: L('dintre tinerii cu facultate au un loc de muncă la 1–3 ani după absolvire.', 'of young university graduates have a job 1–3 years after graduating.'),
-      facts: [[L('Media UE', 'EU average'), fmt(d.eu, 1) + '%'], [L('Locul în UE', 'EU ranking'), rankOf(d.rows, 'RO') + L(' din ', ' of ') + d.rows.length], [L('Cu liceu sau școală profesională', 'With high school or vocational school'), fmt(LV.RO.ED3_4, 1) + L('% (UE: ', '% (EU: ') + fmt(LV.EU.ED3_4, 1) + '%)']],
-      note: L('Cu o diplomă de facultate, șansele sunt aproape ca în restul UE. Problema mare e la cei fără facultate: dintre absolvenții de <b>școală profesională</b>, doar ' + fmt(LV.RO.ED35_45, 1) + '% lucrează, față de ' + fmt(LV.EU.ED35_45, 1) + '% în UE.', 'With a university degree, the odds are close to the rest of the EU. The big problem is for those without one: among <b>vocational school</b> graduates only ' + fmt(LV.RO.ED35_45, 1) + '% have a job, compared with ' + fmt(LV.EU.ED35_45, 1) + '% in the EU.'),
-      rank: { title: L('Absolvenți de facultate cu un job (20–34 ani), ', 'University graduates in work (aged 20–34), ') + d.year, rows: d.rows, eu: d.eu, dec: 1, unit: '%' },
-      trend: { title: L('România vs. media UE', 'Romania vs. EU average'), series: [['RO', L('România', 'Romania'), '--acc'], ['EU27_2020', L('Media UE', 'EU average'), '--mute', 1]], dec: 1, unitShort: '%' },
-      src: L('Eurostat, edat_lfse_24: rata de ocupare a tinerilor de 20–34 de ani care au terminat studiile în ultimii 1–3 ani și nu mai sunt în educație.', 'Eurostat, edat_lfse_24: employment rate of people aged 20–34 who finished their studies 1–3 years ago and are no longer in education.')
-    };
-  };
-  LIFE.self = () => {
-    const d = X.self, ro = d.rows.find(r => r[0] === 'RO')[1];
-    const agri = d.nace.find(r => r.k === 'A');
-    return {
-      big: fmt(ro, 1) + '%', lead: 'dintre românii care muncesc lucrează pe cont propriu: PFA-uri, fermieri, meseriași, profesii liberale.',
-      facts: [['Media UE', fmt(d.eu, 1) + '%'], ['Locul în UE', rankOf(d.rows, 'RO') + ' din ' + d.rows.length], ['Persoane', fmt(d.total, 0) + ' mii (' + fmt(d.prev, 0) + ' mii în 2024)']],
-      note: 'Contrar impresiei, România are <b>mai puțini</b> lucrători pe cont propriu decât media UE. Și aproape jumătate dintre ei (' + fmt(agri.v / d.total * 100, 0) + '%) sunt în agricultură, nu freelanceri. Pentru IT, Eurostat nu publică o cifră pentru România: eșantionul e prea mic, iar mulți programatori lucrează prin propriul SRL, nu ca PFA.',
-      rank: { title: 'Pe cont propriu, % din cei care muncesc, ' + d.year, rows: d.rows, eu: d.eu, dec: 1, unit: '%' },
-      domains: { title: 'În ce domenii lucrează românii pe cont propriu', sub: 'mii de persoane, ' + d.year + ' · * estimare cu precizie scăzută', rows: d.nace.map(r => [r.t + (r.low ? ' *' : ''), r.v]) },
-      src: 'Eurostat, lfsa_esgan2 și lfsa_egan2: lucrători pe cont propriu (cu sau fără angajați), 15–74 ani, ca procent din totalul persoanelor ocupate.'
-    };
-  };
   let lifeTab = 'hours';
   function renderLife() {
     const t = LIFE[lifeTab]();
@@ -194,15 +177,11 @@
       '<dl class="life-facts">' + t.facts.map(f => '<div><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>').join('') + '</dl>' +
       '<p class="life-note">' + t.note + '</p>';
     C.rank($('#lifeRank'), t.rank);
-    if (t.domains) {
-      C.rank($('#lifeTrend'), { title: t.domains.title, sub: t.domains.sub, rows: t.domains.rows, highlight: null, dec: 0, labels: r => r[0], tipv: r => fmt(r[1], 1) + ' mii de persoane', wideLabels: true });
-    } else {
-      const trend = X[lifeTab].trend;
-      C.line($('#lifeTrend'), {
-        title: t.trend.title, dec: t.trend.dec, unitShort: t.trend.unitShort, yMin: t.trend.yMin,
-        series: t.trend.series.map(s => ({ name: s[1], color: col(s[2]), muted: !!s[3], data: trend[s[0]] }))
-      });
-    }
+    const trend = X[lifeTab].trend;
+    C.line($('#lifeTrend'), {
+      title: t.trend.title, dec: t.trend.dec, unitShort: t.trend.unitShort, yMin: t.trend.yMin,
+      series: t.trend.series.map(s => ({ name: s[1], color: col(s[2]), muted: !!s[3], data: trend[s[0]] }))
+    });
     $('#lifeSrc').textContent = L('Sursa: ', 'Source: ') + t.src;
     const life = $('#life'); life.classList.remove('swap'); void life.offsetWidth; life.classList.add('swap');
   }
@@ -301,7 +280,78 @@
     });
   }
 
-  function renderCharts() { renderLife(); renderDias(); renderGrowth(); renderWork(); }
+  /* ---------- câți câștigă cât ---------- */
+  function renderPayDist() {
+    const P = window.RO_PAY_DIST, max = Math.max(...P.bins.map(b => b.n));
+    const pct = n => n / P.total * 100;
+    const low = pct(P.bins[0].n);
+    $('#payDist').innerHTML =
+      '<div class="ch-head"><h4>' + L('Câți câștigă cât', 'Who earns how much') + '</h4><p>' +
+      L('Salariații din sectorul privat după venitul din ' + P.month + ', în lei pe lună. Sus e echivalentul net aproximativ, jos venitul brut.',
+        'Private-sector employees by income in ' + (P.month === 'octombrie 2024' ? 'October 2024' : P.month) + ', lei a month. Approximate net pay on top, gross income below.') + '</p></div>' +
+      '<div class="pd-cols">' + P.bins.map((b, i) =>
+        '<div class="pd-col" data-i="' + i + '"><span class="pd-pct">~' + fmt(pct(b.n), pct(b.n) < 2 ? 1 : 0) + '%</span>' +
+        '<span class="pd-bar"><i style="--h:' + (b.n / max * 100).toFixed(1) + '%"></i></span>' +
+        '<span class="pd-net">' + L(b.net, b.net.replace('sub', 'under').replace('peste', 'over')) + '</span>' +
+        '<span class="pd-gross">' + L(b.gross, b.gross.replace('sub', 'under').replace('peste', 'over')) + L(' brut', ' gross') + '</span></div>').join('') + '</div>' +
+      '<div class="pd-facts">' +
+        '<div><b>' + L('~1 din 3', '~1 in 3') + '</b><span>' + L('salariați ia în mână sub ~2.900 lei', 'employees take home less than ~2,900 lei') + ' (' + fmt(low, 0) + '%).</span></div>' +
+        '<div><b>' + fmt(P.minWage.people / 1e6, 2) + L(' mil.', 'm') + '</b><span>' + L('de salariați erau plătiți cu salariul minim în ' + P.minWage.month + ': ' + fmt(P.minWage.gross) + ' lei brut, ' + fmt(P.minWage.net) + ' lei net.',
+          'employees were on the minimum wage in January 2025: ' + fmt(P.minWage.gross) + ' lei gross, ' + fmt(P.minWage.net) + ' lei net.') + '</span></div>' +
+        '<div><b>1,5%</b><span>' + L('câștigă peste ~17.500 lei net pe lună.', 'earn more than ~17,500 lei net a month.') + '</span></div>' +
+      '</div>';
+    $$('#payDist .pd-col').forEach(c => {
+      const b = P.bins[+c.dataset.i];
+      c.title = L('~' + fmt(b.n * 1000, 0) + ' mii de salariați', '~' + fmt(b.n * 1000, 0) + ' thousand employees');
+    });
+  }
+
+  /* ---------- glob: românii din toată lumea ---------- */
+  let globeApi = null, globeYear = 2024;
+  function globeSide(info, year) {
+    const box = $('#globeSide');
+    if (!globeApi) return;
+    const W = globeApi.W, yi = W.years.indexOf(year);
+    if (!info) {
+      const tot = W.total[yi], tot90 = W.total[0];
+      box.innerHTML = '<p class="eu-k">' + L('În ' + year + ', în afara României trăiau', 'In ' + year + ', living outside Romania:') + '</p>' +
+        '<div class="eu-big">' + fmt(tot / 1e6, 2) + L(' mil.', 'm') + '</div>' +
+        '<p class="eu-u">' + L('persoane născute în România', 'people born in Romania') + (year > 1990 ? L(', de ', ', ') + fmt(tot / tot90, 1) + L(' ori mai multe decât în 1990.', '× as many as in 1990.') : '.') + '</p>' +
+        '<h5 class="gs-h">' + L('Cele mai mari comunități în afara UE', 'Largest communities outside the EU') + '</h5>' +
+        '<ol class="gs-list">' + globeApi.topOutside(year).map(r => '<li><button data-id="' + r.id + '"><span>' + r.name + '</span><b>' + fmt(r.v) + '</b></button></li>').join('') + '</ol>';
+      box.querySelectorAll('.gs-list button').forEach(b => b.addEventListener('click', () => globeApi.selectById(+b.dataset.id)));
+      return;
+    }
+    const v = info.series[yi], v90 = info.series[0];
+    box.innerHTML = '<button class="gs-back">← ' + L('Toată lumea', 'Whole world') + '</button>' +
+      '<p class="eu-k">' + L('Născuți în România care trăiesc în', 'People born in Romania living in') + '</p><h3>' + info.name + '</h3>' +
+      '<div class="eu-big">' + fmt(v) + '</div><p class="eu-u">' + L('în ', 'in ') + year + (v90 && year !== 1990 ? L(' · în 1990: ', ' · in 1990: ') + fmt(v90) : '') + '</p>' +
+      '<div class="eu-mini" id="globeMini"></div>';
+    box.querySelector('.gs-back').addEventListener('click', () => globeApi.select());
+    const ser = {}; info.years.forEach((y, i) => { ser[y] = info.series[i]; });
+    C.line($('#globeMini'), { title: L('Evoluție 1990–2024', 'Trend 1990–2024'), w: 300, h: 150, axisW: 34, dec: 0, legend: false, labels: false, yMin: 0,
+      fmtTick: x => x >= 1e6 ? fmt(x / 1e6, 1) + 'M' : fmt(x / 1000, 0) + 'k', series: [{ name: '', color: col('--acc'), data: ser }] });
+    requestAnimationFrame(() => $('#globeMini').classList.add('drawn'));
+  }
+  function globeLegend(bins) {
+    const labs = ['< 1.000', '1.000–10.000', '10.000–50.000', '50.000–150.000', '150.000–500.000', '> 500.000'];
+    $('#globeLegend').innerHTML = '<span class="eu-leg-t">' + L('Născuți în România', 'Born in Romania') + '</span>' +
+      labs.map((l, i) => '<span><i class="s' + i + '"></i>' + (window.LANG === 'en' ? l.replace(/\./g, ',') : l) + '</span>').join('') +
+      '<span><i class="none"></i>' + L('fără date', 'no data') + '</span>';
+  }
+  if (window.Globe) Globe.start({
+    stage: 'globe', fmt,
+    showTip: (h, x, y) => C.tip(h, x, y), hideTip: () => C.untip(),
+    onSelect: (info, year) => { globeYear = year; globeSide(info, year); },
+    onReady: api => { globeApi = api; globeLegend(api.bins); globeSide(null, globeYear); }
+  });
+  $$('#globeYears button').forEach(b => b.addEventListener('click', () => {
+    $$('#globeYears button').forEach(x => x.classList.toggle('on', x === b));
+    globeYear = +b.dataset.y;
+    if (globeApi) globeApi.setYear(globeYear);
+  }));
+
+  function renderCharts() { renderLife(); renderDias(); renderGrowth(); renderWork(); renderPayDist(); }
   renderCharts();
   const drawIO = new IntersectionObserver(es => es.forEach(en => {
     if (en.isIntersecting) setTimeout(() => en.target.classList.add('drawn'), 150);
@@ -339,10 +389,17 @@
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   $$('section[id]').forEach(s => railIO.observe(s));
+  const railFill = $('#railFill'), rail = $('#rail');
+  let railQueued = false;
   window.addEventListener('scroll', () => {
-    const p = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    $('#railFill').style.transform = 'scaleY(' + Math.min(1, Math.max(0, p)) + ')';
-    $('#rail').classList.toggle('show', window.scrollY > window.innerHeight * 0.5);
+    if (railQueued) return;
+    railQueued = true;
+    requestAnimationFrame(() => {
+      railQueued = false;
+      const p = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      railFill.style.transform = 'scaleY(' + Math.min(1, Math.max(0, p)) + ')';
+      rail.classList.toggle('show', window.scrollY > window.innerHeight * 0.5);
+    });
   }, { passive: true });
 
   /* ---------- hartă + panou ---------- */

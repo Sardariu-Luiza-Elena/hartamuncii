@@ -87,3 +87,18 @@ window.RO_HIRE = [
   { icon: 'network', t: 'Relațiile', big: '~50%', unit: 'din joburi găsite prin cunoștințe', d: 'Rețelele personale explică o parte uriașă din angajări. Contează mai ales „legăturile slabe”, adică cunoștințele îndepărtate, nu prietenii apropiați.', src: 'Granovetter (1973); Rajkumar et al. (2022), Science' },
   { icon: 'age', t: 'Vârsta', big: '+35%', unit: 'mai multe răspunsuri la 30 de ani decât la 65', d: 'Cercetătorii au trimis peste 40.000 de CV-uri identice, schimbând doar vârsta candidatului. Cei de 29–31 de ani au fost chemați cu 35% mai des decât cei de 64–66 de ani. Discriminarea a fost cea mai puternică față de femeile în vârstă.', src: 'Neumark, Burn & Button (2019), Journal of Political Economy' }
 ];
+
+/* Câți salariați câștigă cât: ancheta INS a salariilor din octombrie 2024 (venit brut realizat), preluată de Ziarul Financiar.
+   Total ~4,6 milioane de salariați, fără administrația publică. Tranșa 10.000–20.000 lei e calculată ca diferență.
+   Echivalentul net e aproximativ: net ≈ brut × 0,585 (CAS 25%, CASS 10%, impozit 10%, fără deduceri). */
+window.RO_PAY_DIST = {
+  total: 4.6, month: 'octombrie 2024',
+  bins: [
+    { gross: 'sub 5.000', net: 'sub 2.900', n: 1.60 },
+    { gross: '5.000–10.000', net: '2.900–5.850', n: 1.80 },
+    { gross: '10.000–20.000', net: '5.850–11.700', n: 0.93 },
+    { gross: '20.000–30.000', net: '11.700–17.550', n: 0.20 },
+    { gross: 'peste 30.000', net: 'peste 17.550', n: 0.068 }
+  ],
+  minWage: { people: 1823520, month: 'ianuarie 2025', gross: 4050, net: 2574 }
+};

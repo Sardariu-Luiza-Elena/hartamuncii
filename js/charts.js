@@ -232,5 +232,5 @@ window.Charts = (function () {
     requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add('drawn')));
   }
 
-  return { rank, line, euMap, pairs, fmt, name, css };
+  return { rank, line, euMap, pairs, fmt, name, css, tip: showTip, untip: hideTip };
 })();

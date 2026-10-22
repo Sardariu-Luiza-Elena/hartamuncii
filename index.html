@@ -6,6 +6,7 @@
   <title>HartaMuncii — munca în România, pe date</title>
   <meta name="description" content="Date oficiale despre muncă în România: salarii pe județe, munca la negru, ocupare pe sexe, domenii și ce influențează angajarea.">
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath fill='%23aa9cff' opacity='.35' d='M14 14.5 26 20.5 14 26.5 2 20.5Z'/%3E%3Cpath fill='%23aa9cff' opacity='.65' d='M14 9 23 13.5 14 18 5 13.5Z'/%3E%3Cpath fill='%23aa9cff' d='M14 3.5 20 6.5 14 9.5 8 6.5Z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
   <script>
     var t = null, l = null; try { t = localStorage.getItem('hm-theme'); l = localStorage.getItem('hm-lang'); } catch (e) {}
@@ -143,14 +144,13 @@
   <section id="viata" class="sec">
     <div class="sec-head reveal">
       <p class="kicker mono">02 · Viața la muncă</p>
-      <h2 class="h2">Muncim mult. Tinerii stau pe <em>tușă</em>. Școala nu garantează un job.</h2>
+      <h2 class="h2">Muncim mult. Tinerii stau pe <em>tușă</em>. Și mulți rămân săraci deși au un job.</h2>
       <p class="lede narrow">România comparată cu celelalte 26 de țări din UE. Alege un subiect.</p>
     </div>
     <div class="tabs reveal" role="tablist" id="lifeTabs">
       <button class="on" data-tab="hours" role="tab">Ore pe săptămână</button>
       <button data-tab="neet" role="tab">Tineri NEET</button>
       <button data-tab="iwp" role="tab">Săraci deși muncesc</button>
-      <button data-tab="grad" role="tab">După facultate</button>
       <span class="tab-ink" id="tabInk"></span>
     </div>
     <div class="life reveal" id="life">
@@ -172,6 +172,8 @@
     </div>
 
     <div class="work-stats" id="workStats"></div>
+
+    <div class="chart-card reveal work-card" id="payDist"></div>
 
     <div class="chart-card reveal work-card" id="perHour"></div>
     <div class="chart-card reveal work-card" id="danger"></div>
@@ -289,7 +291,27 @@
       <div class="chart-card reveal" id="diasTrend"></div>
       <div class="chart-card reveal" id="diasRank"></div>
     </div>
-    <p class="src center">Cetățeni români rezidenți, 1 ianuarie (Eurostat, migr_pop1ctz; populație: tps00001). Regatul Unit: persoane născute în România, recensământul ONS 2021 (Anglia și Țara Galilor). Grecia, Cipru și Malta nu raportează anual: am folosit recensământul din 2021. Cei care au luat cetățenia țării gazdă nu apar în aceste cifre, deci totalul real e mai mare.</p>
+    <div class="globe-wrap">
+      <div class="chart-card globe-card reveal">
+        <div class="globe-top">
+          <div>
+            <h4 class="growth-h">Românii din toată lumea</h4>
+            <p class="growth-sub">Persoane născute în România care trăiesc în altă țară. Trage de glob ca să-l rotești și apasă pe o țară.</p>
+          </div>
+          <div class="seg" id="globeYears" role="tablist">
+            <button data-y="1990" role="tab">1990</button>
+            <button data-y="2000" role="tab">2000</button>
+            <button data-y="2010" role="tab">2010</button>
+            <button class="on" data-y="2024" role="tab">2024</button>
+          </div>
+        </div>
+        <div class="globe-stage" id="globe"></div>
+        <div class="eu-legend" id="globeLegend"></div>
+      </div>
+      <aside class="chart-card globe-side reveal" id="globeSide"></aside>
+    </div>
+
+    <p class="src center">Cetățeni români rezidenți, 1 ianuarie (Eurostat, migr_pop1ctz; populație: tps00001). Regatul Unit: persoane născute în România, recensământul ONS 2021 (Anglia și Țara Galilor). Grecia, Cipru și Malta nu raportează anual: am folosit recensământul din 2021. Cei care au luat cetățenia țării gazdă nu apar în aceste cifre, deci totalul real e mai mare. Globul: persoane născute în România (indiferent de cetățenie), ONU, International Migrant Stock 2024; include și emigrări vechi, de exemplu etnicii germani, maghiari sau evrei plecați înainte de 1990.</p>
   </section>
 
   <footer class="foot">
@@ -325,6 +347,7 @@
   <script src="js/map3d.js"></script>
   <script src="js/sound.js"></script>
   <script src="js/fx.js"></script>
+  <script src="js/globe.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

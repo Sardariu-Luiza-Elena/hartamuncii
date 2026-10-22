@@ -9,8 +9,9 @@ window.RoMap3D = (function () {
 
   function create(canvas, opts) {
     const data = window.RO_DATA.counties;
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const small = window.innerWidth < 720;
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !small, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, small ? 1.5 : 1.75));
     renderer.outputEncoding = THREE.sRGBEncoding;
 
     const scene = new THREE.Scene();
@@ -88,6 +89,7 @@ window.RoMap3D = (function () {
       return [Math.min(...v), Math.max(...v)];
     }
     function applyColors() {
+      dirty = true;
       cLo.set(cssVar('--map-lo')); cMid.set(cssVar('--map-mid')); cHi.set(cssVar('--map-hi'));
       cSide.set(cssVar('--map-side'));
       const lineCol = new THREE.Color(cssVar('--ink'));
@@ -103,6 +105,7 @@ window.RoMap3D = (function () {
       });
     }
     function setMetric(m, stagger) {
+      dirty = true;
       metric = m;
       const [lo, hi] = range(m);
       meshes.forEach(mesh => {
@@ -130,6 +133,8 @@ window.RoMap3D = (function () {
 
     // ---- interacțiune ----
     const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
+    let dirty = true;
+    const wake = () => { dirty = true; };
     let needPick = false, hovered = null, selected = null, dragging = false, moved = 0, last = null, lastPointer = null, idleSince = performance.now();
 
     function pick(e) {
@@ -149,7 +154,7 @@ window.RoMap3D = (function () {
     });
     canvas.addEventListener('pointermove', e => {
       lastPointer = e;
-      needPick = true;
+      needPick = true; dirty = true;
       if (dragging && last) {
         const dx = e.clientX - last.x, dy = e.clientY - last.y;
         moved += Math.abs(dx) + Math.abs(dy);
@@ -160,8 +165,8 @@ window.RoMap3D = (function () {
         if (moved > 4) canvas.classList.add('dragging');
       }
     });
-    window.addEventListener('pointerup', () => { dragging = false; canvas.classList.remove('dragging'); });
-    canvas.addEventListener('pointerleave', () => { lastPointer = null; hovered = null; });
+    window.addEventListener('pointerup', () => { wake(); dragging = false; canvas.classList.remove('dragging'); });
+    canvas.addEventListener('pointerleave', () => { lastPointer = null; hovered = null;  wake(); });
     canvas.addEventListener('click', e => {
       if (moved > 6) return;
       const m = pick(e);
@@ -170,10 +175,11 @@ window.RoMap3D = (function () {
     canvas.addEventListener('wheel', e => {
       if (!e.ctrlKey && !e.metaKey) return; // lasă pagina să se deruleze
       e.preventDefault();
-      radiusGoal = Math.min(320, Math.max(35, radiusGoal * (1 + e.deltaY * 0.0015)));
+      radiusGoal = Math.min(320, Math.max(35, radiusGoal * (1 + e.deltaY * 0.0015))); wake();
     }, { passive: false });
 
     function select(code) {
+      dirty = true;
       selected = code ? byCode[code] : null;
       meshes.forEach(m => {
         m.userData.fadeT = !selected || m === selected ? 0 : 0.72;
@@ -208,26 +214,26 @@ window.RoMap3D = (function () {
       return 98 * Math.max(1, (a < 1 ? 1.3 : 1.55) / a);
     }
     window.addEventListener('resize', () => {
-      resize();
+      resize(); wake();
       if (!selected) { targetGoal.set(homeX(), 0, 0); radiusGoal = fitRadius(); }
     });
     resize();
     radius = fitRadius() * 1.2; radiusGoal = fitRadius();
 
     let visible = true;
-    new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(canvas);
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) wake(); }).observe(canvas);
 
     const tip = opts.tip;
     function loop(now) {
       requestAnimationFrame(loop);
-      if (!visible) return;
+      if (!visible || !dirty) return;
+      let moving = false;
+      const ease = (cur, goal, k) => { const d = goal - cur; if (Math.abs(d) > 1e-4) moving = true; return cur + d * k; };
 
-      // balans lent când nu atinge nimeni harta
-      const idle = now - idleSince > 2500 && !selected;
-      const sway = idle ? Math.sin(now * 0.00025) * 0.18 : 0;
-      theta += (thetaGoal + sway - theta) * 0.06;
-      phi += (phiGoal - phi) * 0.08;
-      radius += (radiusGoal - radius) * 0.06;
+      theta = ease(theta, thetaGoal, 0.06);
+      phi = ease(phi, phiGoal, 0.08);
+      radius = ease(radius, radiusGoal, 0.06);
+      if (target.distanceToSquared(targetGoal) > 1e-6) moving = true;
       target.lerp(targetGoal, 0.06);
       placeCamera();
 
@@ -252,14 +258,14 @@ window.RoMap3D = (function () {
 
       meshes.forEach(m => {
         const u = m.userData;
-        if (now >= u.delay) u.h += (u.target - u.h) * 0.07;
+        if (now >= u.delay) u.h = ease(u.h, u.target, 0.07); else moving = true;
         const liftGoal = u.liftT || (m === hovered && !selected ? 0.4 : 0);
-        u.lift += (liftGoal - u.lift) * 0.12;
-        u.fade += (u.fadeT - u.fade) * 0.1;
+        u.lift = ease(u.lift, liftGoal, 0.12);
+        u.fade = ease(u.fade, u.fadeT, 0.1);
         m.scale.z = Math.max(0.001, u.h);
         m.position.z = u.lift;
         // județul selectat primește culoarea cea mai intensă, ca să iasă în evidență
-        u.sel += ((m === selected ? 1 : 0) - u.sel) * 0.1;
+        u.sel = ease(u.sel, m === selected ? 1 : 0, 0.1);
         m.material[0].color.copy(u.baseCol).lerp(cHi, u.sel * 0.85).lerp(cDim, u.fade);
         m.material[1].color.copy(u.sideCol).lerp(cDim, u.fade);
         const glow = m === hovered || m === selected ? 0.18 : 0;
@@ -268,6 +274,7 @@ window.RoMap3D = (function () {
       });
 
       renderer.render(scene, camera);
+      dirty = moving; // când nimic nu se mai mișcă, harta nu se mai redesenează
     }
 
     const [lo, hi] = setMetric('s', true);
