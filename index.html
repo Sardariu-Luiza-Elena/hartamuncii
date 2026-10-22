@@ -31,6 +31,7 @@
     <a href="#negru"><i></i><span>La negru</span></a>
     <a href="#angajare"><i></i><span>Angajarea</span></a>
     <a href="#diaspora"><i></i><span>Diaspora</span></a>
+    <a href="#surse"><i></i><span>Surse</span></a>
     <b class="rail-fill" id="railFill"></b>
   </nav>
 
@@ -314,23 +315,30 @@
     <p class="src center">Cetățeni români rezidenți, 1 ianuarie (Eurostat, migr_pop1ctz; populație: tps00001). Regatul Unit: persoane născute în România, recensământul ONS 2021 (Anglia și Țara Galilor). Grecia, Cipru și Malta nu raportează anual: am folosit recensământul din 2021. Cei care au luat cetățenia țării gazdă nu apar în aceste cifre, deci totalul real e mai mare. Globul: persoane născute în România (indiferent de cetățenie), ONU, International Migrant Stock 2024; include și emigrări vechi, de exemplu etnicii germani, maghiari sau evrei plecați înainte de 1990.</p>
   </section>
 
+  <!-- ============ SURSE ============ -->
+  <section id="surse" class="sec sources">
+    <div class="sec-head reveal">
+      <p class="kicker mono">Surse și metodă</p>
+      <h2 class="h2">De unde vin <em>datele</em>.</h2>
+      <p class="lede narrow">Fiecare cifră de pe site vine dintr-o sursă oficială sau dintr-un studiu publicat. Apasă pe o sursă ca s-o deschizi.</p>
+    </div>
+    <div class="src-grid" id="sourcesList"></div>
+    <div class="card method-card reveal">
+      <h4>Note de metodă</h4>
+      <ul class="method-list" id="methodList"></ul>
+    </div>
+  </section>
+
   <footer class="foot">
     <div class="foot-big">Harta<b>Muncii</b></div>
     <div class="foot-cols">
       <div>
-        <p class="mono label">Surse</p>
-        <ul>
-          <li><a href="https://insse.ro" target="_blank" rel="noopener">Institutul Național de Statistică (INS)</a>: câștig salarial, forța de muncă</li>
-          <li><a href="https://www.ela.europa.eu/sites/default/files/2024-02/RO-UDW_factsheet-2023-fin.pdf" target="_blank" rel="noopener">ELA, Factsheet on undeclared work: Romania (2023)</a></li>
-          <li><a href="https://www.inspectiamuncii.ro" target="_blank" rel="noopener">Inspecția Muncii</a>: bilanțuri săptămânale 2025</li>
-          <li><a href="https://ec.europa.eu/eurostat/data/database" target="_blank" rel="noopener">Eurostat</a>: diaspora, ore lucrate, NEET, sărăcia celor care muncesc</li>
-          <li><a href="https://www.ons.gov.uk" target="_blank" rel="noopener">ONS</a>: recensământul 2021, Regatul Unit</li>
-          <li><a href="https://www.geoboundaries.org" target="_blank" rel="noopener">geoBoundaries</a> (CC BY 4.0) și <a href="https://www.naturalearthdata.com" target="_blank" rel="noopener">Natural Earth</a>: contururi</li>
-        </ul>
+        <p class="mono label">Despre</p>
+        <p>Un proiect de jurnalism de date despre munca în România, construit numai din surse oficiale și studii publicate. Lista completă e în secțiunea <a href="#surse">Surse și metodă</a>.</p>
       </div>
       <div>
-        <p class="mono label">Metodă</p>
-        <p>Înălțimea fiecărui județ pe hartă e proporțională cu salariul mediu net din iunie 2025. Salariul e un indicator aproximativ al dezvoltării: nu include munca la negru, remitențele sau costul vieții.</p>
+        <p class="mono label">Date actualizate</p>
+        <p>Octombrie 2026. Cifrele sunt cele mai recente publicate de INS, Eurostat și ONU la acea dată.</p>
       </div>
     </div>
   </footer>
@@ -349,5 +357,6 @@
   <script src="js/fx.js"></script>
   <script src="js/globe.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/sources.js"></script>
 </body>
 </html>
