@@ -78,7 +78,7 @@
     'Ghidul veniturilor': 'A guide to', '<em>regionale</em>.': '<em>regional</em> income.',
     'Fiecare județ e ridicat pe hartă după salariul mediu net. Cu cât e mai înalt, cu atât oamenii de acolo câștigă mai mult. <b>Apasă pe un județ.</b>':
       'Each county rises according to its average net salary. The taller it is, the more people there earn. <b>Click a county.</b>',
-    'Salariu net': 'Net salary', 'Creștere anuală': 'Annual growth', 'Emigrare': 'Emigration', 'Pornește sunetul': 'Turn on sound',
+    'Salariu net': 'Net salary', 'Creștere anuală': 'Annual growth', 'Pornește sunetul': 'Turn on sound',
     'trage ↻ rotește · scroll + ctrl ⊕ zoom': 'drag ↻ rotate · ctrl + scroll ⊕ zoom', 'se încarcă harta…': 'loading map…',
     'lei net / lună': 'lei net / month', '<b class="mono">media</b>': '<b class="mono">average</b>', 'Industrii de top': 'Top industries',
     'Salariu: INS, iunie 2025. Industrii: sinteză după profilul economic al județului, nu un clasament oficial.':

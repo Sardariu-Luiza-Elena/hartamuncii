@@ -98,22 +98,23 @@
   });
 
   /* ---------- reveal la scroll ---------- */
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      const el = en.target;
-      if (en.isIntersecting) {
-        el.classList.add('in');
-        el.querySelectorAll('[data-count]').forEach(countUp);
-        if (el.id === 'split') el.querySelectorAll('div').forEach(d => { d.style.flexBasis = d.dataset.w + '%'; });
-      } else {
-        // a ieșit din ecran: pregătim din nou animația, din direcția în care va reveni
-        el.classList.remove('in');
-        el.querySelectorAll('[data-count]').forEach(c => { c.dataset.done = ''; c.textContent = fmt(0, +(c.dataset.dec || 0)); });
-        if (el.id === 'split') el.querySelectorAll('div').forEach(d => { d.style.flexBasis = '0%'; });
-      }
-    });
-  }, { threshold: 0.12 });
-  $$('.reveal, #split').forEach(el => io.observe(el));
+  // Două observatoare cu praguri diferite (histerezis): un element apare abia când a intrat ~15% în ecran
+  // și se resetează doar după ce a ieșit complet, așa că nu mai pâlpâie la marginea ecranului.
+  const show = el => {
+    if (el.classList.contains('in')) return;
+    el.classList.add('in');
+    el.querySelectorAll('[data-count]').forEach(countUp);
+    if (el.id === 'split') el.querySelectorAll('div').forEach(d => { d.style.flexBasis = d.dataset.w + '%'; });
+  };
+  const reset = el => {
+    if (!el.classList.contains('in')) return;
+    el.classList.remove('in');
+    el.querySelectorAll('[data-count]').forEach(c => { c.dataset.done = ''; c.textContent = fmt(0, +(c.dataset.dec || 0)); });
+    if (el.id === 'split') el.querySelectorAll('div').forEach(d => { d.style.flexBasis = '0%'; });
+  };
+  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) show(en.target); }), { rootMargin: '0px 0px -15% 0px' });
+  const ioOut = new IntersectionObserver(es => es.forEach(en => { if (!en.isIntersecting) reset(en.target); }), { rootMargin: '80px 0px 80px 0px' });
+  $$('.reveal, #split').forEach(el => { io.observe(el); ioOut.observe(el); });
   // numere din titluri (în afara .reveal)
   $$('.h2 [data-count]').forEach(el => {
     new IntersectionObserver(es => {
@@ -364,11 +365,9 @@
 
   function renderCharts() { renderLife(); renderDias(); renderGrowth(); renderWork(); renderPayDist(); renderMigration(); }
   renderCharts();
-  const drawIO = new IntersectionObserver(es => es.forEach(en => {
-    if (en.isIntersecting) setTimeout(() => en.target.classList.add('drawn'), 150);
-    else en.target.classList.remove('drawn');
-  }), { threshold: 0.15 });
-  ['#lifeRank', '#lifeTrend', '#perHour', '#danger', '#diasTrend', '#diasRank', '#growth', '#euMap', '#occChart', '#remitChart', '#retChart'].forEach(s => { const e = $(s); if (e) drawIO.observe(e); });
+  const drawIO = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) setTimeout(() => en.target.classList.add('drawn'), 150); }), { rootMargin: '0px 0px -15% 0px' });
+  const undrawIO = new IntersectionObserver(es => es.forEach(en => { if (!en.isIntersecting) en.target.classList.remove('drawn'); }), { rootMargin: '80px 0px 80px 0px' });
+  ['#lifeRank', '#lifeTrend', '#perHour', '#danger', '#diasTrend', '#diasRank', '#growth', '#euMap', '#occChart', '#remitChart', '#retChart'].forEach(s => { const e = $(s); if (e) { drawIO.observe(e); undrawIO.observe(e); } });
   window.FX && FX.init();
   requestAnimationFrame(moveInk);
 
@@ -422,8 +421,6 @@
   }, { passive: true });
 
   /* ---------- hartă + panou ---------- */
-  const EMIG = window.RO_EXTRA.mig.emig;
-  Object.keys(D.counties).forEach(k => { const e = EMIG.county[k]; D.counties[k].e = e ? e.rate : 0; D.counties[k].en = e ? e.n : 0; });
   const sorted = Object.entries(D.counties).sort((a, b) => b[1].s - a[1].s).map(e => e[0]);
   const maxS = D.counties[sorted[0]].s;
   const panel = $('#panel');
@@ -441,7 +438,6 @@
     g.className = 'chip ' + (d.g >= 0 ? 'up' : 'down');
     const diff = (d.s / D.nationalNet2025 - 1) * 100;
     $('#pVsAvg').textContent = (diff >= 0 ? '+' : '') + fmt(diff, 0) + L('% vs. media anuală pe țară', '% vs. national annual average');
-    $('#pEmig').textContent = fmt(d.e, 1) + L('‰ au emigrat temporar în ' + EMIG.year + ' (' + fmt(d.en) + ' oameni; media: ' + fmt(EMIG.national, 1) + '‰)', '‰ emigrated temporarily in ' + EMIG.year + ' (' + fmt(d.en) + ' people; national: ' + fmt(EMIG.national, 1) + '‰)');
     $('#pGauge').style.width = '0';
     requestAnimationFrame(() => requestAnimationFrame(() => { $('#pGauge').style.width = (d.s / maxS * 100) + '%'; }));
     $('#pAvgMark').style.left = (D.nationalNet2025 / maxS * 100) + '%';
@@ -453,8 +449,8 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && map) map.select(null); });
 
   function setLegend(m, lo, hi) {
-    $('#legMin').textContent = m === 's' ? fmt(lo) + ' lei' : m === 'e' ? fmt(lo, 1) + '‰' : fmt(lo, 1) + '%';
-    $('#legMax').textContent = m === 's' ? fmt(hi) + ' lei' : m === 'e' ? fmt(hi, 1) + '‰' : '+' + fmt(hi, 1) + '%';
+    $('#legMin').textContent = m === 's' ? fmt(lo) + ' lei' : fmt(lo, 1) + '%';
+    $('#legMax').textContent = m === 's' ? fmt(hi) + ' lei' : '+' + fmt(hi, 1) + '%';
   }
 
   try {

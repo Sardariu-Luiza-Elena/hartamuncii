@@ -59,7 +59,6 @@
       ['ONS, recensământul 2021 (Anglia și Țara Galilor)', 'ONS, 2021 census (England and Wales)', 'https://www.ons.gov.uk/census', 'Persoane născute în România din Regatul Unit.', 'People born in Romania living in the UK.'],
       ['ONU, DESA, International Migrant Stock 2024', 'UN DESA, International Migrant Stock 2024', 'https://www.un.org/development/desa/pd/content/international-migrant-stock',
         'Persoane născute în România din 69 de țări, 1990–2024 (globul).', 'People born in Romania in 69 countries, 1990–2024 (the globe).'],
-      ['INS, TEMPO POP320C: emigranți temporari pe județe', 'INS, TEMPO POP320C: temporary emigrants by county', 'http://statistici.insse.ro:8077/tempo-online/', 'Rata de emigrare pe județe din harta 3D (2025), împărțită la populația rezidentă (POP105A).', 'County emigration rates on the 3D map (2025), divided by resident population (POP105A).'],
       ['Panzaru (2024), Health & Social Care in the Community', 'Panzaru (2024), Health & Social Care in the Community', 'https://onlinelibrary.wiley.com/doi/10.1155/2024/7435493', 'Româncele care lucrează în îngrijire în Italia; rolul eliminării vizelor din 2002.', 'Romanian women in Italian care work; the role of the 2002 visa abolition.'],
       ['Studiu despre legalizările din Italia și Spania', 'Study on regularisations in Italy and Spain', 'https://www.researchgate.net/publication/255708598_Regularisation_of_Unauthorised_Immigrants_in_Italy_and_Spain_Determinants_and_Effects', 'Efectul legalizării din 2002 asupra emigrării românești.', 'Effect of the 2002 amnesty on Romanian emigration.'],
       ['CEEMR (2021), îngrijitoare din România și Moldova în Italia', 'CEEMR (2021), Romanian and Moldovan care workers in Italy', 'https://ceemr.uw.edu.pl/vol-10-no-2-2021/articles/migration-and-elderly-care-work-italy-three-stories-romanian-and-moldovan', 'Munca de îngrijire a vârstnicilor.', 'Elderly care work.'],
@@ -92,8 +91,8 @@
      'Top industries by county are an editorial summary based on each county’s main employers, not an official ranking.']
     ,['Remitențele de la Banca Mondială au o ruptură de metodă în 2013 (valorile sar de la 0,7 la 4,8 miliarde de dolari de la un an la altul). De aceea arătăm doar perioada 2013–2025.',
       'World Bank remittance data has a method break in 2013 (values jump from $0.7 bn to $4.8 bn in one year). That is why only 2013–2025 is shown.']
-    ,['Emigrarea temporară pe județe e o estimare INS, nu o numărătoare: de aceea diferențele dintre județe sunt mici. Imigrarea temporară a INS include și străinii, așa că pentru întoarceri folosim datele Eurostat despre cetățenii români.',
-      'Temporary emigration by county is an INS estimate, not a count, which is why county differences are small. INS temporary immigration also includes foreigners, so returns use Eurostat data on Romanian citizens.']
+    ,['Pentru întoarceri folosim datele Eurostat despre cetățenii români: imigrarea temporară publicată de INS îi include și pe străinii veniți la muncă în România.',
+      'Returns use Eurostat data on Romanian citizens: the temporary immigration figures published by INS also include foreigners coming to work in Romania.']
   ];
   const mbox = document.getElementById('methodList');
   if (mbox) mbox.innerHTML = METHOD.map(m => '<li>' + (window.LANG === 'en' ? m[1] : m[0]) + '</li>').join('');
