@@ -60,6 +60,8 @@
   $('#split').innerHTML = window.RO_SECTORS_SPLIT.map(s =>
     '<div data-w="' + s.v + '"><b>' + fmt(s.v, 1) + '%</b><span>' + s.k + '</span></div>').join('');
 
+  $('#splitLegend').innerHTML = window.RO_SECTORS_SPLIT.map((s, i) => '<span><i class="c' + i + '"></i>' + s.k + ' <b>' + fmt(s.v, 1) + '%</b></span>').join('');
+
   /* ---------- domenii ---------- */
   const WORK = window.RO_EXTRA.work, WK = {};
   WORK.rows.forEach(r => { WK[r.k] = r; });
@@ -351,13 +353,22 @@
     if (globeApi) globeApi.setYear(globeYear);
   }));
 
-  function renderCharts() { renderLife(); renderDias(); renderGrowth(); renderWork(); renderPayDist(); }
+  function goGlobe(y) {
+    const btns = $$('#globeYears button');
+    btns.forEach(b => b.classList.toggle('on', +b.dataset.y === y));
+    globeYear = y;
+    if (globeApi) globeApi.setYear(y);
+    $('#globe').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function renderMigration() { if (window.Migration) Migration.init(C, fmt, col, goGlobe); }
+
+  function renderCharts() { renderLife(); renderDias(); renderGrowth(); renderWork(); renderPayDist(); renderMigration(); }
   renderCharts();
   const drawIO = new IntersectionObserver(es => es.forEach(en => {
     if (en.isIntersecting) setTimeout(() => en.target.classList.add('drawn'), 150);
     else en.target.classList.remove('drawn');
   }), { threshold: 0.15 });
-  ['#lifeRank', '#lifeTrend', '#perHour', '#danger', '#diasTrend', '#diasRank', '#growth', '#euMap'].forEach(s => { const e = $(s); if (e) drawIO.observe(e); });
+  ['#lifeRank', '#lifeTrend', '#perHour', '#danger', '#diasTrend', '#diasRank', '#growth', '#euMap', '#occChart', '#remitChart', '#retChart'].forEach(s => { const e = $(s); if (e) drawIO.observe(e); });
   window.FX && FX.init();
   requestAnimationFrame(moveInk);
 
@@ -389,6 +400,14 @@
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   $$('section[id]').forEach(s => railIO.observe(s));
+  const navEl = document.querySelector('.nav');
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (window.innerWidth <= 720) navEl.classList.toggle('nav-hide', y > lastY && y > 120);
+    else navEl.classList.remove('nav-hide');
+    lastY = y;
+  }, { passive: true });
   const railFill = $('#railFill'), rail = $('#rail');
   let railQueued = false;
   window.addEventListener('scroll', () => {
@@ -403,6 +422,8 @@
   }, { passive: true });
 
   /* ---------- hartă + panou ---------- */
+  const EMIG = window.RO_EXTRA.mig.emig;
+  Object.keys(D.counties).forEach(k => { const e = EMIG.county[k]; D.counties[k].e = e ? e.rate : 0; D.counties[k].en = e ? e.n : 0; });
   const sorted = Object.entries(D.counties).sort((a, b) => b[1].s - a[1].s).map(e => e[0]);
   const maxS = D.counties[sorted[0]].s;
   const panel = $('#panel');
@@ -420,6 +441,7 @@
     g.className = 'chip ' + (d.g >= 0 ? 'up' : 'down');
     const diff = (d.s / D.nationalNet2025 - 1) * 100;
     $('#pVsAvg').textContent = (diff >= 0 ? '+' : '') + fmt(diff, 0) + L('% vs. media anuală pe țară', '% vs. national annual average');
+    $('#pEmig').textContent = fmt(d.e, 1) + L('‰ au emigrat temporar în ' + EMIG.year + ' (' + fmt(d.en) + ' oameni; media: ' + fmt(EMIG.national, 1) + '‰)', '‰ emigrated temporarily in ' + EMIG.year + ' (' + fmt(d.en) + ' people; national: ' + fmt(EMIG.national, 1) + '‰)');
     $('#pGauge').style.width = '0';
     requestAnimationFrame(() => requestAnimationFrame(() => { $('#pGauge').style.width = (d.s / maxS * 100) + '%'; }));
     $('#pAvgMark').style.left = (D.nationalNet2025 / maxS * 100) + '%';
@@ -431,8 +453,8 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && map) map.select(null); });
 
   function setLegend(m, lo, hi) {
-    $('#legMin').textContent = m === 's' ? fmt(lo) + ' lei' : fmt(lo, 1) + '%';
-    $('#legMax').textContent = m === 's' ? fmt(hi) + ' lei' : '+' + fmt(hi, 1) + '%';
+    $('#legMin').textContent = m === 's' ? fmt(lo) + ' lei' : m === 'e' ? fmt(lo, 1) + '‰' : fmt(lo, 1) + '%';
+    $('#legMax').textContent = m === 's' ? fmt(hi) + ' lei' : m === 'e' ? fmt(hi, 1) + '‰' : '+' + fmt(hi, 1) + '%';
   }
 
   try {

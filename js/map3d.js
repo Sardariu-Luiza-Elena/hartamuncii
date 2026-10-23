@@ -249,7 +249,7 @@ window.RoMap3D = (function () {
         if (hovered && lastPointer) {
           const r = canvas.getBoundingClientRect();
           const d = hovered.userData.d;
-          tip.innerHTML = d.n + '<small>' + (metric === 's' ? d.s.toLocaleString(window.LOCALE || 'ro-RO') + ' lei' : (d.g > 0 ? '+' : '') + d.g.toLocaleString(window.LOCALE || 'ro-RO') + '%') + '</small>';
+          tip.innerHTML = d.n + '<small>' + (metric === 's' ? d.s.toLocaleString(window.LOCALE || 'ro-RO') + ' lei' : metric === 'e' ? d.e.toLocaleString(window.LOCALE || 'ro-RO') + '‰' : (d.g > 0 ? '+' : '') + d.g.toLocaleString(window.LOCALE || 'ro-RO') + '%') + '</small>';
           tip.style.left = (lastPointer.clientX - r.left) + 'px';
           tip.style.top = (lastPointer.clientY - r.top) + 'px';
           tip.classList.add('show');

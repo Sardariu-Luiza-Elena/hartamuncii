@@ -31,6 +31,7 @@
     <a href="#negru"><i></i><span>La negru</span></a>
     <a href="#angajare"><i></i><span>Angajarea</span></a>
     <a href="#diaspora"><i></i><span>Diaspora</span></a>
+    <a href="#plecare"><i></i><span>Plecare și întoarcere</span></a>
     <a href="#surse"><i></i><span>Surse</span></a>
     <b class="rail-fill" id="railFill"></b>
   </nav>
@@ -60,13 +61,14 @@
     <div class="hero-copy">
       <p class="kicker mono">România · 42 de județe · date INS 2025</p>
       <h1 class="title">
-        <span class="line"><span>Unde se</span></span>
-        <span class="line"><span>câștigă <em>pâinea</em>.</span></span>
+        <span class="line"><span>Ghidul veniturilor</span></span>
+        <span class="line"><span><em>regionale</em>.</span></span>
       </h1>
       <p class="lede">Fiecare județ e ridicat pe hartă după salariul mediu net. Cu cât e mai înalt, cu atât oamenii de acolo câștigă mai mult. <b>Apasă pe un județ.</b></p>
       <div class="metric-switch" role="tablist" aria-label="Indicator hartă">
         <button class="on" data-metric="s" role="tab">Salariu net</button>
         <button data-metric="g" role="tab">Creștere anuală</button>
+        <button data-metric="e" role="tab">Emigrare</button>
       </div>
       <button class="sound-btn" id="soundBtn" aria-pressed="false">
         <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
@@ -96,6 +98,7 @@
       <div class="panel-row">
         <div class="chip" id="pGrowth"></div>
         <div class="chip" id="pVsAvg"></div>
+        <div class="chip" id="pEmig"></div>
       </div>
       <div class="panel-gauge"><span id="pGauge"></span><i class="avg-mark" id="pAvgMark"><b class="mono">media</b></i></div>
       <h3 class="panel-h mono">Industrii de top</h3>
@@ -181,6 +184,7 @@
 
     <h3 class="sub-h reveal">Din ce trăiește România</h3>
     <div class="split reveal" id="split"></div>
+    <div class="split-legend" id="splitLegend"></div>
 
     <div class="chart-card growth reveal" id="growthCard">
       <div class="growth-top">
@@ -282,6 +286,14 @@
       <h2 class="h2"><em>3 milioane</em> de români trăiesc în alt stat al UE. Sunt cea mai mare „diasporă” din Uniune.</h2>
       <p class="lede narrow">Pe hartă, culoarea arată ce procent din populația fiecărei țări sunt cetățeni români. Apasă pe o țară.</p>
     </div>
+    <div class="why reveal">
+      <div class="why-tl">
+        <h3 class="sub-h">De ce pleacă românii</h3>
+        <ol class="timeline" id="timeline"></ol>
+      </div>
+      <aside class="card why-italy" id="whyItaly"></aside>
+    </div>
+
     <div class="dias reveal">
       <div class="eu-map chart-card" id="euMap">
         <div class="eu-legend" id="euLegend"></div>
@@ -301,8 +313,12 @@
           </div>
           <div class="seg" id="globeYears" role="tablist">
             <button data-y="1990" role="tab">1990</button>
+            <button data-y="1995" role="tab">1995</button>
             <button data-y="2000" role="tab">2000</button>
+            <button data-y="2005" role="tab">2005</button>
             <button data-y="2010" role="tab">2010</button>
+            <button data-y="2015" role="tab">2015</button>
+            <button data-y="2020" role="tab">2020</button>
             <button class="on" data-y="2024" role="tab">2024</button>
           </div>
         </div>
@@ -313,6 +329,39 @@
     </div>
 
     <p class="src center">Cetățeni români rezidenți, 1 ianuarie (Eurostat, migr_pop1ctz; populație: tps00001). Regatul Unit: persoane născute în România, recensământul ONS 2021 (Anglia și Țara Galilor). Grecia, Cipru și Malta nu raportează anual: am folosit recensământul din 2021. Cei care au luat cetățenia țării gazdă nu apar în aceste cifre, deci totalul real e mai mare. Globul: persoane născute în România (indiferent de cetățenie), ONU, International Migrant Stock 2024; include și emigrări vechi, de exemplu etnicii germani, maghiari sau evrei plecați înainte de 1990.</p>
+  </section>
+
+  <!-- ============ PLECARE ȘI ÎNTOARCERE ============ -->
+  <section id="plecare" class="sec">
+    <div class="sec-head reveal">
+      <p class="kicker mono">07 · Plecare și întoarcere</p>
+      <h2 class="h2">Ce câștigă cei care pleacă și <em>ce lasă în urmă</em>.</h2>
+      <p class="lede narrow">Diferența de salariu care îi face pe oameni să plece, banii pe care îi trimit acasă, cei care se întorc și copiii care rămân.</p>
+    </div>
+
+    <div class="chart-card reveal mg-card">
+      <div class="growth-top">
+        <div>
+          <h4 class="growth-h">Aceeași muncă, alt salariu</h4>
+          <p class="growth-sub" id="occLead"></p>
+        </div>
+        <div class="seg" id="occUnit" role="tablist">
+          <button class="on" data-u="EUR" role="tab">Euro</button>
+          <button data-u="PPS" role="tab">După prețuri</button>
+        </div>
+      </div>
+      <div class="chips" id="occChips"></div>
+      <div id="occChart"></div>
+    </div>
+
+    <div class="mg-row">
+      <div class="chart-card reveal"><div class="mg-lead" id="remitLead"></div><div id="remitChart"></div></div>
+      <div class="chart-card reveal"><div class="mg-lead" id="retLead"></div><div id="retChart"></div></div>
+    </div>
+
+    <h3 class="sub-h reveal">Copiii rămași acasă</h3>
+    <div class="work-stats" id="kids"></div>
+    <p class="src center">Salarii: Eurostat, earn_ses22_47, câștig brut pe oră, firme cu cel puțin 10 angajați, 2022; „după prețuri” = în standardul puterii de cumpărare (PPS). Remitențe și investiții: Banca Mondială, 2013–2025. Plecări și întoarceri: Eurostat, migr_emi1ctz și migr_imm1ctz (nu există date pentru 2019–2020). Copii: ANPDCA, 31 decembrie 2025.</p>
   </section>
 
   <!-- ============ SURSE ============ -->
@@ -356,6 +405,7 @@
   <script src="js/sound.js"></script>
   <script src="js/fx.js"></script>
   <script src="js/globe.js"></script>
+  <script src="js/migration.js"></script>
   <script src="js/main.js"></script>
   <script src="js/sources.js"></script>
 </body>

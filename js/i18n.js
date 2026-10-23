@@ -75,10 +75,10 @@
   const STATIC = {
     'Harta': 'Map', 'La negru': 'Off the books', 'Cine muncește': 'Who works', 'Viața la muncă': 'Work life', 'Domenii': 'Sectors', 'Angajarea': 'Hiring',
     'România · 42 de județe · date INS 2025': 'Romania · 42 counties · official 2025 data',
-    'Unde se': 'Where the', 'câștigă <em>pâinea</em>.': '<em>money</em> is.',
+    'Ghidul veniturilor': 'A guide to', '<em>regionale</em>.': '<em>regional</em> income.',
     'Fiecare județ e ridicat pe hartă după salariul mediu net. Cu cât e mai înalt, cu atât oamenii de acolo câștigă mai mult. <b>Apasă pe un județ.</b>':
       'Each county rises according to its average net salary. The taller it is, the more people there earn. <b>Click a county.</b>',
-    'Salariu net': 'Net salary', 'Creștere anuală': 'Annual growth', 'Pornește sunetul': 'Turn on sound',
+    'Salariu net': 'Net salary', 'Creștere anuală': 'Annual growth', 'Emigrare': 'Emigration', 'Pornește sunetul': 'Turn on sound',
     'trage ↻ rotește · scroll + ctrl ⊕ zoom': 'drag ↻ rotate · ctrl + scroll ⊕ zoom', 'se încarcă harta…': 'loading map…',
     'lei net / lună': 'lei net / month', '<b class="mono">media</b>': '<b class="mono">average</b>', 'Industrii de top': 'Top industries',
     'Salariu: INS, iunie 2025. Industrii: sinteză după profilul economic al județului, nu un clasament oficial.':
@@ -148,7 +148,13 @@
     'Cetățeni români rezidenți, 1 ianuarie (Eurostat, migr_pop1ctz; populație: tps00001). Regatul Unit: persoane născute în România, recensământul ONS 2021 (Anglia și Țara Galilor). Grecia, Cipru și Malta nu raportează anual: am folosit recensământul din 2021. Cei care au luat cetățenia țării gazdă nu apar în aceste cifre, deci totalul real e mai mare. Globul: persoane născute în România (indiferent de cetățenie), ONU, International Migrant Stock 2024; include și emigrări vechi, de exemplu etnicii germani, maghiari sau evrei plecați înainte de 1990.':
       'Romanian citizens resident on 1 January (Eurostat, migr_pop1ctz; population: tps00001). United Kingdom: people born in Romania, ONS 2021 census (England and Wales). Greece, Cyprus and Malta don’t report every year, so the 2021 census is used. People who took the host country’s citizenship are not included, so the real total is higher. Globe: people born in Romania (whatever their citizenship), UN International Migrant Stock 2024; it also includes older emigration, for example ethnic Germans, Hungarians or Jews who left before 1990.',
 
-    'Surse': 'Sources', 'Metodă': 'Method', 'Surse și metodă': 'Sources and method', 'Despre': 'About', 'Date actualizate': 'Data updated',
+    'Surse': 'Sources', 'Metodă': 'Method', 'Plecare și întoarcere': 'Leaving and returning', 'De ce pleacă românii': 'Why Romanians leave',
+    '07 · Plecare și întoarcere': '07 · Leaving and returning',
+    'Ce câștigă cei care pleacă și <em>ce lasă în urmă</em>.': 'What those who leave gain, and <em>what they leave behind</em>.',
+    'Diferența de salariu care îi face pe oameni să plece, banii pe care îi trimit acasă, cei care se întorc și copiii care rămân.': 'The pay gap that makes people leave, the money they send home, those who come back and the children who stay.',
+    'Aceeași muncă, alt salariu': 'Same work, different pay', 'Euro': 'Euros', 'După prețuri': 'Adjusted for prices', 'Copiii rămași acasă': 'Children left behind',
+    'Salarii: Eurostat, earn_ses22_47, câștig brut pe oră, firme cu cel puțin 10 angajați, 2022; „după prețuri” = în standardul puterii de cumpărare (PPS). Remitențe și investiții: Banca Mondială, 2013–2025. Plecări și întoarceri: Eurostat, migr_emi1ctz și migr_imm1ctz (nu există date pentru 2019–2020). Copii: ANPDCA, 31 decembrie 2025.':
+      'Pay: Eurostat, earn_ses22_47, gross hourly earnings, firms with 10+ employees, 2022; “adjusted for prices” = purchasing power standard (PPS). Remittances and investment: World Bank, 2013–2025. Leaving and returning: Eurostat, migr_emi1ctz and migr_imm1ctz (no data for 2019–2020). Children: ANPDCA, 31 December 2025.', 'Surse și metodă': 'Sources and method', 'Despre': 'About', 'Date actualizate': 'Data updated',
     'De unde vin <em>datele</em>.': 'Where the <em>data</em> comes from.',
     'Fiecare cifră de pe site vine dintr-o sursă oficială sau dintr-un studiu publicat. Apasă pe o sursă ca s-o deschizi.': 'Every figure on this site comes from an official source or a published study. Click a source to open it.',
     'Note de metodă': 'Method notes',

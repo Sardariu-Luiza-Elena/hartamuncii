@@ -696,3 +696,58 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; }
 .method-list { margin-top: 12px; padding-left: 18px; display: grid; gap: 10px; font-size: 14px; color: var(--mute); line-height: 1.5; }
 .to-src { color: var(--acc); text-decoration: none; white-space: nowrap; margin-left: 4px; }
 .to-src:hover { text-decoration: underline; }
+
+/* ============ MOBIL: meniu care se ascunde, legendă sectoare, etichete pe mai multe rânduri ============ */
+.nav { transition: transform .35s var(--ease), opacity .35s; }
+.nav.nav-hide { transform: translate(-50%, -140%); opacity: 0; }
+.split-legend { display: none; }
+.split-legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.split-legend i.c0 { background: var(--acc); } .split-legend i.c1 { background: var(--cool); } .split-legend i.c2 { background: var(--hot); }
+@media (max-width: 720px) {
+  .split { height: 22px; margin-bottom: 12px; }
+  .split div b, .split div span { display: none; }
+  .split-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 24px; font-size: 14px; color: var(--mute); }
+  .split-legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .split-legend b { color: var(--ink); font-weight: 600; }
+  .rank.wide .rk-row { grid-template-columns: minmax(0, 1fr) 34% 46px; align-items: center; }
+  .rank.wide .rk-n, .pr-row .rk-n { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.2; }
+  .pr-row { grid-template-columns: minmax(0, 1fr) 38% 64px; }
+}
+
+/* ============ DE CE PLEACĂ ROMÂNII ============ */
+.why { display: grid; grid-template-columns: 1fr 360px; gap: 16px; margin-bottom: 28px; align-items: start; }
+.why-tl .sub-h { margin-top: 0; }
+.timeline { list-style: none; position: relative; display: grid; gap: 4px; padding-left: 22px; }
+.timeline::before { content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+.tl-item { position: relative; padding: 10px 0 14px; }
+.tl-item::before { content: ""; position: absolute; left: -22px; top: 15px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--acc); }
+.tl-year { font-size: 13px; font-weight: 600; color: var(--acc); font-variant-numeric: tabular-nums; }
+.tl-item h4 { font-size: 18px; font-weight: 600; letter-spacing: -.02em; margin-top: 2px; }
+.tl-item p { font-size: 14.5px; color: var(--mute); margin-top: 4px; max-width: 62ch; }
+.tl-go { margin-top: 8px; font-size: 13px; color: var(--acc); padding: 0; }
+.tl-go:hover { text-decoration: underline; }
+.why-italy { position: sticky; top: 100px; }
+.why-italy h4 { font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+.wi-lead { font-size: 14px; color: var(--mute); margin-top: 6px; }
+.why-italy ol { margin: 14px 0 0 18px; display: grid; gap: 12px; }
+.why-italy li b { display: block; font-size: 15px; font-weight: 600; }
+.why-italy li span { font-size: 13.5px; color: var(--mute); }
+.why-italy a { color: var(--acc); text-decoration: none; white-space: nowrap; }
+.wi-note { font-size: 13.5px; color: var(--mute); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+
+/* ============ PLECARE ȘI ÎNTOARCERE ============ */
+.mg-card { margin-bottom: 16px; }
+.mg-card .growth-sub { max-width: 70ch; }
+.mg-card .growth-sub b { color: var(--ink); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.chips button { font-size: 13px; padding: 7px 12px; border-radius: 999px; background: var(--bg3); color: var(--mute); transition: background .25s, color .25s; }
+.chips button.on { background: var(--ink); color: var(--bg); }
+.mg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.mg-big { font: 600 44px/1 var(--body); letter-spacing: -.05em; color: var(--acc); }
+.mg-lead p { font-size: 14.5px; color: var(--mute); margin-top: 8px; max-width: 52ch; }
+@media (max-width: 960px) { .why, .mg-row { grid-template-columns: 1fr; } .why-italy { position: static; } }
+
+#remitChart .ch-head, #retChart .ch-head { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+#occChart .ch-head { margin-top: 20px; }
+#globeYears { flex-wrap: wrap; }
+#globeYears button { padding: 7px 10px; }
