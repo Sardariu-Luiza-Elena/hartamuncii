@@ -1,3 +1,5 @@
 .vscode/
 .DS_Store
 Thumbs.db
+work/
+__pycache__/

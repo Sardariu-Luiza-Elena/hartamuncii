@@ -4,18 +4,17 @@
   const GS = q => 'https://scholar.google.com/scholar?q=' + encodeURIComponent(q);
   const SOURCES = [
     { ro: 'Harta și salariile pe județe', en: 'The map and county salaries', items: [
-      ['INS, câștigul salarial mediu net pe județe, iunie 2025', 'INS, average net earnings by county, June 2025', 'https://infopolitica.ro/2025/10/12/salariul-mediu-pentru-fiecare-judet-in-luna-iunie-2025-vs-iunie-2024/',
-        'Salariul și variația anuală pentru toate cele 42 de județe (comunicatele direcțiilor județene INS, centralizate de Infopolitica).', 'Salary and annual change for all 42 counties (INS county office releases, compiled by Infopolitica).'],
-      ['INS, câștigul salarial mediu net, anul 2025', 'INS, average net earnings, 2025', 'https://tvrinfo.ro/salariul-mediu-net-a-ajuns-la-5-266-de-lei-in-2025-diferenta-de-peste-3-000-de-lei-intre-bucuresti-si-botosani/',
-        'Media anuală pe țară: 5.266 lei.', 'National annual average: 5,266 lei.'],
+      ['INS TEMPO, FOM106E: câștigul salarial mediu net lunar pe județe', 'INS TEMPO, FOM106E: average monthly net earnings by county', 'http://statistici.insse.ro:8077/tempo-online/#/pages/tables/insse-table',
+        'Media anuală 2024 și creșterea față de 2023, pentru toate cele 42 de județe; media pe țară: 4.959 lei. Descărcat cu scripts/tempo_county_salary.py.', '2024 annual average and change from 2023 for all 42 counties; national average: 4,959 lei. Downloaded with scripts/tempo_county_salary.py.'],
+      ['INS, câștigul salarial mediu net, anul 2025 (prin TVR Info)', 'INS, average net earnings, 2025 (via TVR Info)', 'https://tvrinfo.ro/salariul-mediu-net-a-ajuns-la-5-266-de-lei-in-2025-diferenta-de-peste-3-000-de-lei-intre-bucuresti-si-botosani/',
+        'Media anuală pe țară în 2025: 5.266 lei (folosită ca reper în secțiunea despre salarii).', 'National annual average for 2025: 5,266 lei (used as a reference in the pay section).'],
       ['geoBoundaries, granițele județelor (CC BY 4.0)', 'geoBoundaries, county boundaries (CC BY 4.0)', 'https://www.geoboundaries.org', 'Contururile hărții 3D.', 'Outlines for the 3D map.']
     ] },
     { ro: 'Cine muncește', en: 'Who works', items: [
-      ['INS, Forța de muncă în România: ocupare și șomaj, 2025', 'INS, Labour force in Romania: employment and unemployment, 2025', 'https://www.forbes.ro/ins-populatia-activa-a-romaniei-era-de-816-milioane-de-persoane-in-trimestrul-al-iv-lea-din-2025-492058',
-        'Ratele de ocupare pe sexe, urban/rural, șomaj.', 'Employment rates by sex, urban/rural, unemployment.']
-    ] },
-    { ro: 'Viața la muncă', en: 'Work life', items: [
-      ['Eurostat, ore efectiv lucrate pe săptămână (lfsa_ewhan2)', 'Eurostat, actual weekly hours worked (lfsa_ewhan2)', ES('lfsa_ewhan2'), 'Ore la locul de muncă principal, 20–64 de ani, 2010–2025, pe țări și pe domenii.', 'Hours in the main job, ages 20–64, 2010–2025, by country and sector.'],
+      ['Eurostat, rata de ocupare pe sexe (lfsi_emp_a)', 'Eurostat, employment rate by sex (lfsi_emp_a)', 'https://ec.europa.eu/eurostat/databrowser/view/lfsi_emp_a/default/table',
+        'Rata de ocupare a bărbaților și femeilor de 15–64 de ani, 2025 (aceleași valori ca în ancheta INS).', 'Employment rates of men and women aged 15–64, 2025 (same values as the INS survey).'],
+      ['INS, Forța de muncă în România: ocupare și șomaj, 2025 (prin Forbes România)', 'INS, Labour force in Romania: employment and unemployment, 2025 (via Forbes Romania)', 'https://www.forbes.ro/ins-populatia-activa-a-romaniei-era-de-816-milioane-de-persoane-in-trimestrul-al-iv-lea-din-2025-492058',
+        'Urban vs. rural, tineri de 15–24 de ani, șomaj.', 'Urban vs. rural, young people aged 15–24, unemployment.'],
       ['Eurostat, tineri NEET (edat_lfse_20)', 'Eurostat, young NEETs (edat_lfse_20)', ES('edat_lfse_20'), 'Tineri de 15–29 de ani care nu lucrează și nu învață, 2015–2025.', 'People aged 15–29 not in employment, education or training, 2015–2025.'],
       ['Eurostat, sărăcia în rândul celor care muncesc (ilc_iw01)', 'Eurostat, in-work poverty (ilc_iw01)', ES('ilc_iw01'), 'Persoane ocupate de 18–64 de ani sub pragul de sărăcie, 2015–2025.', 'Employed people aged 18–64 below the poverty line, 2015–2025.']
     ] },
@@ -28,8 +27,8 @@
         '1.823.520 de salariați plătiți cu salariul minim.', '1,823,520 employees on the minimum wage.'],
       ['Eurostat, accidente de muncă mortale (hsw_n2_02)', 'Eurostat, fatal accidents at work (hsw_n2_02)', ES('hsw_n2_02'), 'Rata la 100.000 de lucrători, pe domenii, media 2021–2024.', 'Rate per 100,000 workers, by sector, 2021–2024 average.'],
       ['Eurostat, persoane ocupate pe domenii (lfsa_egan2)', 'Eurostat, employment by sector (lfsa_egan2)', ES('lfsa_egan2'), 'Evoluția numărului de lucrători pe domenii, 2011–2025.', 'Change in the number of workers by sector, 2011–2025.'],
-      ['INS, populația ocupată pe mari sectoare, 2024', 'INS, employment by broad sector, 2024', 'https://agerpres.ro/economic/2025/04/22/rata-de-ocupare-a-populatiei-in-varsta-de-munca-a-crescut-la-63-8-in-2024--1442085',
-        'Ponderile serviciilor, industriei și agriculturii.', 'Shares of services, industry and agriculture.']
+      ['Eurostat, persoane ocupate pe domenii (lfsa_egan2): mari sectoare', 'Eurostat, employment by sector (lfsa_egan2): broad sectors', 'https://ec.europa.eu/eurostat/databrowser/view/lfsa_egan2/default/table',
+        'Ponderile serviciilor, industriei și construcțiilor și agriculturii în 2025.', 'Shares of services, industry and construction, and agriculture in 2025.']
     ] },
     { ro: 'Munca nedeclarată', en: 'Undeclared work', items: [
       ['European Labour Authority, Factsheet on undeclared work: Romania (2023)', 'European Labour Authority, Factsheet on undeclared work: Romania (2023)', 'https://www.ela.europa.eu/sites/default/files/2024-02/RO-UDW_factsheet-2023-fin.pdf',
@@ -75,8 +74,8 @@
   ];
 
   const METHOD = [
-    ['Înălțimea județelor pe hartă e proporțională cu salariul mediu net din iunie 2025. Salariul e doar un indicator aproximativ al dezvoltării: nu include munca la negru, banii trimiși din străinătate sau costul vieții.',
-     'County heights on the map are proportional to the average net salary in June 2025. Salary is only a rough measure of development: it leaves out undeclared work, money sent from abroad and the cost of living.'],
+    ['Înălțimea județelor pe hartă e proporțională cu salariul mediu net din 2024, cel mai recent an cu date oficiale complete pe județe (INS n-a publicat încă în baza de date anul 2025). Salariul e doar un indicator aproximativ al dezvoltării: nu include munca la negru, banii trimiși din străinătate sau costul vieții.',
+     'County heights on the map are proportional to the average net salary in 2024, the latest year with complete official county data (INS has not yet published 2025 in its database). Salary is only a rough measure of development: it leaves out undeclared work, money sent from abroad and the cost of living.'],
     ['INS publică două medii salariale: media anuală oficială (5.266 lei în 2025) și media anchetei lunare (5.536 lei, media lunilor din 2025). Comparațiile între domenii folosesc ancheta lunară.',
      'INS publishes two salary averages: the official annual average (5,266 lei in 2025) and the monthly survey average (5,536 lei, mean of the 2025 months). Comparisons between sectors use the monthly survey.'],
     ['Salariul net din tranșele de venit e estimat din cel brut: net ≈ brut × 0,585 (contribuții de 25% și 10%, impozit de 10%, fără deduceri).',

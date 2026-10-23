@@ -59,7 +59,7 @@
   <!-- ============ HERO + HARTA 3D ============ -->
   <section id="harta" class="hero">
     <div class="hero-copy">
-      <p class="kicker mono">România · 42 de județe · date INS 2025</p>
+      <p class="kicker mono">România · 42 de județe · date oficiale INS</p>
       <h1 class="title">
         <span class="line"><span>Ghidul veniturilor</span></span>
         <span class="line"><span><em>regionale</em>.</span></span>
@@ -101,10 +101,19 @@
       <div class="panel-gauge"><span id="pGauge"></span><i class="avg-mark" id="pAvgMark"><b class="mono">media</b></i></div>
       <h3 class="panel-h mono">Industrii de top</h3>
       <ul class="panel-ind" id="pInd"></ul>
-      <p class="panel-note">Salariu: INS, iunie 2025. Industrii: sinteză după profilul economic al județului, nu un clasament oficial.</p>
+      <p class="panel-note">Salariu: INS, media anuală 2024 (cele mai noi date oficiale pe județe). Industrii: sinteză după profilul economic al județului, nu un clasament oficial.</p>
     </aside>
 
-    <a href="#cine" class="scroll-cue mono">derulează ↓</a>
+    <a href="#pe-scurt" class="scroll-cue mono">derulează ↓</a>
+  </section>
+
+  <!-- ============ PE SCURT ============ -->
+  <section id="pe-scurt" class="sec key">
+    <div class="sec-head reveal">
+      <p class="kicker mono">Pe scurt</p>
+      <h2 class="h2">Patru lucruri pe care le arată <em>datele</em>.</h2>
+    </div>
+    <div class="key-grid" id="keyFindings"></div>
   </section>
 
   <!-- ============ CINE MUNCESTE ============ -->
@@ -200,7 +209,7 @@
     </div>
 
     <div class="domains" id="domains"></div>
-    <p class="src center">Salarii: INS, câștigul salarial mediu net, media lunilor din 2025 (ancheta lunară; media economiei aici e 5.536 lei, față de 5.266 lei, media anuală oficială de pe hartă, calculată de INS dintr-o altă anchetă). Ore: Eurostat, lfsa_ewhan2, doar salariații de 20–64 de ani, 2025. Accidente: Eurostat, hsw_n2_02, media 2021–2024. Ponderi pe mari sectoare: INS, 2024.</p>
+    <p class="src center">Salarii: INS, câștigul salarial mediu net, media lunilor din 2025 (ancheta lunară; media economiei aici e 5.536 lei, față de 5.266 lei, media anuală oficială pe 2025, calculată de INS dintr-o altă anchetă). Ore: Eurostat, lfsa_ewhan2, doar salariații de 20–64 de ani, 2025. Accidente: Eurostat, hsw_n2_02, media 2021–2024. Ponderi pe mari sectoare: Eurostat, 2025.</p>
   </section>
 
   <!-- ============ MUNCA LA NEGRU ============ -->
@@ -381,7 +390,7 @@
     <div class="foot-cols">
       <div>
         <p class="mono label">Despre</p>
-        <p>Un proiect de jurnalism de date despre munca în România, construit numai din surse oficiale și studii publicate. Lista completă e în secțiunea <a href="#surse">Surse și metodă</a>.</p>
+        <div id="aboutBox"></div>
       </div>
       <div>
         <p class="mono label">Date actualizate</p>
@@ -390,6 +399,7 @@
     </div>
   </footer>
 
+  <script src="js/author.js"></script>
   <script src="js/i18n.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="js/geo.js"></script>

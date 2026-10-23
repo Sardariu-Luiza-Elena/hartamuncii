@@ -74,15 +74,15 @@
   /* ---------- texte fixe din pagină (cheia = textul românesc din HTML) ---------- */
   const STATIC = {
     'Harta': 'Map', 'La negru': 'Off the books', 'Cine muncește': 'Who works', 'Viața la muncă': 'Work life', 'Domenii': 'Sectors', 'Angajarea': 'Hiring',
-    'România · 42 de județe · date INS 2025': 'Romania · 42 counties · official 2025 data',
+    'România · 42 de județe · date oficiale INS': 'Romania · 42 counties · official statistics',
     'Ghidul veniturilor': 'A guide to', '<em>regionale</em>.': '<em>regional</em> income.',
     'Fiecare județ e ridicat pe hartă după salariul mediu net. Cu cât e mai înalt, cu atât oamenii de acolo câștigă mai mult. <b>Apasă pe un județ.</b>':
       'Each county rises according to its average net salary. The taller it is, the more people there earn. <b>Click a county.</b>',
     'Salariu net': 'Net salary', 'Creștere anuală': 'Annual growth', 'Pornește sunetul': 'Turn on sound',
     'trage ↻ rotește · scroll + ctrl ⊕ zoom': 'drag ↻ rotate · ctrl + scroll ⊕ zoom', 'se încarcă harta…': 'loading map…',
     'lei net / lună': 'lei net / month', '<b class="mono">media</b>': '<b class="mono">average</b>', 'Industrii de top': 'Top industries',
-    'Salariu: INS, iunie 2025. Industrii: sinteză după profilul economic al județului, nu un clasament oficial.':
-      'Salary: Romanian statistics office (INS), June 2025. Industries: an editorial summary of each county’s economy, not an official ranking.',
+    'Salariu: INS, media anuală 2024 (cele mai noi date oficiale pe județe). Industrii: sinteză după profilul economic al județului, nu un clasament oficial.':
+      'Salary: Romanian statistics office (INS), 2024 annual average (the latest official county data). Industries: an editorial summary of each county’s economy, not an official ranking.',
     'derulează ↓': 'scroll ↓',
 
     '04 · Munca nedeclarată': '04 · Undeclared work',
@@ -129,13 +129,13 @@
     'Cine muncește cel mai greu <em>nu</em> e și cel mai bine plătit.': 'Those who work hardest are <em>not</em> the best paid.',
     'Salariul, orele și riscurile din fiecare domeniu, din datele INS și Eurostat.': 'Pay, hours and risks in every sector, from official Romanian and Eurostat data.',
     'Din ce trăiește România': 'What Romania lives on',
-    'Salarii: INS, câștigul salarial mediu net, media lunilor din 2025 (ancheta lunară; media economiei aici e 5.536 lei, față de 5.266 lei, media anuală oficială de pe hartă, calculată de INS dintr-o altă anchetă). Ore: Eurostat, lfsa_ewhan2, doar salariații de 20–64 de ani, 2025. Accidente: Eurostat, hsw_n2_02, media 2021–2024. Ponderi pe mari sectoare: INS, 2024.':
-      'Pay: Romanian statistics office (INS), average net earnings, mean of the 2025 monthly surveys (the economy-wide average here is 5,536 lei, compared with the official annual average of 5,266 lei used on the map, which INS calculates from a different survey). Hours: Eurostat, lfsa_ewhan2, employees only, aged 20–64, 2025. Accidents: Eurostat, hsw_n2_02, 2021–2024 average. Shares by broad sector: INS, 2024.',
+    'Salarii: INS, câștigul salarial mediu net, media lunilor din 2025 (ancheta lunară; media economiei aici e 5.536 lei, față de 5.266 lei, media anuală oficială pe 2025, calculată de INS dintr-o altă anchetă). Ore: Eurostat, lfsa_ewhan2, doar salariații de 20–64 de ani, 2025. Accidente: Eurostat, hsw_n2_02, media 2021–2024. Ponderi pe mari sectoare: Eurostat, 2025.':
+      'Pay: Romanian statistics office (INS), average net earnings, mean of the 2025 monthly surveys (the economy-wide average here is 5,536 lei, compared with the official 2025 annual average of 5,266 lei, which INS calculates from a different survey). Hours: Eurostat, lfsa_ewhan2, employees only, aged 20–64, 2025. Accidents: Eurostat, hsw_n2_02, 2021–2024 average. Shares by broad sector: Eurostat, 2025.',
     'Ce industrii au crescut': 'Which industries grew',
     'Schimbarea numărului de oameni care lucrează în fiecare domeniu': 'Change in the number of people working in each sector',
     'Eurostat, lfsa_egan2. În 2021, INS a schimbat metodologia: cei care lucrează doar pentru consumul propriu (mai ales în agricultură) nu mai sunt numărați ca ocupați. De aceea comparăm separat cele două perioade, fără să le amestecăm.':
       'Eurostat, lfsa_egan2. In 2021 Romania changed its survey method: people who only produce for their own household (mostly small farmers) are no longer counted as employed. That’s why the two periods are shown separately rather than combined.',
-    'Ponderi pe mari sectoare: INS, 2024. Risc de muncă nedeclarată: după ELA și controalele Inspecției Muncii.': 'Shares by broad sector: INS, 2024. Risk of undeclared work: based on ELA and Labour Inspectorate findings.',
+    'Ponderi pe mari sectoare: Eurostat, 2025. Risc de muncă nedeclarată: după ELA și controalele Inspecției Muncii.': 'Shares by broad sector: Eurostat, 2025. Risk of undeclared work: based on ELA and Labour Inspectorate findings.',
 
     '05 · Cine e angajat': '05 · Who gets hired',
     'CV-ul contează. Dar contează și <em>înălțimea</em>, fața și numele tău.': 'Your CV matters. So do your <em>height</em>, your face and your name.',
@@ -148,7 +148,8 @@
     'Cetățeni români rezidenți, 1 ianuarie (Eurostat, migr_pop1ctz; populație: tps00001). Regatul Unit: persoane născute în România, recensământul ONS 2021 (Anglia și Țara Galilor). Grecia, Cipru și Malta nu raportează anual: am folosit recensământul din 2021. Cei care au luat cetățenia țării gazdă nu apar în aceste cifre, deci totalul real e mai mare. Globul: persoane născute în România (indiferent de cetățenie), ONU, International Migrant Stock 2024; include și emigrări vechi, de exemplu etnicii germani, maghiari sau evrei plecați înainte de 1990.':
       'Romanian citizens resident on 1 January (Eurostat, migr_pop1ctz; population: tps00001). United Kingdom: people born in Romania, ONS 2021 census (England and Wales). Greece, Cyprus and Malta don’t report every year, so the 2021 census is used. People who took the host country’s citizenship are not included, so the real total is higher. Globe: people born in Romania (whatever their citizenship), UN International Migrant Stock 2024; it also includes older emigration, for example ethnic Germans, Hungarians or Jews who left before 1990.',
 
-    'Surse': 'Sources', 'Metodă': 'Method', 'Plecare și întoarcere': 'Leaving and returning', 'De ce pleacă românii': 'Why Romanians leave',
+    'Surse': 'Sources', 'Metodă': 'Method', 'Pe scurt': 'In short',
+    'Patru lucruri pe care le arată <em>datele</em>.': 'Four things the <em>data</em> shows.', 'Plecare și întoarcere': 'Leaving and returning', 'De ce pleacă românii': 'Why Romanians leave',
     '07 · Plecare și întoarcere': '07 · Leaving and returning',
     'Ce câștigă cei care pleacă și <em>ce lasă în urmă</em>.': 'What those who leave gain, and <em>what they leave behind</em>.',
     'Diferența de salariu care îi face pe oameni să plece, banii pe care îi trimit acasă, cei care se întorc și copiii care rămân.': 'The pay gap that makes people leave, the money they send home, those who come back and the children who stay.',
@@ -165,8 +166,8 @@
     '<a href="https://ec.europa.eu/eurostat/data/database" target="_blank" rel="noopener">Eurostat</a>: diaspora, ore lucrate, NEET, sărăcia celor care muncesc': '<a href="https://ec.europa.eu/eurostat/data/database" target="_blank" rel="noopener">Eurostat</a>: diaspora, hours worked, NEETs, in-work poverty, graduates, jobs by sector',
     '<a href="https://www.ons.gov.uk" target="_blank" rel="noopener">ONS</a>: recensământul 2021, Regatul Unit': '<a href="https://www.ons.gov.uk" target="_blank" rel="noopener">ONS</a>: 2021 census, United Kingdom',
     '<a href="https://www.geoboundaries.org" target="_blank" rel="noopener">geoBoundaries</a> (CC BY 4.0) și <a href="https://www.naturalearthdata.com" target="_blank" rel="noopener">Natural Earth</a>: contururi': '<a href="https://www.geoboundaries.org" target="_blank" rel="noopener">geoBoundaries</a> (CC BY 4.0) and <a href="https://www.naturalearthdata.com" target="_blank" rel="noopener">Natural Earth</a>: map outlines',
-    'Înălțimea fiecărui județ pe hartă e proporțională cu salariul mediu net din iunie 2025. Salariul e un indicator aproximativ al dezvoltării: nu include munca la negru, remitențele sau costul vieții.':
-      'The height of each county on the map is proportional to its average net salary in June 2025. Salary is only a rough measure of development: it leaves out undeclared work, money sent home from abroad and the cost of living.'
+    'Înălțimea fiecărui județ pe hartă e proporțională cu salariul mediu net din 2024. Salariul e un indicator aproximativ al dezvoltării: nu include munca la negru, remitențele sau costul vieții.':
+      'The height of each county on the map is proportional to its average net salary in 2024. Salary is only a rough measure of development: it leaves out undeclared work, money sent home from abroad and the cost of living.'
   };
   const norm = s => s.replace(/\s+/g, ' ').trim();
   const MAP = {};

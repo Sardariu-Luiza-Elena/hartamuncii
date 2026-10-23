@@ -363,7 +363,35 @@
   }
   function renderMigration() { if (window.Migration) Migration.init(C, fmt, col, goGlobe); }
 
-  function renderCharts() { renderLife(); renderDias(); renderGrowth(); renderWork(); renderPayDist(); renderMigration(); }
+  /* ---------- pe scurt: cele patru descoperiri principale ---------- */
+  function renderKey() {
+    const P = window.RO_PAY_DIST, M = window.RO_EXTRA.mig, ry = Object.keys(M.ret.in).sort();
+    const firstRet = ry.find(y => M.ret.in[y] > (M.ret.out[y] || Infinity));
+    const ylast = Object.keys(M.remit).sort().pop();
+    const cards = [
+      ['~' + fmt(P.bins[0].n / P.total * 100, 0) + '%', L('dintre salariații din sectorul privat iau în mână sub ~2.900 lei pe lună.', 'of private-sector employees take home less than ~2,900 lei a month.'), '#payDist', L('Câți câștigă cât', 'Who earns how much')],
+      [fmt(WK.J.perH / WK.I.perH, 1) + '×', L('câștigă pe oră un angajat din IT față de unul din hoteluri și restaurante, unde se lucrează cele mai multe ore.', 'more per hour is earned in IT than in hotels and restaurants, where people work the longest hours.'), '#perHour', L('Cât valorează munca', 'What work is worth')],
+      [fmt(M.remit[ylast], 1) + L(' mld. $', ' bn $'), L('au trimis acasă românii din străinătate în ' + ylast + ', mai mult decât toate investițiile străine din acel an.', 'was sent home by Romanians abroad in ' + ylast + ', more than all foreign investment that year.'), '#plecare', L('Plecare și întoarcere', 'Leaving and returning')],
+      [firstRet || '2022', L('e primul an în care s-au întors în țară mai mulți români decât au plecat. De atunci, la fel în fiecare an.', 'was the first year more Romanians came home than left. It has been the same every year since.'), '#plecare', L('Plecare și întoarcere', 'Leaving and returning')]
+    ];
+    $('#keyFindings').innerHTML = cards.map((c, i) =>
+      '<a class="key-card reveal" href="' + c[2] + '" style="transition-delay:' + i * 70 + 'ms"><span class="key-big">' + c[0] + '</span><span class="key-txt">' + c[1] + '</span><span class="key-go">' + c[3] + ' →</span></a>').join('');
+    $$('#keyFindings .reveal').forEach(el => { io.observe(el); ioOut.observe(el); });
+  }
+
+  /* ---------- despre autor ---------- */
+  function renderAbout() {
+    const A = window.AUTHOR, box = $('#aboutBox');
+    if (!A || !box) return;
+    const role = window.LANG === 'en' ? A.role.en : A.role.ro;
+    box.innerHTML = '<p>' + L('Proiect realizat de ', 'A project by ') + '<b>' + A.name + '</b>, ' + role + '. ' +
+      L('Un proiect de jurnalism de date despre munca în România: date oficiale găsite, verificate și transformate în vizualizări interactive. Lista completă a surselor e în secțiunea <a href="#surse">Surse și metodă</a>.',
+        'A data journalism project about work in Romania: official data found, checked and turned into interactive visualisations. The full list of sources is in <a href="#surse">Sources and method</a>.') + '</p>' +
+      (A.links && A.links.length ? '<p class="about-links">' + A.links.map(l => '<a href="' + l[1] + '" target="_blank" rel="noopener">' + l[0] + ' ↗</a>').join('') + '</p>' : '');
+  }
+  renderAbout();
+
+  function renderCharts() { renderLife(); renderDias(); renderGrowth(); renderWork(); renderPayDist(); renderMigration(); renderKey(); }
   renderCharts();
   const drawIO = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) setTimeout(() => en.target.classList.add('drawn'), 150); }), { rootMargin: '0px 0px -15% 0px' });
   const undrawIO = new IntersectionObserver(es => es.forEach(en => { if (!en.isIntersecting) en.target.classList.remove('drawn'); }), { rootMargin: '80px 0px 80px 0px' });
@@ -434,13 +462,13 @@
     $('#pName').textContent = d.n;
     animateNumber($('#pSal'), d.s, 0, 900);
     const g = $('#pGrowth');
-    g.textContent = (d.g >= 0 ? '▲ +' : '▼ ') + fmt(d.g, 1) + L('% față de iunie 2024', '% vs. June 2024');
+    g.textContent = (d.g >= 0 ? '▲ +' : '▼ ') + fmt(d.g, 1) + L('% față de 2023', '% vs. 2023');
     g.className = 'chip ' + (d.g >= 0 ? 'up' : 'down');
-    const diff = (d.s / D.nationalNet2025 - 1) * 100;
-    $('#pVsAvg').textContent = (diff >= 0 ? '+' : '') + fmt(diff, 0) + L('% vs. media anuală pe țară', '% vs. national annual average');
+    const diff = (d.s / D.nationalNet - 1) * 100;
+    $('#pVsAvg').textContent = (diff >= 0 ? '+' : '') + fmt(diff, 0) + L('% față de media pe țară', '% vs. national average');
     $('#pGauge').style.width = '0';
     requestAnimationFrame(() => requestAnimationFrame(() => { $('#pGauge').style.width = (d.s / maxS * 100) + '%'; }));
-    $('#pAvgMark').style.left = (D.nationalNet2025 / maxS * 100) + '%';
+    $('#pAvgMark').style.left = (D.nationalNet / maxS * 100) + '%';
     $('#pInd').innerHTML = d.ind.map((x, i) =>
       '<li><span class="ib">' + ICONS(x[0]) + '</span>' + x[1] + '<span class="rk">#' + (i + 1) + '</span></li>').join('');
     panel.classList.add('open');
