@@ -193,8 +193,8 @@
     if (!theme) return;
     const b = document.createElement('button');
     b.className = 'lang-btn';
-    b.setAttribute('aria-label', EN ? 'Schimbă în română' : 'Switch to English');
-    b.innerHTML = '<span class="' + (EN ? '' : 'on') + '">RO</span><span class="' + (EN ? 'on' : '') + '">EN</span>';
+    b.setAttribute('aria-label', EN ? 'RO EN, schimbă în română' : 'RO EN, switch to English');
+    b.innerHTML = '<span class="' + (EN ? '' : 'on') + '">RO</span> <span class="' + (EN ? 'on' : '') + '">EN</span>';
     b.addEventListener('click', () => {
       const next = EN ? 'ro' : 'en';
       const secs = Array.from(document.querySelectorAll('section[id]'));

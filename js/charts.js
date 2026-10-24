@@ -35,7 +35,7 @@ window.Charts = (function () {
     const hl = o.highlight || 'RO';
     const div = o.diverge && o.eu != null;
     const maxd = div ? Math.max(...rows.map(r => Math.abs(r[1] - o.eu))) * 1.05 : 0;
-    let h = (o.title ? '<div class="ch-head"><h4>' + o.title + '</h4>' + (o.sub ? '<p>' + o.sub + '</p>' : '') + '</div>' : '') +
+    let h = (o.title ? '<div class="ch-head"><h3>' + o.title + '</h3>' + (o.sub ? '<p>' + o.sub + '</p>' : '') + '</div>' : '') +
       '<div class="rank' + (div ? ' div' : '') + (o.highlight === null ? ' all' : '') + (o.wideLabels ? ' wide' : '') + (o.cls ? ' ' + o.cls : '') + '">';
     rows.forEach((r, i) => {
       let bar;
@@ -80,7 +80,7 @@ window.Charts = (function () {
     const pad = (hi - lo) * 0.12 || 1; if (o.yMin == null) lo -= pad; hi += pad;
     const x = y => m.l + (years.indexOf(y) / (years.length - 1)) * (W - m.l - m.r);
     const yy = v => m.t + (1 - (v - lo) / (hi - lo)) * (H - m.t - m.b);
-    box.innerHTML = '<div class="ch-head"><h4>' + o.title + '</h4>' + (o.sub ? '<p>' + o.sub + '</p>' : '') + '</div>';
+    box.innerHTML = '<div class="ch-head"><h3>' + o.title + '</h3>' + (o.sub ? '<p>' + o.sub + '</p>' : '') + '</div>';
     if (o.series.length > 1 && o.legend !== false) {
       box.insertAdjacentHTML('beforeend', '<div class="ch-legend">' + o.series.map(s => '<span><i style="background:' + s.color + '"></i>' + s.name + '</span>').join('') + '</div>');
     }
@@ -212,7 +212,7 @@ window.Charts = (function () {
   /* ---------- două bare pe rând (România vs. UE) ---------- */
   function pairs(box, o) {
     const max = Math.max(...o.rows.flatMap(r => [r[1], r[2] || 0])) * 1.05;
-    let h = '<div class="ch-head"><h4>' + o.title + '</h4>' + (o.sub ? '<p>' + o.sub + '</p>' : '') + '</div>' +
+    let h = '<div class="ch-head"><h3>' + o.title + '</h3>' + (o.sub ? '<p>' + o.sub + '</p>' : '') + '</div>' +
       '<div class="ch-legend"><span><i class="pa"></i>' + o.names[0] + '</span><span><i class="pb"></i>' + o.names[1] + '</span></div><div class="pairs">';
     o.rows.forEach((r, i) => {
       h += '<div class="pr-row" data-i="' + i + '"><span class="rk-n">' + r[0] + '</span><span class="pr-bars">' +

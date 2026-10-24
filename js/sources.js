@@ -104,7 +104,7 @@
   if (!box) return;
   const EN = window.LANG === 'en';
   box.innerHTML = SOURCES.map(g =>
-    '<div class="src-group"><h4>' + (EN ? g.en : g.ro) + '</h4><ol>' +
+    '<div class="src-group"><h3>' + (EN ? g.en : g.ro) + '</h3><ol>' +
     g.items.map(it => '<li><a href="' + it[2] + '" target="_blank" rel="noopener">' + (EN ? it[1] : it[0]) + ' <span aria-hidden="true">↗</span></a><p>' + (EN ? it[4] : it[3]) + '</p></li>').join('') +
     '</ol></div>').join('');
 })();

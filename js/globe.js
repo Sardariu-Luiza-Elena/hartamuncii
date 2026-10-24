@@ -37,13 +37,21 @@ window.Globe = (function () {
     const val = id => { const v = W.ro[id]; return v ? v[yearIdx[year]] : 0; };
 
     const feats = W.c.map(c => ({ type: 'Feature', id: c.id, c, geometry: { type: 'MultiPolygon', coordinates: c.p } }));
+    // pentru fiecare țară: centrul și „raza” unghiulară, ca să sărim peste țările din spatele globului
+    feats.forEach(f => {
+      f.ctr = [f.c.lx, f.c.ly];
+      let r = 0;
+      f.c.p.forEach(poly => poly[0].forEach(pt => { const d = d3.geoDistance(f.ctr, pt); if (d > r) r = d; }));
+      f.rad = r;
+      f.arc = { type: 'LineString', coordinates: [RO, f.ctr] };
+    });
     const canvas = document.createElement('canvas');
     canvas.className = 'globe-canvas';
     canvas.setAttribute('role', 'img');
     canvas.setAttribute('aria-label', L('Glob cu numărul de persoane născute în România care trăiesc în fiecare țară', 'Globe showing how many people born in Romania live in each country'));
     host.appendChild(canvas);
     const ctx = canvas.getContext('2d');
-    const proj = d3.geoOrthographic().clipAngle(90).precision(0.6);
+    const proj = d3.geoOrthographic().clipAngle(90).precision(1.5);
     const path = d3.geoPath(proj, ctx);
     const sphere = { type: 'Sphere' }, grat = d3.geoGraticule10();
     let size = 0, dpr = 1, rot = [-20, -38, 0], scale0 = 1, zoom = 1;
@@ -62,7 +70,7 @@ window.Globe = (function () {
 
     function resize() {
       const r = host.getBoundingClientRect();
-      size = Math.min(r.width, 560); dpr = Math.min(window.devicePixelRatio || 1, 2);
+      size = Math.min(r.width, 560); dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = size * dpr; canvas.height = size * dpr;
       canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
       scale0 = size / 2 - 6;
@@ -70,29 +78,41 @@ window.Globe = (function () {
     }
 
     let hover = null, sel = null;
+    // Desenare optimizată: țările sunt grupate pe culori (câteva umpleri în loc de 177), cele din spatele
+    // globului sunt sărite, iar arcele sunt grupate pe grosimi.
     function draw() {
       if (!size) return;
       proj.translate([size / 2, size / 2]).scale(scale0 * zoom).rotate(rot);
+      const center = [-rot[0], -rot[1]];
+      const vis = feats.filter(f => d3.geoDistance(center, f.ctr) - f.rad < Math.PI / 2);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, size, size);
       ctx.beginPath(); path(sphere); ctx.fillStyle = C.ocean; ctx.fill();
       ctx.beginPath(); path(grat); ctx.strokeStyle = C.grid; ctx.lineWidth = 0.6; ctx.stroke();
-      feats.forEach(f => {
-        const v = val(f.id);
-        ctx.beginPath(); path(f);
-        ctx.fillStyle = f.id === 642 ? C.hot : v > 0 ? C.q[bin(v)] : C.land;
-        ctx.fill();
+      const groups = new Map();
+      vis.forEach(f => {
+        const v = val(f.id), color = f.id === 642 ? C.hot : v > 0 ? C.q[bin(v)] : C.land;
+        if (!groups.has(color)) groups.set(color, []);
+        groups.get(color).push(f);
       });
-      ctx.beginPath(); feats.forEach(f => path(f)); ctx.strokeStyle = C.ocean; ctx.lineWidth = 0.5; ctx.stroke();
-      // arce de la România spre fiecare țară (cercuri mari, tăiate la orizont)
-      const maxV = Math.max(...feats.map(f => val(f.id)));
-      feats.forEach(f => {
-        const v = val(f.id); if (!v || f.id === 642) return;
-        ctx.beginPath(); path({ type: 'LineString', coordinates: [RO, [f.c.lx, f.c.ly]] });
-        const on = !sel || sel === f;
-        ctx.strokeStyle = C.hot; ctx.globalAlpha = on ? (sel ? 0.95 : 0.45) : 0.12;
-        ctx.lineWidth = 0.6 + Math.sqrt(v / maxV) * 3.2; ctx.stroke();
+      groups.forEach((list, color) => { ctx.beginPath(); list.forEach(f => path(f)); ctx.fillStyle = color; ctx.fill(); });
+      ctx.beginPath(); vis.forEach(f => path(f)); ctx.strokeStyle = C.ocean; ctx.lineWidth = 0.5; ctx.stroke();
+      // arce de la România spre fiecare țară, grupate pe grosime (cercuri mari, tăiate la orizont)
+      const withData = feats.filter(f => f.id !== 642 && val(f.id) > 0);
+      const maxV = Math.max(...withData.map(f => val(f.id)));
+      const widths = new Map();
+      withData.forEach(f => {
+        if (sel && f === sel) return;
+        const w = Math.round((0.6 + Math.sqrt(val(f.id) / maxV) * 3.2) * 2) / 2;
+        if (!widths.has(w)) widths.set(w, []);
+        widths.get(w).push(f);
       });
+      ctx.strokeStyle = C.hot; ctx.globalAlpha = sel ? 0.12 : 0.45;
+      widths.forEach((list, w) => { ctx.beginPath(); list.forEach(f => path(f.arc)); ctx.lineWidth = w; ctx.stroke(); });
+      if (sel) {
+        ctx.globalAlpha = 0.95; ctx.beginPath(); path(sel.arc);
+        ctx.lineWidth = 0.6 + Math.sqrt(val(sel.id) / maxV) * 3.2; ctx.stroke();
+      }
       ctx.globalAlpha = 1;
       [sel, hover].forEach((f, i) => {
         if (!f) return;
@@ -111,11 +131,16 @@ window.Globe = (function () {
     }
 
     // tragere cu inerție
-    let drag = null, vel = [0, 0], spin = true, raf = 0;
+    const weak = window.matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 8) <= 4;
+    let drag = null, vel = [0, 0], spin = !weak, raf = 0, tick = 0;
     function loop() {
       raf = 0;
       if (!drag) {
-        if (spin) { rot[0] += 0.08; }
+        if (spin) {
+          rot[0] += 0.08;
+          if (++tick % 2) { if (visible) raf = requestAnimationFrame(loop); return; }
+          rot[0] += 0.08;
+        }
         else if (Math.abs(vel[0]) + Math.abs(vel[1]) > 0.01) {
           rot[0] += vel[0]; rot[1] = Math.max(-80, Math.min(80, rot[1] + vel[1])); vel = [vel[0] * 0.93, vel[1] * 0.93];
         } else { draw(); return; }

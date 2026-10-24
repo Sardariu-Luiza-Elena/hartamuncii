@@ -23,7 +23,7 @@ res = []
 for f in d['features']:
     n = f['properties']['shapeName']; g = f['geometry']
     polys = g['coordinates'] if g['type']=='MultiPolygon' else [g['coordinates']]
-    eps = 0.002 if n=='BUCURESTI' else 0.006
+    eps = 0.003 if n=='BUCURESTI' else 0.011
     P = []
     for poly in polys:
         rings = [ring(r, eps) for r in poly]

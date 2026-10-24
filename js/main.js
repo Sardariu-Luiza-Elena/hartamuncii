@@ -73,7 +73,7 @@
     return '<button class="dom reveal" style="transition-delay:' + (i % 4) * 60 + 'ms" aria-expanded="false">' +
       '<span class="di">' + ICONS(d.icon) + '</span>' +
       '<span class="pay ' + payLevel(f.perH) + '" title="' + L('Salariu net pe oră de muncă', 'Net pay per hour worked') + '"><b>' + fmt(f.perH, 0) + ' lei</b>' + L('/oră', '/hour') + '</span>' +
-      '<h4>' + d.t + '</h4>' +
+      '<h3>' + d.t + '</h3>' +
       '<span class="dom-facts"><span>' + fmt(f.net) + L(' lei net/lună', ' lei net/month') + '</span><span>' + fmt(f.h, 1) + L(' h/săpt.', ' h/week') + '</span></span>' +
       '<p>' + d.d + '</p></button>';
   }).join('');
@@ -88,7 +88,7 @@
   const hireBox = $('#hire');
   hireBox.innerHTML = window.RO_HIRE.map((h, i) =>
     '<div class="flip reveal" tabindex="0" role="button" aria-label="' + h.t + '" style="transition-delay:' + (i % 3) * 80 + 'ms"><div class="flip-in">' +
-      '<div class="face"><span class="turn">' + ICONS('arrow') + '</span><span class="hi">' + ICONS(h.icon) + '</span><h4>' + h.t + '</h4>' +
+      '<div class="face"><span class="turn">' + ICONS('arrow') + '</span><span class="hi">' + ICONS(h.icon) + '</span><h3>' + h.t + '</h3>' +
         '<div class="hb">' + h.big + '</div><div class="hu">' + h.unit + '</div></div>' +
       '<div class="face back"><p>' + h.d + '</p><div class="s">' + h.src + '</div></div>' +
     '</div></div>').join('');
@@ -289,7 +289,7 @@
     const pct = n => n / P.total * 100;
     const low = pct(P.bins[0].n);
     $('#payDist').innerHTML =
-      '<div class="ch-head"><h4>' + L('Distribuția salariaților după venit', 'Employees by income') + '</h4><p>' +
+      '<div class="ch-head"><h3>' + L('Distribuția salariaților după venit', 'Employees by income') + '</h3><p>' +
       L('Salariații din sectorul privat după venitul din ' + P.month + ', în lei pe lună. Sus e echivalentul net aproximativ, jos venitul brut.',
         'Private-sector employees by income in ' + (P.month === 'octombrie 2024' ? 'October 2024' : P.month) + ', lei a month. Approximate net pay on top, gross income below.') + '</p></div>' +
       '<div class="pd-cols">' + P.bins.map((b, i) =>
@@ -391,12 +391,22 @@
   }
   renderAbout();
 
-  function renderCharts() { renderLife(); renderDias(); renderGrowth(); renderWork(); renderPayDist(); renderMigration(); renderKey(); }
-  renderCharts();
+  // Fiecare bloc de grafice se construiește abia când utilizatorul ajunge la ~800 px de el,
+  // nu toate la încărcarea paginii. La schimbarea temei se reconstruiesc doar cele deja afișate.
+  const LAZY = [['#keyFindings', renderKey], ['#lifeTabs', renderLife], ['#payDist', renderPayDist], ['#workStats', renderWork],
+                ['#growthCard', renderGrowth], ['#timeline', renderMigration], ['#euMap', renderDias]];
+  const built = new Set();
+  const lazyIO = new IntersectionObserver(es => es.forEach(en => {
+    if (!en.isIntersecting) return;
+    const item = LAZY.find(l => $(l[0]) === en.target);
+    if (item && !built.has(item[1])) { item[1](); built.add(item[1]); }
+    lazyIO.unobserve(en.target);
+  }), { rootMargin: '800px 0px' });
+  LAZY.forEach(([sel]) => { const e = $(sel); if (e) lazyIO.observe(e); });
+  function renderCharts() { built.forEach(fn => fn()); }
   const drawIO = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) setTimeout(() => en.target.classList.add('drawn'), 150); }), { rootMargin: '0px 0px -15% 0px' });
   const undrawIO = new IntersectionObserver(es => es.forEach(en => { if (!en.isIntersecting) en.target.classList.remove('drawn'); }), { rootMargin: '80px 0px 80px 0px' });
   ['#lifeRank', '#lifeTrend', '#perHour', '#danger', '#diasTrend', '#diasRank', '#growth', '#euMap', '#occChart', '#remitChart', '#retChart'].forEach(s => { const e = $(s); if (e) { drawIO.observe(e); undrawIO.observe(e); } });
-  window.FX && FX.init();
   requestAnimationFrame(moveInk);
 
   /* ---------- sunet de suspans ---------- */
@@ -481,16 +491,26 @@
     $('#legMax').textContent = m === 's' ? fmt(hi) + ' lei' : '+' + fmt(hi, 1) + '%';
   }
 
-  try {
-    if (!window.THREE) throw new Error(L('three.js nu s-a încărcat', 'three.js failed to load'));
-    map = RoMap3D.create($('#map3d'), { tip: $('#mapTip'), onSelect: openPanel });
-    $('#mapLoading').remove();
-    setLegend('s', map.initialRange[0], map.initialRange[1]);
-    const m = location.hash.match(/^#judet-([A-Z]{1,2})$/);
-    if (m && D.counties[m[1]]) setTimeout(() => map.select(m[1]), 1200);
-  } catch (err) {
-    $('#mapLoading').textContent = L('Harta 3D nu a putut fi încărcată (', 'The 3D map could not be loaded (') + err.message + ').';
+  // Harta 3D e construită după prima afișare a paginii, ca textul să apară imediat.
+  function initMap() {
+    try {
+      if (!window.THREE) throw new Error(L('three.js nu s-a încărcat', 'three.js failed to load'));
+      map = RoMap3D.create($('#map3d'), { tip: $('#mapTip'), onSelect: openPanel });
+      $('#mapLoading').remove();
+      setLegend('s', map.initialRange[0], map.initialRange[1]);
+      const m = location.hash.match(/^#judet-([A-Z]{1,2})$/);
+      if (m && D.counties[m[1]]) setTimeout(() => map.select(m[1]), 1200);
+    } catch (err) {
+      $('#mapLoading').textContent = L('Harta 3D nu a putut fi încărcată (', 'The 3D map could not be loaded (') + err.message + ').';
+    }
   }
+  // Three.js, contururile și codul hărții se încarcă abia după ce pagina e complet afișată.
+  const loadScript = src => new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+  const startMap = () => loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js')
+    .then(() => Promise.all([loadScript('js/geo.js'), loadScript('js/map3d.js')]))
+    .then(initMap)
+    .catch(() => { $('#mapLoading').textContent = L('Harta 3D nu a putut fi încărcată.', 'The 3D map could not be loaded.'); });
+  if (document.readyState === 'complete') startMap(); else window.addEventListener('load', startMap, { once: true });
 
   $$('.metric-switch button').forEach(b => b.addEventListener('click', () => {
     $$('.metric-switch button').forEach(x => x.classList.toggle('on', x === b));

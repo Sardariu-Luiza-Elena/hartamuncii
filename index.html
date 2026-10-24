@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HartaMuncii — munca în România, pe date</title>
   <meta name="description" content="Date oficiale despre muncă în România: salarii pe județe, munca la negru, ocupare pe sexe, domenii și ce influențează angajarea.">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath fill='%23aa9cff' opacity='.35' d='M14 14.5 26 20.5 14 26.5 2 20.5Z'/%3E%3Cpath fill='%23aa9cff' opacity='.65' d='M14 9 23 13.5 14 18 5 13.5Z'/%3E%3Cpath fill='%23aa9cff' d='M14 3.5 20 6.5 14 9.5 8 6.5Z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
@@ -56,6 +58,7 @@
     </button>
   </header>
 
+  <main id="continut">
   <!-- ============ HERO + HARTA 3D ============ -->
   <section id="harta" class="hero">
     <div class="hero-copy">
@@ -196,7 +199,7 @@
     <div class="chart-card growth reveal" id="growthCard">
       <div class="growth-top">
         <div>
-          <h4 class="growth-h">Evoluția numărului de lucrători pe domenii</h4>
+          <h3 class="growth-h">Evoluția numărului de lucrători pe domenii</h3>
           <p class="growth-sub">Variația procentuală dintre începutul și sfârșitul fiecărei perioade</p>
         </div>
         <div class="seg" id="growthSeg" role="tablist">
@@ -315,7 +318,7 @@
       <div class="chart-card globe-card reveal">
         <div class="globe-top">
           <div>
-            <h4 class="growth-h">Persoane născute în România, pe țări de reședință</h4>
+            <h3 class="growth-h">Persoane născute în România, pe țări de reședință</h3>
             <p class="growth-sub">Date ONU, 1990–2024. Globul poate fi rotit, iar fiecare țară poate fi selectată.</p>
           </div>
           <div class="seg" id="globeYears" role="tablist">
@@ -349,7 +352,7 @@
     <div class="chart-card reveal mg-card">
       <div class="growth-top">
         <div>
-          <h4 class="growth-h">Câștigul pe oră, pe grupe de ocupații</h4>
+          <h3 class="growth-h">Câștigul pe oră, pe grupe de ocupații</h3>
           <p class="growth-sub" id="occLead"></p>
         </div>
         <div class="seg" id="occUnit" role="tablist">
@@ -380,10 +383,12 @@
     </div>
     <div class="src-grid" id="sourcesList"></div>
     <div class="card method-card reveal">
-      <h4>Note de metodă</h4>
+      <h3>Note de metodă</h3>
       <ul class="method-list" id="methodList"></ul>
     </div>
   </section>
+
+  </main>
 
   <footer class="foot">
     <div class="foot-big">Harta<b>Muncii</b></div>
@@ -399,22 +404,18 @@
     </div>
   </footer>
 
-  <script src="js/author.js"></script>
-  <script src="js/i18n.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="js/geo.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/data-extra.js"></script>
-  <script src="js/europe.js"></script>
-  <script src="js/data-en.js"></script>
-  <script src="js/icons.js"></script>
-  <script src="js/charts.js"></script>
-  <script src="js/map3d.js"></script>
-  <script src="js/sound.js"></script>
-  <script src="js/fx.js"></script>
-  <script src="js/globe.js"></script>
-  <script src="js/migration.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/sources.js"></script>
+  <script defer src="js/author.js"></script>
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/data.js"></script>
+  <script defer src="js/data-extra.js"></script>
+  <script defer src="js/europe.js"></script>
+  <script defer src="js/data-en.js"></script>
+  <script defer src="js/icons.js"></script>
+  <script defer src="js/charts.js"></script>
+  <script defer src="js/sound.js"></script>
+  <script defer src="js/globe.js"></script>
+  <script defer src="js/migration.js"></script>
+  <script defer src="js/main.js"></script>
+  <script defer src="js/sources.js"></script>
 </body>
 </html>

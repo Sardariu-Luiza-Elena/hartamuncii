@@ -42,14 +42,14 @@ window.Migration = (function () {
     if (tl) {
       tl.innerHTML = TIMELINE.map((t, i) => {
         const [h, p] = EN ? t.en : t.ro;
-        return '<li class="tl-item"><span class="tl-year">' + t.y + '</span><h4>' + h + '</h4><p>' + p + '</p>' +
+        return '<li class="tl-item"><span class="tl-year">' + t.y + '</span><h3>' + h + '</h3><p>' + p + '</p>' +
           '<button class="tl-go" data-g="' + t.g + '">' + T('Vezi pe glob, ' + t.g, 'See it on the globe, ' + t.g) + ' →</button></li>';
       }).join('');
       tl.querySelectorAll('.tl-go').forEach(b => b.addEventListener('click', () => goGlobe(+b.dataset.g)));
     }
     const it = $('#whyItaly');
     if (it) {
-      it.innerHTML = '<h4>' + T('Factorii emigrației spre Italia', 'Why so many went to Italy') + '</h4><p class="wi-lead">' +
+      it.innerHTML = '<h3>' + T('Factorii emigrației spre Italia', 'Why so many went to Italy') + '</h3><p class="wi-lead">' +
         T('Nu există un singur motiv. Patru factori s-au suprapus la începutul anilor 2000:', 'There is no single reason. Four factors overlapped in the early 2000s:') + '</p><ol>' +
         ITALY.map(r => '<li><b>' + (EN ? r[1] : r[0]) + '</b><span>' + (EN ? r[3] : r[2]) + ' <a href="' + r[4] + '" target="_blank" rel="noopener">' + T('sursa', 'source') + ' ↗</a></span></li>').join('') +
         '</ol><p class="wi-note">' + T('În plus, rețelele de rude și vecini: cine pleca aducea apoi familia, uneori sate întregi plecate în același oraș. După 2014, noii plecați aleg mai des Germania, unde salariile sunt mai mari.',

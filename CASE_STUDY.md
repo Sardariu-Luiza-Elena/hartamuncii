@@ -43,7 +43,7 @@ Un site de jurnalism de date despre munca în România, în română și englez�
 
 ## Decizii de design și tehnice
 
-- **Performanță:** harta 3D se redesenează doar când se schimbă ceva, deci în repaus nu consumă nimic. Globul și datele lui se încarcă doar când ajungi la secțiune.
+- **Performanță:** harta 3D se încarcă după ce pagina e afișată și se redesenează doar când se schimbă ceva, deci în repaus nu consumă nimic. Graficele se construiesc abia când utilizatorul ajunge la ele, iar globul și datele lui se încarcă la nevoie. Desenarea globului e optimizată (țări grupate pe culori, emisfera din spate sărită), iar pe telefoane globul nu se rotește singur, ca să nu consume baterie. Lighthouse: performanță 98 pe desktop și 71 pe mobil (telefon mediu simulat, 4G lent), accesibilitate 100.
 - **Mobil:** meniul se ascunde la derulare, graficele își adaptează etichetele, iar pagina nu are scroll orizontal.
 - **Accesibilitate:** respectă setarea sistemului de reducere a animațiilor. Culorile graficului cu mai multe serii (destinațiile diasporei) au fost verificate cu un validator pentru daltonism, pe ambele teme. Graficele au tooltip-uri cu valorile exacte, iar cardurile pot fi folosite și de la tastatură.
 - **Două limbi:** comutare română/engleză, cu numerele formatate după limbă.
