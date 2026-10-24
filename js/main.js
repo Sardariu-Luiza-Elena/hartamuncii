@@ -142,7 +142,7 @@
       const d = X.hours, ro = d.rows.find(r => r[0] === 'RO')[1], nl = d.rows.find(r => r[0] === 'NL')[1];
       const extraWeeks = (ro - nl) * 46 / ro;
       return {
-        big: fmt(ro, 1) + ' h', lead: L('lucrează efectiv un român într-o săptămână obișnuită. Cu ' + fmt(ro - d.eu, 1) + ' ore <b>mai mult</b> decât media UE.', 'is how long a Romanian actually works in a typical week. That’s ' + fmt(ro - d.eu, 1) + ' hours <b>more</b> than the EU average.'),
+        big: fmt(ro, 1) + ' h', lead: L('lucrează efectiv un român într-o săptămână obișnuită. Cu ' + fmt(ro - d.eu, 1) + ' ore mai mult decât media UE.', 'is how long a Romanian actually works in a typical week. That’s ' + fmt(ro - d.eu, 1) + ' hours more than the EU average.'),
         facts: [[L('Media UE', 'EU average'), fmt(d.eu, 1) + ' h'], [L('Locul în UE', 'EU ranking'), rankOf(d.rows, 'RO') + L(' din ', ' of ') + d.rows.length + L(' (mai sus = mai multe ore)', ' (higher = more hours)')], [L('Față de Olanda', 'Compared with the Netherlands'), '+' + fmt(ro - nl, 1) + L(' h pe săptămână', ' h a week')]],
         note: L('<b>De ce nu 40 de ore?</b> Cifra nu e programul din contract, ci media orelor lucrate efectiv. Intră în calcul și cei cu jumătate de normă, și săptămânile cu concediu sau zile libere. În România foarte puțini lucrează cu jumătate de normă, așa că media iese mai mare decât în vest.<br><br>În Olanda, mulți lucrează part-time. Cele ' + fmt(ro - nl, 1) + ' ore în plus pe săptămână ale unui român înseamnă cam <b>' + fmt(extraWeeks, 0) + ' săptămâni de muncă în plus pe an</b>.', '<b>Why not 40 hours?</b> This isn’t the hours in a contract but the average actually worked. It includes part-timers and weeks with holidays or days off. Very few Romanians work part-time, so the average comes out higher than in Western Europe.<br><br>In the Netherlands many people work part-time. A Romanian’s extra ' + fmt(ro - nl, 1) + ' hours a week add up to roughly <b>' + fmt(extraWeeks, 0) + ' extra weeks of work a year</b>.'),
         rank: { title: L('Ore lucrate pe săptămână, ', 'Hours worked per week, ') + d.year, sub: L('Barele arată cât de departe e fiecare țară de media UE', 'Bars show how far each country is from the EU average'), rows: d.rows, eu: d.eu, dec: 1, unit: ' h', diverge: true },
@@ -225,13 +225,13 @@
     new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { setTimeout(euMap.draw, 250); o.disconnect(); } }, { threshold: 0.25 }).observe($('#euMap'));
     const top = DIAS.filter(d => d.ser && Object.keys(d.ser).length > 8).slice(0, 4);
     C.line($('#diasTrend'), {
-      title: L('Unde au crescut comunitățile', 'Where the communities grew'), sub: L('Cetățeni români rezidenți, primele 4 destinații cu serie completă', 'Resident Romanian citizens, top 4 destinations with a full time series'), dec: 0, yMin: 0, axisW: 46,
+      title: L('Evoluția comunităților de cetățeni români', 'Growth of Romanian communities'), sub: L('Cetățeni români rezidenți, primele 4 destinații cu serie completă', 'Resident Romanian citizens, top 4 destinations with a full time series'), dec: 0, yMin: 0, axisW: 46,
       fmtLab: v => v >= 1e6 ? fmt(v / 1e6, 2) + L(' mil.', 'm') : fmt(v / 1000, 0) + 'k',
       fmtTick: v => v >= 1e6 ? fmt(v / 1e6, 1) + L(' mil.', 'm') : fmt(v / 1000, 0) + 'k',
       series: top.map((d, i) => ({ name: C.name(d.id), color: col('--s' + (i + 1)), data: d.ser }))
     });
     C.rank($('#diasRank'), {
-      title: L('Cei mai mulți români', 'Largest Romanian communities'), sub: L('Număr de persoane, cel mai recent an disponibil', 'Number of people, latest year available'), highlight: null,
+      title: L('Cele mai mari comunități', 'Largest communities'), sub: L('Număr de persoane, cel mai recent an disponibil', 'Number of people, latest year available'), highlight: null,
       rows: DIAS.slice(0, 12).map(d => [d.id, d.n]),
       fmtv: v => v >= 1e6 ? fmt(v / 1e6, 2) + L(' mil.', 'm') : fmt(v / 1000, 0) + 'k',
       tipv: r => fmt(r[1]) + L(' români', ' Romanians')
@@ -267,7 +267,7 @@
       '<div class="card stat-tile' + (i === 0 ? ' accent' : '') + '"><div class="mega">' + s[0] + '</div><span class="label">' + s[1] + '</span></div>').join('');
     const byPay = rows.slice().sort((a, b) => b.perH - a.perH);
     C.rank($('#perHour'), {
-      title: L('Cât câștigi pe o oră de muncă', 'What an hour of work pays'),
+      title: L('Câștigul net pe oră, pe domenii', 'Net hourly pay by sector'),
       sub: L('Salariul mediu net împărțit la orele lucrate efectiv de salariați, pe domenii, 2025. Treci cu mouse-ul peste un domeniu pentru detalii.', 'Average net salary divided by hours actually worked by employees, by sector, 2025. Hover over a sector for details.'),
       rows: byPay.map(r => [r.t, r.perH, r]), eu: avg, centerLabel: L('media economiei: ', 'economy average: ') + fmt(avg, 1) + ' lei',
       highlight: null, wideLabels: true, cls: 'pay-bars', labels: r => r[0], fmtv: v => fmt(v, 1) + ' lei',
@@ -276,7 +276,7 @@
     });
     const byRisk = rows.filter(r => r.acc != null && r.accEU != null).sort((a, b) => b.acc - a.acc).slice(0, 8);
     C.pairs($('#danger'), {
-      title: L('Cât de periculoasă e munca', 'How dangerous the work is'),
+      title: L('Accidente de muncă mortale, pe domenii', 'Fatal workplace accidents by sector'),
       sub: L('Accidente mortale la 100.000 de lucrători pe an, media 2021–2024. Cele 8 domenii cu cel mai mare risc în România.', 'Fatal accidents per 100,000 workers a year, 2021–2024 average. The 8 riskiest sectors in Romania.'),
       names: [L('România', 'Romania'), L('Media UE', 'EU average')], dec: 1,
       rows: byRisk.map(r => [r.t, r.acc, r.accEU])
@@ -289,7 +289,7 @@
     const pct = n => n / P.total * 100;
     const low = pct(P.bins[0].n);
     $('#payDist').innerHTML =
-      '<div class="ch-head"><h4>' + L('Câți câștigă cât', 'Who earns how much') + '</h4><p>' +
+      '<div class="ch-head"><h4>' + L('Distribuția salariaților după venit', 'Employees by income') + '</h4><p>' +
       L('Salariații din sectorul privat după venitul din ' + P.month + ', în lei pe lună. Sus e echivalentul net aproximativ, jos venitul brut.',
         'Private-sector employees by income in ' + (P.month === 'octombrie 2024' ? 'October 2024' : P.month) + ', lei a month. Approximate net pay on top, gross income below.') + '</p></div>' +
       '<div class="pd-cols">' + P.bins.map((b, i) =>
@@ -369,7 +369,7 @@
     const firstRet = ry.find(y => M.ret.in[y] > (M.ret.out[y] || Infinity));
     const ylast = Object.keys(M.remit).sort().pop();
     const cards = [
-      ['~' + fmt(P.bins[0].n / P.total * 100, 0) + '%', L('dintre salariații din sectorul privat iau în mână sub ~2.900 lei pe lună.', 'of private-sector employees take home less than ~2,900 lei a month.'), '#payDist', L('Câți câștigă cât', 'Who earns how much')],
+      ['~' + fmt(P.bins[0].n / P.total * 100, 0) + '%', L('dintre salariații din sectorul privat iau în mână sub ~2.900 lei pe lună.', 'of private-sector employees take home less than ~2,900 lei a month.'), '#payDist', L('Distribuția salariaților după venit', 'Employees by income')],
       [fmt(WK.J.perH / WK.I.perH, 1) + '×', L('câștigă pe oră un angajat din IT față de unul din hoteluri și restaurante, unde se lucrează cele mai multe ore.', 'more per hour is earned in IT than in hotels and restaurants, where people work the longest hours.'), '#perHour', L('Cât valorează munca', 'What work is worth')],
       [fmt(M.remit[ylast], 1) + L(' mld. $', ' bn $'), L('au trimis acasă românii din străinătate în ' + ylast + ', mai mult decât toate investițiile străine din acel an.', 'was sent home by Romanians abroad in ' + ylast + ', more than all foreign investment that year.'), '#plecare', L('Plecare și întoarcere', 'Leaving and returning')],
       [firstRet || '2022', L('e primul an în care s-au întors în țară mai mulți români decât au plecat. De atunci, la fel în fiecare an.', 'was the first year more Romanians came home than left. It has been the same every year since.'), '#plecare', L('Plecare și întoarcere', 'Leaving and returning')]

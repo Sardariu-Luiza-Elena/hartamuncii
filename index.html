@@ -64,7 +64,7 @@
         <span class="line"><span>Ghidul veniturilor</span></span>
         <span class="line"><span><em>regionale</em>.</span></span>
       </h1>
-      <p class="lede">Fiecare județ e ridicat pe hartă după salariul mediu net. Cu cât e mai înalt, cu atât oamenii de acolo câștigă mai mult. <b>Apasă pe un județ.</b></p>
+      <p class="lede">Înălțimea fiecărui județ pe hartă corespunde salariului mediu net din 2024. Selectează un județ pentru detalii.</p>
       <div class="metric-switch" role="tablist" aria-label="Indicator hartă">
         <button class="on" data-metric="s" role="tab">Salariu net</button>
         <button data-metric="g" role="tab">Creștere anuală</button>
@@ -111,7 +111,7 @@
   <section id="pe-scurt" class="sec key">
     <div class="sec-head reveal">
       <p class="kicker mono">Pe scurt</p>
-      <h2 class="h2">Patru lucruri pe care le arată <em>datele</em>.</h2>
+      <h2 class="h2">Principalele concluzii.</h2>
     </div>
     <div class="key-grid" id="keyFindings"></div>
   </section>
@@ -120,7 +120,7 @@
   <section id="cine" class="sec">
     <div class="sec-head reveal">
       <p class="kicker mono">01 · Cine muncește</p>
-      <h2 class="h2">Din 100 de bărbați, <em>71</em> lucrează. Din 100 de femei, doar <em>54</em>.</h2>
+      <h2 class="h2">Rata de ocupare este de 71% în rândul bărbaților și de 54% în rândul femeilor.</h2>
       <p class="lede narrow">În total, 7,69 milioane de oameni aveau un loc de muncă în 2025.</p>
     </div>
 
@@ -133,7 +133,7 @@
       </div>
       <div class="gender-gap">
         <div class="gap-num"><span data-count="17">0</span></div>
-        <p>femei din 100 lipsesc de pe piața muncii, comparativ cu bărbații</p>
+        <p>puncte procentuale separă rata de ocupare a femeilor de cea a bărbaților</p>
       </div>
       <div class="gender-col">
         <div class="g-head"><span class="g-sym">♀</span><span class="mono">Femei 15–64</span></div>
@@ -145,7 +145,7 @@
 
     <div class="mini-grid">
       <div class="card mini reveal"><span class="mono label">rata de ocupare 20–64 ani</span><div class="mid"><span data-count="69.0" data-dec="1">0</span>%</div><p>Ținta UE pentru 2030: 78%</p></div>
-      <div class="card mini reveal"><span class="mono label">urban vs. rural</span><div class="mid"><span data-count="69.7" data-dec="1">0</span> / <span data-count="56.0" data-dec="1">0</span>%</div><p>Satul rămâne în urmă</p></div>
+      <div class="card mini reveal"><span class="mono label">urban vs. rural</span><div class="mid"><span data-count="69.7" data-dec="1">0</span> / <span data-count="56.0" data-dec="1">0</span>%</div><p>Diferență de aproape 14 puncte între urban și rural</p></div>
       <div class="card mini reveal"><span class="mono label">șomeri (BIM)</span><div class="mid"><span data-count="500.3" data-dec="1">0</span>k</div><p>din 8,19 mil. de oameni activi</p></div>
     </div>
     <p class="src center">Sursa: INS, Forța de muncă în România, ocupare și șomaj, 2025 (date anuale)</p>
@@ -155,7 +155,7 @@
   <section id="viata" class="sec">
     <div class="sec-head reveal">
       <p class="kicker mono">02 · Viața la muncă</p>
-      <h2 class="h2">Muncim mult. Tinerii stau pe <em>tușă</em>. Și mulți rămân săraci deși au un job.</h2>
+      <h2 class="h2">Programul de lucru, tinerii și sărăcia în rândul celor care muncesc, comparativ cu restul UE.</h2>
       <p class="lede narrow">România comparată cu celelalte 26 de țări din UE. Alege un subiect.</p>
     </div>
     <div class="tabs reveal" role="tablist" id="lifeTabs">
@@ -178,8 +178,8 @@
   <section id="domenii" class="sec">
     <div class="sec-head reveal">
       <p class="kicker mono">03 · Cât valorează munca</p>
-      <h2 class="h2">Cine muncește cel mai greu <em>nu</em> e și cel mai bine plătit.</h2>
-      <p class="lede narrow">Salariul, orele și riscurile din fiecare domeniu, din datele INS și Eurostat.</p>
+      <h2 class="h2">Salariile, programul și riscurile diferă puternic de la un domeniu la altul.</h2>
+      <p class="lede narrow">Comparația folosește datele INS și Eurostat privind câștigul pe oră, programul de lucru și accidentele de muncă.</p>
     </div>
 
     <div class="work-stats" id="workStats"></div>
@@ -189,15 +189,15 @@
     <div class="chart-card reveal work-card" id="perHour"></div>
     <div class="chart-card reveal work-card" id="danger"></div>
 
-    <h3 class="sub-h reveal">Din ce trăiește România</h3>
+    <h3 class="sub-h reveal">Structura ocupării pe sectoare</h3>
     <div class="split reveal" id="split"></div>
     <div class="split-legend" id="splitLegend"></div>
 
     <div class="chart-card growth reveal" id="growthCard">
       <div class="growth-top">
         <div>
-          <h4 class="growth-h">Ce industrii au crescut</h4>
-          <p class="growth-sub">Schimbarea numărului de oameni care lucrează în fiecare domeniu</p>
+          <h4 class="growth-h">Evoluția numărului de lucrători pe domenii</h4>
+          <p class="growth-sub">Variația procentuală dintre începutul și sfârșitul fiecărei perioade</p>
         </div>
         <div class="seg" id="growthSeg" role="tablist">
           <button class="on" data-p="p1" role="tab">2011–2020</button>
@@ -216,7 +216,7 @@
   <section id="negru" class="sec">
     <div class="sec-head reveal">
       <p class="kicker mono">04 · Munca nedeclarată</p>
-      <h2 class="h2">Aproape <em>1 oră din 5</em> lucrată în sectorul privat nu apare nicăieri.</h2>
+      <h2 class="h2">Aproximativ o cincime din munca prestată în sectorul privat nu este declarată.</h2>
     </div>
 
     <div class="grid-negru">
@@ -252,7 +252,7 @@
       </div>
 
       <div class="card checks reveal">
-        <p class="mono label">Ce găsește Inspecția Muncii într-o singură săptămână</p>
+        <p class="mono label">Rezultatele controalelor Inspecției Muncii într-o săptămână</p>
         <div class="check-list">
           <div><b class="mono" data-count="2055">0</b><span>controale<br>8–12 sept. 2025</span></div>
           <div><b class="mono" data-count="370">0</b><span>persoane fără forme legale</span></div>
@@ -279,8 +279,8 @@
   <section id="angajare" class="sec">
     <div class="sec-head reveal">
       <p class="kicker mono">05 · Cine e angajat</p>
-      <h2 class="h2">CV-ul contează. Dar contează și <em>înălțimea</em>, fața și numele tău.</h2>
-      <p class="lede narrow">Ce arată studiile publicate despre factorii care nu țin de competență. Apasă pe un card ca să vezi detaliile și sursa.</p>
+      <h2 class="h2">Pe lângă competențe, angajarea și salariul sunt influențate de factori precum înălțimea, aspectul sau numele.</h2>
+      <p class="lede narrow">Rezultate din studii publicate. Selectează un card pentru detalii și sursă.</p>
     </div>
     <div class="hire" id="hire"></div>
     <p class="src center">Majoritatea studiilor sunt din SUA și Europa de Vest. Efectele sunt medii statistice, nu reguli pentru fiecare om.</p>
@@ -290,12 +290,12 @@
   <section id="diaspora" class="sec">
     <div class="sec-head reveal">
       <p class="kicker mono">06 · Românii plecați</p>
-      <h2 class="h2"><em>3 milioane</em> de români trăiesc în alt stat al UE. Sunt cea mai mare „diasporă” din Uniune.</h2>
-      <p class="lede narrow">Pe hartă, culoarea arată ce procent din populația fiecărei țări sunt cetățeni români. Apasă pe o țară.</p>
+      <h2 class="h2">Aproximativ 3 milioane de cetățeni români locuiesc în alte state ale UE, cea mai numeroasă comunitate de acest fel din Uniune.</h2>
+      <p class="lede narrow">Culoarea indică ponderea cetățenilor români în populația fiecărei țări. Selectează o țară pentru detalii.</p>
     </div>
     <div class="why reveal">
       <div class="why-tl">
-        <h3 class="sub-h">De ce pleacă românii</h3>
+        <h3 class="sub-h">Etapele emigrației</h3>
         <ol class="timeline" id="timeline"></ol>
       </div>
       <aside class="card why-italy" id="whyItaly"></aside>
@@ -315,8 +315,8 @@
       <div class="chart-card globe-card reveal">
         <div class="globe-top">
           <div>
-            <h4 class="growth-h">Românii din toată lumea</h4>
-            <p class="growth-sub">Persoane născute în România care trăiesc în altă țară. Trage de glob ca să-l rotești și apasă pe o țară.</p>
+            <h4 class="growth-h">Persoane născute în România, pe țări de reședință</h4>
+            <p class="growth-sub">Date ONU, 1990–2024. Globul poate fi rotit, iar fiecare țară poate fi selectată.</p>
           </div>
           <div class="seg" id="globeYears" role="tablist">
             <button data-y="1990" role="tab">1990</button>
@@ -342,14 +342,14 @@
   <section id="plecare" class="sec">
     <div class="sec-head reveal">
       <p class="kicker mono">07 · Plecare și întoarcere</p>
-      <h2 class="h2">Ce câștigă cei care pleacă și <em>ce lasă în urmă</em>.</h2>
-      <p class="lede narrow">Diferența de salariu care îi face pe oameni să plece, banii pe care îi trimit acasă, cei care se întorc și copiii care rămân.</p>
+      <h2 class="h2">Diferențele salariale, banii trimiși acasă și migrația de întoarcere.</h2>
+      <p class="lede narrow">Factorii economici ai emigrației și efectele ei asupra celor rămași acasă.</p>
     </div>
 
     <div class="chart-card reveal mg-card">
       <div class="growth-top">
         <div>
-          <h4 class="growth-h">Aceeași muncă, alt salariu</h4>
+          <h4 class="growth-h">Câștigul pe oră, pe grupe de ocupații</h4>
           <p class="growth-sub" id="occLead"></p>
         </div>
         <div class="seg" id="occUnit" role="tablist">
@@ -366,7 +366,7 @@
       <div class="chart-card reveal"><div class="mg-lead" id="retLead"></div><div id="retChart"></div></div>
     </div>
 
-    <h3 class="sub-h reveal">Copiii rămași acasă</h3>
+    <h3 class="sub-h reveal">Copii cu părinți plecați la muncă în străinătate</h3>
     <div class="work-stats" id="kids"></div>
     <p class="src center">Salarii: Eurostat, earn_ses22_47, câștig brut pe oră, firme cu cel puțin 10 angajați, 2022; „după prețuri” = în standardul puterii de cumpărare (PPS). Remitențe și investiții: Banca Mondială, 2013–2025. Plecări și întoarceri: Eurostat, migr_emi1ctz și migr_imm1ctz (nu există date pentru 2019–2020). Copii: ANPDCA, 31 decembrie 2025.</p>
   </section>
@@ -375,7 +375,7 @@
   <section id="surse" class="sec sources">
     <div class="sec-head reveal">
       <p class="kicker mono">Surse și metodă</p>
-      <h2 class="h2">De unde vin <em>datele</em>.</h2>
+      <h2 class="h2">Datele folosite și limitele lor.</h2>
       <p class="lede narrow">Fiecare cifră de pe site vine dintr-o sursă oficială sau dintr-un studiu publicat. Apasă pe o sursă ca s-o deschizi.</p>
     </div>
     <div class="src-grid" id="sourcesList"></div>

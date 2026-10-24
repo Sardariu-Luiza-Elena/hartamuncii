@@ -9,8 +9,8 @@ window.Migration = (function () {
   const TIMELINE = [
     { y: '1990', g: 1990, ro: ['Granițele se deschid', 'Primii care pleacă în masă sunt etnicii germani, maghiari și evrei, spre Germania, Ungaria și Israel. În 1990 trăiau în străinătate ~0,96 milioane de oameni născuți în România.'],
       en: ['The borders open', 'The first to leave in large numbers are ethnic Germans, Hungarians and Jews, heading to Germany, Hungary and Israel. In 1990 about 0.96 million people born in Romania lived abroad.'] },
-    { y: '2002', g: 2005, ro: ['Fără vize în Schengen', 'Din ianuarie 2002, românii intră în spațiul Schengen fără viză. Plecările spre Italia și Spania explodează. În noiembrie, Italia legalizează imigranții care lucrau la negru.'],
-      en: ['Visa-free Schengen', 'From January 2002 Romanians can enter the Schengen area without a visa. Departures to Italy and Spain take off. In November, Italy legalises immigrants working without papers.'] },
+    { y: '2002', g: 2005, ro: ['Fără vize în Schengen', 'Din ianuarie 2002, românii intră în spațiul Schengen fără viză. Plecările spre Italia și Spania cresc puternic. În noiembrie, Italia legalizează imigranții care lucrau la negru.'],
+      en: ['Visa-free Schengen', 'From January 2002 Romanians can enter the Schengen area without a visa. Departures to Italy and Spain rise sharply. In November, Italy legalises immigrants working without papers.'] },
     { y: '2007', g: 2010, ro: ['Aderarea la UE', 'Românii primesc libertate de mișcare, deși mai multe țări păstrează restricții pe piața muncii până în 2014.'],
       en: ['Joining the EU', 'Romanians gain freedom of movement, although several countries keep labour-market restrictions until 2014.'] },
     { y: '2008–10', g: 2010, ro: ['Criza financiară', 'Construcțiile din Spania și Italia se prăbușesc. Unii români se întorc acasă, alții se mută mai spre nord.'],
@@ -49,7 +49,7 @@ window.Migration = (function () {
     }
     const it = $('#whyItaly');
     if (it) {
-      it.innerHTML = '<h4>' + T('De ce tocmai Italia?', 'Why Italy?') + '</h4><p class="wi-lead">' +
+      it.innerHTML = '<h4>' + T('Factorii emigrației spre Italia', 'Why so many went to Italy') + '</h4><p class="wi-lead">' +
         T('Nu există un singur motiv. Patru factori s-au suprapus la începutul anilor 2000:', 'There is no single reason. Four factors overlapped in the early 2000s:') + '</p><ol>' +
         ITALY.map(r => '<li><b>' + (EN ? r[1] : r[0]) + '</b><span>' + (EN ? r[3] : r[2]) + ' <a href="' + r[4] + '" target="_blank" rel="noopener">' + T('sursa', 'source') + ' ↗</a></span></li>').join('') +
         '</ol><p class="wi-note">' + T('În plus, rețelele de rude și vecini: cine pleca aducea apoi familia, uneori sate întregi plecate în același oraș. După 2014, noii plecați aleg mai des Germania, unde salariile sunt mai mari.',
