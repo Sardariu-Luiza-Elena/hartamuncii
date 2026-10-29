@@ -309,6 +309,57 @@
     });
   }
 
+  /* ---------- unde te afli tu ---------- */
+  // Valorile alese se păstrează când graficele se reconstruiesc (de exemplu, la schimbarea temei).
+  const calcState = { pay: 4500, county: 'B', dom: 'C', h: 40 };
+  // Ce procent dintre salariații din privat câștigă mai puțin. Limitele nete ale grupelor sunt cele din RO_PAY_DIST;
+  // în interiorul unei grupe presupunem o distribuție uniformă, deci rezultatul e aproximativ.
+  function payShareBelow(net) {
+    const P = window.RO_PAY_DIST, edges = [0, 2900, 5850, 11700, 17550, 30000];
+    const below = P.bins.reduce((s, b, i) => s + b.n * Math.max(0, Math.min(1, (net - edges[i]) / (edges[i + 1] - edges[i]))), 0);
+    return Math.max(1, Math.min(99, below / P.total * 100));
+  }
+  function renderCalc() {
+    const S = calcState, loc = window.LOCALE || 'ro-RO';
+    const counties = Object.entries(D.counties).sort((a, b) => a[1].n.localeCompare(b[1].n, loc));
+    const doms = WORK.rows.slice().sort((a, b) => a.t.localeCompare(b.t, loc));
+    const opt = (v, t, on) => '<option value="' + v + '"' + (on ? ' selected' : '') + '>' + t + '</option>';
+    $('#calc').innerHTML =
+      '<div class="ch-head"><h3>' + L('Unde te afli tu?', 'Where do you stand?') + '</h3><p>' +
+      L('Introdu salariul tău net, județul și domeniul în care lucrezi. Calculul se face în browser, nu se trimite nimic.',
+        'Enter your net pay, your county and the sector you work in. Everything is calculated in your browser; nothing is sent anywhere.') + '</p></div>' +
+      '<div class="calc-in">' +
+        '<label><span>' + L('Salariul net pe lună (lei)', 'Net monthly pay (lei)') + '</span><input type="number" id="cPay" min="0" step="100" inputmode="numeric" value="' + S.pay + '"></label>' +
+        '<label><span>' + L('Județul', 'County') + '</span><select id="cCounty">' + counties.map(([k, c]) => opt(k, c.n, k === S.county)).join('') + '</select></label>' +
+        '<label><span>' + L('Domeniul', 'Sector') + '</span><select id="cDom">' + doms.map(r => opt(r.k, r.t, r.k === S.dom)).join('') + '</select></label>' +
+        '<label><span>' + L('Ore pe săptămână', 'Hours a week') + '</span><input type="number" id="cH" min="1" max="80" inputmode="numeric" value="' + S.h + '"></label>' +
+      '</div>' +
+      '<div class="calc-out" id="cOut" aria-live="polite"></div>' +
+      '<p class="src">' + L('Distribuția: salariații din sectorul privat, octombrie 2024, pe grupe de venit, deci poziția e aproximativă. Media pe județ: INS, 2024. Media pe domeniu și orele: INS și Eurostat, 2025.',
+        'Distribution: private-sector employees, October 2024, by income band, so the position is approximate. County average: INS, 2024. Sector average and hours: INS and Eurostat, 2025.') +
+      ' <a class="to-src" href="#ocupatii">' + L('Cât se plătește aceeași muncă în alte țări →', 'What the same work pays in other countries →') + '</a></p>';
+    const read = () => {
+      S.pay = parseFloat($('#cPay').value); S.h = parseFloat($('#cH').value);
+      S.county = $('#cCounty').value; S.dom = $('#cDom').value;
+      calcOut();
+    };
+    $$('#calc input, #calc select').forEach(e => e.addEventListener('input', read));
+    calcOut();
+  }
+  function calcOut() {
+    const S = calcState, c = D.counties[S.county], r = WK[S.dom];
+    const ok = S.pay > 0, perH = ok && S.h > 0 ? S.pay / (S.h * 52 / 12) : null;
+    const diff = v => (v >= 0 ? '+' : '−') + fmt(Math.abs(v), 0) + '%';
+    const share = ok ? payShareBelow(S.pay) : null;
+    const tile = (big, txt, extra) => '<div><b>' + big + '</b>' + (extra || '') + '<span>' + txt + '</span></div>';
+    $('#cOut').innerHTML =
+      tile(ok ? '~' + fmt(share, 0) + '%' : '–', L('dintre salariații din privat câștigă mai puțin decât tine.', 'of private-sector employees earn less than you.'),
+        '<span class="calc-bar" aria-hidden="true"><i style="left:' + (share || 0).toFixed(1) + '%"></i></span>') +
+      tile(ok ? diff((S.pay / c.s - 1) * 100) : '–', L('față de salariul mediu net din ', 'compared with the average net pay in ') + c.n + ' (' + fmt(c.s) + ' lei).') +
+      tile(ok ? diff((S.pay / r.net - 1) * 100) : '–', L('față de media domeniului ', 'compared with the average in ') + r.t + ' (' + fmt(r.net) + ' lei).') +
+      tile(perH ? fmt(perH, 1) + ' lei' : '–', L('net pe oră. Media domeniului: ', 'net per hour. Sector average: ') + fmt(r.perH, 1) + L(' lei.', ' lei.'));
+  }
+
   /* ---------- glob: românii din toată lumea ---------- */
   let globeApi = null, globeYear = 2024;
   function globeSide(info, year) {
@@ -393,7 +444,7 @@
 
   // Fiecare bloc de grafice se construiește abia când utilizatorul ajunge la ~800 px de el,
   // nu toate la încărcarea paginii. La schimbarea temei se reconstruiesc doar cele deja afișate.
-  const LAZY = [['#keyFindings', renderKey], ['#lifeTabs', renderLife], ['#payDist', renderPayDist], ['#workStats', renderWork],
+  const LAZY = [['#keyFindings', renderKey], ['#lifeTabs', renderLife], ['#payDist', renderPayDist], ['#calc', renderCalc],['#workStats', renderWork],
                 ['#growthCard', renderGrowth], ['#timeline', renderMigration], ['#euMap', renderDias]];
   const built = new Set();
   const lazyIO = new IntersectionObserver(es => es.forEach(en => {
