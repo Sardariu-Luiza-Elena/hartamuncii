@@ -1,0 +1,67 @@
+{
+  "file_hashes": {
+    "CASE_STUDY.md": "c28b056fdf28ba87c7db7b079a4b8afaf38d04b7fbc5f6a5ff75dea57a61abea",
+    "README.md": "e7013e5513ffbb3846537902d362752c3a27272ee7c1cc73d13d9a78d579f529",
+    "css/style.css": "86947702ec3d8b7ee6b8264f4d6b9fdc589a95b304ac351544dfb7ad595154d9",
+    "js/author.js": "ffa98fbd94c110ff313e325437473d3c34b38b5cdebe3328a4f9ed123a738e08",
+    "js/charts.js": "450c50253cef2d9195780de06a1b88a669e496136d83d0a86e966e4e4da6a1d0",
+    "js/data-en.js": "e406a3074878489b3bff650f282c52b202b82f86698ec3648de93a21de159b15",
+    "js/data-extra.js": "0cc656964570ed9d51291c4ec92fbc7c3612e1a794050cc6bf80ffaa15b65790",
+    "js/data.js": "1386595c2933efa9b8991c8b41c28026d5186a39a1bfb81a8ed2fb3e023ae0ee",
+    "js/europe.js": "f561247acc6fb214932d4b708dccbe835e3d2cdf85530421e805ec1121315695",
+    "js/geo.js": "356af0a1c1dcdfcb36a9f4bac1724c57dcc3a06d445f9da1b6e3edd651d335d1",
+    "js/globe.js": "3515b2b506178a4b0ab51be8a1439e16ea0b33b7f8c6bb96642a85551bb39bf4",
+    "js/i18n.js": "b59eacae3e7117bef94bc16e232f3493fa3df9dcf370fe741b14f5ebe2b9042c",
+    "js/icons.js": "60deedd5a6becc3f15078215202dc4ed33e260858acdfb06d9da4dbd5faee738",
+    "js/main.js": "27b6272fb948e9845050f9cbe4dd362c34de0c9e9cb31573260c4f013d116a95",
+    "js/map3d.js": "dfefc1ff541bffde9faf0c586df7035cca7a06ca6faebef919ea822b784b3979",
+    "js/migration.js": "09f092be5eaf85d4f6f6dd39cd90d51fbd99c93fd1bc1faaaed8cbcc3f088fdc",
+    "js/sound.js": "4bd791cce86bc850d279702b95dfdeaab57dcc93c5e2acdca81fd03b1387a706",
+    "js/sources.js": "3ef6d36a2669a54bc60f47bcae2c3af5de23ad5e8c1771b7e3dd15b9b3272616",
+    "js/world.js": "5e7219b8669c53ad288167c65bd34900dea71d71177adb78685a8372e8f5b1e1",
+    "scripts/README.md": "71cf8cc1e9c4c35c6a892346d2f703382da00ac01c4a31a8c31d667bde84d90e",
+    "scripts/download.sh": "e0c1e9f7287b9b4b86bc823bdbc138cb15c1cac012836d679be639d4a6e87bae",
+    "scripts/europe.py": "b8c011bbeb3dde9a065aa0ba2894f5668db8e2cbf3bc8327030c123932f0d5a0",
+    "scripts/extra.py": "6d6477961f2c355732a60327b6d2f72f310e5a7eb7d7295d0e0aacfa67641f96",
+    "scripts/geo.py": "06ec51401d1f6805b60e87bcfd520147e9241405139c55a2510f37a10bc4ab79",
+    "scripts/grad_sect.py": "d4607a6bbdb386cbc643eb3de5fba4174f33bfa67014c9b04414a157e313e7ba",
+    "scripts/jstat.py": "83825c85ff1aacd02b9bbec2344018aa5bd2e15f69019b48c6feed88610e5348",
+    "scripts/mig.py": "aa0396f5bafc87f2ef07c889eb6cb86a1071ed1fb2708521dab620de4a2fc211",
+    "scripts/tempo_county_salary.py": "1413ad0c06df7410f62fb3bf5781b40f8be41e412fccc9a259dadbca4ff5cd32",
+    "scripts/un_extract.py": "0c9aa00001d148d6cff5fdd1c5b586794e8267c56c5e5d5084b0a0c1c35ee71b",
+    "scripts/work.py": "558b8c4cd0305fb422fd12c0184dc948a13781375a45cb785abc3f9271a61c73",
+    "scripts/world.py": "dfb548cc730a5286866a1223b45101d7572c8b6556de373a5607006bf0a5d1d1"
+  },
+  "indexed_at_commit": "67579eab8378324c656485da9417ba5f944e6648",
+  "indexed_at_timestamp": "2026-10-29T22:07:22.518523+00:00",
+  "languages": {
+    "bash": {
+      "calls": 0,
+      "nodes": 1
+    },
+    "css": {
+      "calls": 0,
+      "nodes": 400
+    },
+    "javascript": {
+      "calls": 75,
+      "nodes": 64
+    },
+    "markdown": {
+      "calls": 0,
+      "nodes": 22
+    },
+    "python": {
+      "calls": 9,
+      "nodes": 14
+    }
+  },
+  "parser_version": "3.3.2",
+  "schema_version": 3,
+  "stats": {
+    "total_edges": 103,
+    "total_files": 31,
+    "total_nodes": 501
+  },
+  "vexp_version": "3.3.8"
+}
