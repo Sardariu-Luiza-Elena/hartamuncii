@@ -1,65 +1,59 @@
 /*
   Date folosite pe site.
-  - Salarii pe județe: câștigul salarial mediu net lunar, media anului 2024 (INS TEMPO, FOM106E)
-  - Variație: 2024 față de 2023 (INS TEMPO, FOM106E). Script: scripts/tempo_county_salary.py
+  - Salariile pe județe și variația față de anul anterior (INS TEMPO, FOM106E) nu sunt aici: se generează automat
+    în js/data-extra.js (scripts/update.py) și se adaugă peste obiectele de mai jos.
   - Industrii de top: sinteză editorială după profilul economic al județului (marii angajatori și ramuri),
     NU un clasament oficial INS. Pentru cifre exacte pe CAEN: INS TEMPO-Online.
 */
 window.RO_DATA = {
-  nationalNet: 4959, nationalYear: 2024, // media anuală pe țară, INS TEMPO FOM106E
   counties: {
-    B:  { n: 'București',       s: 6730, g: 11.2,  ind: [['it','IT & tehnologie'], ['finance','Servicii financiare'], ['public','Administrație & sedii centrale']] },
-    CJ: { n: 'Cluj',            s: 5921, g: 10.8, ind: [['it','IT & software'], ['finance','Servicii de business (BPO)'], ['health','Farma & sănătate']] },
-    TM: { n: 'Timiș',           s: 5508, g: 12.2,  ind: [['electronics','Electronică & componente auto'], ['it','IT & software'], ['logistics','Logistică']] },
-    TL: { n: 'Tulcea',          s: 4003, g: 13.6,  ind: [['naval','Construcții navale'], ['metal','Metalurgie (alumină)'], ['tourism','Turism în Delta Dunării']] },
-    SB: { n: 'Sibiu',           s: 4942, g: 12.5,  ind: [['auto','Componente auto'], ['tourism','Turism'], ['it','IT & servicii']] },
-    IF: { n: 'Ilfov',           s: 5060, g: 10.0,  ind: [['logistics','Logistică & depozite'], ['retail','Comerț & retail'], ['construction','Construcții & imobiliare']] },
-    AG: { n: 'Argeș',           s: 4729, g: 15.2, ind: [['auto','Industria auto (Mioveni)'], ['oil','Petrol & gaze'], ['energy','Hidroenergie']] },
-    BV: { n: 'Brașov',          s: 5019, g: 14.0,  ind: [['aero','Aeronautică & auto'], ['tourism','Turism montan'], ['it','IT & servicii']] },
-    IS: { n: 'Iași',            s: 5098, g: 11.6,  ind: [['it','IT & servicii'], ['health','Sănătate & universități'], ['chem','Farma (antibiotice)']] },
-    BC: { n: 'Bacău',           s: 4474, g: 13.3, ind: [['aero','Aeronautică'], ['food','Industrie alimentară'], ['retail','Comerț']] },
-    AR: { n: 'Arad',            s: 4258, g: 11.4, ind: [['auto','Componente auto'], ['metal','Vagoane & metalurgie'], ['agri','Agricultură']] },
-    OT: { n: 'Olt',             s: 4377, g: 12.9,  ind: [['metal','Aluminiu (Slatina)'], ['auto','Componente auto'], ['agri','Agricultură']] },
-    PH: { n: 'Prahova',         s: 4747, g: 14.1,  ind: [['oil','Rafinare petrol'], ['food','Bunuri de larg consum'], ['tourism','Turism (Valea Prahovei)']] },
-    MS: { n: 'Mureș',           s: 4492, g: 11.2,  ind: [['chem','Chimie (îngrășăminte)'], ['health','Farma & sănătate'], ['wood','Prelucrarea lemnului']] },
-    CT: { n: 'Constanța',       s: 4491, g: 11.5,  ind: [['logistics','Port & logistică'], ['tourism','Turism pe litoral'], ['energy','Energie nucleară & petrochimie']] },
-    GL: { n: 'Galați',          s: 4276, g: 11.9,  ind: [['metal','Siderurgie'], ['naval','Șantier naval'], ['logistics','Port la Dunăre']] },
-    DJ: { n: 'Dolj',            s: 4520, g: 12.5,  ind: [['auto','Industria auto (Craiova)'], ['energy','Energie'], ['agri','Agricultură']] },
-    AB: { n: 'Alba',            s: 4326, g: 12.7,  ind: [['auto','Componente auto'], ['wood','Lemn & mobilă'], ['tourism','Turism']] },
-    CS: { n: 'Caraș-Severin',   s: 4060, g: 13.6, ind: [['metal','Metalurgie (Reșița)'], ['energy','Hidroenergie'], ['tourism','Turism balnear']] },
-    GJ: { n: 'Gorj',            s: 4446, g: 11.8, ind: [['energy','Energie termo'], ['mining','Minerit (lignit)'], ['oil','Petrol']] },
-    BH: { n: 'Bihor',           s: 4095, g: 13.5,  ind: [['wood','Mobilă'], ['tourism','Turism balnear'], ['textile','Încălțăminte & textile']] },
-    VS: { n: 'Vaslui',          s: 3929, g: 14.0, ind: [['textile','Confecții'], ['metal','Rulmenți (Bârlad)'], ['agri','Agricultură']] },
-    SJ: { n: 'Sălaj',           s: 4155, g: 12.6, ind: [['metal','Cord metalic & cabluri'], ['wood','Prelucrarea lemnului'], ['agri','Agricultură']] },
-    DB: { n: 'Dâmbovița',       s: 4181, g: 13.9,  ind: [['metal','Oțel (Târgoviște)'], ['oil','Petrol'], ['agri','Legumicultură']] },
-    IL: { n: 'Ialomița',        s: 4136, g: 14.3, ind: [['agri','Agricultură'], ['food','Industrie alimentară'], ['logistics','Transport']] },
-    BZ: { n: 'Buzău',           s: 4067, g: 13.1,  ind: [['food','Industrie alimentară'], ['metal','Metalurgie'], ['agri','Agricultură']] },
-    GR: { n: 'Giurgiu',         s: 4317, g: 14.4,  ind: [['logistics','Logistică & vamă'], ['agri','Agricultură'], ['retail','Comerț']] },
-    BR: { n: 'Brăila',          s: 3912, g: 13.5,  ind: [['naval','Naval & metalurgie'], ['agri','Agricultură'], ['food','Industrie alimentară']] },
-    CL: { n: 'Călărași',        s: 4057, g: 12.6, ind: [['agri','Agricultură'], ['metal','Siderurgie'], ['logistics','Transport fluvial']] },
-    HD: { n: 'Hunedoara',       s: 3902, g: 12.3, ind: [['auto','Componente auto'], ['mining','Minerit (în declin)'], ['energy','Energie']] },
-    MH: { n: 'Mehedinți',       s: 3945, g: 12.6, ind: [['energy','Hidroenergie (Porțile de Fier)'], ['naval','Naval'], ['agri','Agricultură']] },
-    SM: { n: 'Satu Mare',       s: 4094, g: 14.1,  ind: [['electronics','Componente auto & electrice'], ['textile','Textile'], ['agri','Agricultură']] },
-    NT: { n: 'Neamț',           s: 4013, g: 13.3,  ind: [['metal','Țevi (Roman)'], ['tourism','Turism'], ['textile','Textile']] },
-    BN: { n: 'Bistrița-Năsăud', s: 3942, g: 14.4,  ind: [['electronics','Cablaje auto'], ['wood','Prelucrarea lemnului'], ['agri','Agricultură']] },
-    CV: { n: 'Covasna',         s: 3896, g: 10.4,  ind: [['wood','Prelucrarea lemnului'], ['food','Ape minerale & alimentare'], ['textile','Textile']] },
-    MM: { n: 'Maramureș',       s: 4177, g: 17.3,  ind: [['wood','Mobilă'], ['electronics','Componente'], ['tourism','Turism rural']] },
-    HR: { n: 'Harghita',        s: 3955, g: 13.3,  ind: [['wood','Prelucrarea lemnului'], ['food','Ape minerale'], ['tourism','Turism']] },
-    TR: { n: 'Teleorman',       s: 3822, g: 14.0, ind: [['agri','Agricultură'], ['electronics','Cablaje'], ['food','Industrie alimentară']] },
-    SV: { n: 'Suceava',         s: 4071, g: 13.5,  ind: [['wood','Prelucrarea lemnului'], ['tourism','Turism (Bucovina)'], ['food','Industrie alimentară']] },
-    VN: { n: 'Vrancea',         s: 3890, g: 16.3,  ind: [['wine','Viticultură'], ['agri','Agricultură'], ['wood','Lemn & mobilă']] },
-    BT: { n: 'Botoșani',        s: 3941, g: 14.9,  ind: [['textile','Confecții'], ['agri','Agricultură'], ['retail','Comerț']] },
-    VL: { n: 'Vâlcea',          s: 3881, g: 13.0, ind: [['chem','Chimie'], ['energy','Hidroenergie'], ['tourism','Turism balnear']] }
+    B:  { n: 'București',       ind: [['it','IT & tehnologie'], ['finance','Servicii financiare'], ['public','Administrație & sedii centrale']] },
+    CJ: { n: 'Cluj',            ind: [['it','IT & software'], ['finance','Servicii de business (BPO)'], ['health','Farma & sănătate']] },
+    TM: { n: 'Timiș',           ind: [['electronics','Electronică & componente auto'], ['it','IT & software'], ['logistics','Logistică']] },
+    TL: { n: 'Tulcea',          ind: [['naval','Construcții navale'], ['metal','Metalurgie (alumină)'], ['tourism','Turism în Delta Dunării']] },
+    SB: { n: 'Sibiu',           ind: [['auto','Componente auto'], ['tourism','Turism'], ['it','IT & servicii']] },
+    IF: { n: 'Ilfov',           ind: [['logistics','Logistică & depozite'], ['retail','Comerț & retail'], ['construction','Construcții & imobiliare']] },
+    AG: { n: 'Argeș',           ind: [['auto','Industria auto (Mioveni)'], ['oil','Petrol & gaze'], ['energy','Hidroenergie']] },
+    BV: { n: 'Brașov',          ind: [['aero','Aeronautică & auto'], ['tourism','Turism montan'], ['it','IT & servicii']] },
+    IS: { n: 'Iași',            ind: [['it','IT & servicii'], ['health','Sănătate & universități'], ['chem','Farma (antibiotice)']] },
+    BC: { n: 'Bacău',           ind: [['aero','Aeronautică'], ['food','Industrie alimentară'], ['retail','Comerț']] },
+    AR: { n: 'Arad',            ind: [['auto','Componente auto'], ['metal','Vagoane & metalurgie'], ['agri','Agricultură']] },
+    OT: { n: 'Olt',             ind: [['metal','Aluminiu (Slatina)'], ['auto','Componente auto'], ['agri','Agricultură']] },
+    PH: { n: 'Prahova',         ind: [['oil','Rafinare petrol'], ['food','Bunuri de larg consum'], ['tourism','Turism (Valea Prahovei)']] },
+    MS: { n: 'Mureș',           ind: [['chem','Chimie (îngrășăminte)'], ['health','Farma & sănătate'], ['wood','Prelucrarea lemnului']] },
+    CT: { n: 'Constanța',       ind: [['logistics','Port & logistică'], ['tourism','Turism pe litoral'], ['energy','Energie nucleară & petrochimie']] },
+    GL: { n: 'Galați',          ind: [['metal','Siderurgie'], ['naval','Șantier naval'], ['logistics','Port la Dunăre']] },
+    DJ: { n: 'Dolj',            ind: [['auto','Industria auto (Craiova)'], ['energy','Energie'], ['agri','Agricultură']] },
+    AB: { n: 'Alba',            ind: [['auto','Componente auto'], ['wood','Lemn & mobilă'], ['tourism','Turism']] },
+    CS: { n: 'Caraș-Severin',   ind: [['metal','Metalurgie (Reșița)'], ['energy','Hidroenergie'], ['tourism','Turism balnear']] },
+    GJ: { n: 'Gorj',            ind: [['energy','Energie termo'], ['mining','Minerit (lignit)'], ['oil','Petrol']] },
+    BH: { n: 'Bihor',           ind: [['wood','Mobilă'], ['tourism','Turism balnear'], ['textile','Încălțăminte & textile']] },
+    VS: { n: 'Vaslui',          ind: [['textile','Confecții'], ['metal','Rulmenți (Bârlad)'], ['agri','Agricultură']] },
+    SJ: { n: 'Sălaj',           ind: [['metal','Cord metalic & cabluri'], ['wood','Prelucrarea lemnului'], ['agri','Agricultură']] },
+    DB: { n: 'Dâmbovița',       ind: [['metal','Oțel (Târgoviște)'], ['oil','Petrol'], ['agri','Legumicultură']] },
+    IL: { n: 'Ialomița',        ind: [['agri','Agricultură'], ['food','Industrie alimentară'], ['logistics','Transport']] },
+    BZ: { n: 'Buzău',           ind: [['food','Industrie alimentară'], ['metal','Metalurgie'], ['agri','Agricultură']] },
+    GR: { n: 'Giurgiu',         ind: [['logistics','Logistică & vamă'], ['agri','Agricultură'], ['retail','Comerț']] },
+    BR: { n: 'Brăila',          ind: [['naval','Naval & metalurgie'], ['agri','Agricultură'], ['food','Industrie alimentară']] },
+    CL: { n: 'Călărași',        ind: [['agri','Agricultură'], ['metal','Siderurgie'], ['logistics','Transport fluvial']] },
+    HD: { n: 'Hunedoara',       ind: [['auto','Componente auto'], ['mining','Minerit (în declin)'], ['energy','Energie']] },
+    MH: { n: 'Mehedinți',       ind: [['energy','Hidroenergie (Porțile de Fier)'], ['naval','Naval'], ['agri','Agricultură']] },
+    SM: { n: 'Satu Mare',       ind: [['electronics','Componente auto & electrice'], ['textile','Textile'], ['agri','Agricultură']] },
+    NT: { n: 'Neamț',           ind: [['metal','Țevi (Roman)'], ['tourism','Turism'], ['textile','Textile']] },
+    BN: { n: 'Bistrița-Năsăud', ind: [['electronics','Cablaje auto'], ['wood','Prelucrarea lemnului'], ['agri','Agricultură']] },
+    CV: { n: 'Covasna',         ind: [['wood','Prelucrarea lemnului'], ['food','Ape minerale & alimentare'], ['textile','Textile']] },
+    MM: { n: 'Maramureș',       ind: [['wood','Mobilă'], ['electronics','Componente'], ['tourism','Turism rural']] },
+    HR: { n: 'Harghita',        ind: [['wood','Prelucrarea lemnului'], ['food','Ape minerale'], ['tourism','Turism']] },
+    TR: { n: 'Teleorman',       ind: [['agri','Agricultură'], ['electronics','Cablaje'], ['food','Industrie alimentară']] },
+    SV: { n: 'Suceava',         ind: [['wood','Prelucrarea lemnului'], ['tourism','Turism (Bucovina)'], ['food','Industrie alimentară']] },
+    VN: { n: 'Vrancea',         ind: [['wine','Viticultură'], ['agri','Agricultură'], ['wood','Lemn & mobilă']] },
+    BT: { n: 'Botoșani',        ind: [['textile','Confecții'], ['agri','Agricultură'], ['retail','Comerț']] },
+    VL: { n: 'Vâlcea',          ind: [['chem','Chimie'], ['energy','Hidroenergie'], ['tourism','Turism balnear']] }
   }
 };
 
-/* Domenii (secțiuni CAEN). Salariul, orele și riscul vin din RO_EXTRA.work; ponderile pe mari sectoare: Eurostat lfsa_egan2, populația ocupată 2025. */
-window.RO_SECTORS_SPLIT = [
-  { k: 'Servicii', v: 57.5 },
-  { k: 'Industrie & construcții', v: 32.4 },
-  { k: 'Agricultură', v: 10.0 }
-];
-
+/* Domenii (secțiuni CAEN). Salariul, orele și riscul vin din RO_EXTRA.work, iar ponderile pe mari sectoare (RO_SECTORS_SPLIT)
+   din js/data-extra.js, generat de scripts/update.py. */
 window.RO_DOMAINS = [
   { icon: 'agri',         k: 'A',    t: 'Agricultură',             d: 'Muncă fizică grea, sezonieră, mult în aer liber. Majoritatea celor din agricultură nu au salariu: lucrează pe cont propriu sau pentru familie. E și cel mai periculos domeniu din România.' },
   { icon: 'metal',        k: 'C',    t: 'Industrie prelucrătoare', d: 'Cel mai mare angajator: auto, componente, confecții, alimentară. Muncă în ture, la bandă. Salariile diferă enorm: în jur de 3.500 de lei în confecții și peste 6.500 în electronice.' },
@@ -88,17 +82,4 @@ window.RO_HIRE = [
   { icon: 'age', t: 'Vârsta', big: '+35%', unit: 'mai multe răspunsuri la 30 de ani decât la 65', d: 'Cercetătorii au trimis peste 40.000 de CV-uri identice, schimbând doar vârsta candidatului. Cei de 29–31 de ani au fost chemați cu 35% mai des decât cei de 64–66 de ani. Discriminarea a fost cea mai puternică față de femeile în vârstă.', src: 'Neumark, Burn & Button (2019), Journal of Political Economy' }
 ];
 
-/* Câți salariați câștigă cât: ancheta INS a salariilor din octombrie 2024 (venit brut realizat), preluată de Ziarul Financiar.
-   Total ~4,6 milioane de salariați, fără administrația publică. Tranșa 10.000–20.000 lei e calculată ca diferență.
-   Echivalentul net e aproximativ: net ≈ brut × 0,585 (CAS 25%, CASS 10%, impozit 10%, fără deduceri). */
-window.RO_PAY_DIST = {
-  total: 4.6, month: 'octombrie 2024',
-  bins: [
-    { gross: 'sub 5.000', net: 'sub 2.900', n: 1.60 },
-    { gross: '5.000–10.000', net: '2.900–5.850', n: 1.80 },
-    { gross: '10.000–20.000', net: '5.850–11.700', n: 0.93 },
-    { gross: '20.000–30.000', net: '11.700–17.550', n: 0.20 },
-    { gross: 'peste 30.000', net: 'peste 17.550', n: 0.068 }
-  ],
-  minWage: { people: 1823520, month: 'ianuarie 2025', gross: 4050, net: 2574 }
-};
+/* Distribuția salariilor (RO_PAY_DIST) se introduce de mână în data/manual.json și ajunge pe site prin js/data-extra.js. */

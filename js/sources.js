@@ -2,10 +2,12 @@
 (function () {
   const ES = code => 'https://ec.europa.eu/eurostat/databrowser/view/' + code + '/default/table';
   const GS = q => 'https://scholar.google.com/scholar?q=' + encodeURIComponent(q);
+  const NY = window.RO_DATA.nationalYear, NN = window.RO_DATA.nationalNet;
   const SOURCES = [
     { ro: 'Harta și salariile pe județe', en: 'The map and county salaries', items: [
       ['INS TEMPO, FOM106E: câștigul salarial mediu net lunar pe județe', 'INS TEMPO, FOM106E: average monthly net earnings by county', 'http://statistici.insse.ro:8077/tempo-online/#/pages/tables/insse-table',
-        'Media anuală 2024 și creșterea față de 2023, pentru toate cele 42 de județe; media pe țară: 4.959 lei. Descărcat cu scripts/tempo_county_salary.py.', '2024 annual average and change from 2023 for all 42 counties; national average: 4,959 lei. Downloaded with scripts/tempo_county_salary.py.'],
+        'Media anuală ' + NY + ' și creșterea față de ' + (NY - 1) + ', pentru toate cele 42 de județe; media pe țară: ' + NN.toLocaleString('ro-RO') + ' lei. Descărcat cu scripts/update.py.',
+        NY + ' annual average and change from ' + (NY - 1) + ' for all 42 counties; national average: ' + NN.toLocaleString('en-GB') + ' lei. Downloaded with scripts/update.py.'],
       ['INS, câștigul salarial mediu net, anul 2025 (prin TVR Info)', 'INS, average net earnings, 2025 (via TVR Info)', 'https://tvrinfo.ro/salariul-mediu-net-a-ajuns-la-5-266-de-lei-in-2025-diferenta-de-peste-3-000-de-lei-intre-bucuresti-si-botosani/',
         'Media anuală pe țară în 2025: 5.266 lei (folosită ca reper în secțiunea despre salarii).', 'National annual average for 2025: 5,266 lei (used as a reference in the pay section).'],
       ['geoBoundaries, granițele județelor (CC BY 4.0)', 'geoBoundaries, county boundaries (CC BY 4.0)', 'https://www.geoboundaries.org', 'Contururile hărții 3D.', 'Outlines for the 3D map.']
@@ -93,6 +95,22 @@
     ,['Pentru întoarceri folosim datele Eurostat despre cetățenii români: imigrarea temporară publicată de INS îi include și pe străinii veniți la muncă în România.',
       'Returns use Eurostat data on Romanian citizens: the temporary immigration figures published by INS also include foreigners coming to work in Romania.']
   ];
+  // Datele de descărcat și data ultimei actualizări (scrisă de scripts/update.py în js/data-extra.js)
+  const EN = window.LANG === 'en', GH = 'https://github.com/Sardariu-Luiza-Elena/hartamuncii/';
+  const dl = document.getElementById('dataDl');
+  if (dl) dl.innerHTML = '<h3>' + (EN ? 'Download the data' : 'Descarcă datele') + '</h3><p>' +
+    (EN ? 'Every figure on the site is in an SQLite database and in CSV tables, with a description and source for each column. The scripts that download the official data and rebuild the database are on GitHub.'
+        : 'Toate cifrele de pe site sunt într-o bază de date SQLite și în tabele CSV, cu descrierea și sursa fiecărei coloane. Scripturile care descarcă datele oficiale și refac baza sunt pe GitHub.') +
+    '</p><p class="about-links"><a href="data/hartamuncii.sqlite" download>' + (EN ? 'Database (SQLite)' : 'Baza de date (SQLite)') + '</a>' +
+    '<a href="' + GH + 'tree/main/data/csv">' + (EN ? 'CSV tables' : 'Tabelele CSV') + '</a>' +
+    '<a href="' + GH + 'blob/main/data/README.md">' + (EN ? 'What each table contains' : 'Ce conține fiecare tabel') + '</a>' +
+    '<a href="' + GH + 'tree/main/scripts">' + (EN ? 'The scripts' : 'Scripturile') + '</a></p>';
+  const up = document.getElementById('updatedNote');
+  if (up && window.RO_DATA_UPDATED) {
+    const m = new Date(window.RO_DATA_UPDATED + 'T12:00:00').toLocaleDateString(EN ? 'en-GB' : 'ro-RO', { month: 'long', year: 'numeric' });
+    up.textContent = m.charAt(0).toUpperCase() + m.slice(1) + (EN ? '. The figures are the latest published by INS, Eurostat, the World Bank and the UN at that date.'
+      : '. Cifrele sunt cele mai recente publicate de INS, Eurostat, Banca Mondială și ONU la acea dată.');
+  }
   const mbox = document.getElementById('methodList');
   if (mbox) mbox.innerHTML = METHOD.map(m => '<li>' + (window.LANG === 'en' ? m[1] : m[0]) + '</li>').join('');
   document.querySelectorAll('.sec:not(#surse) .src').forEach(p => {
@@ -102,7 +120,6 @@
 
   const box = document.getElementById('sourcesList');
   if (!box) return;
-  const EN = window.LANG === 'en';
   box.innerHTML = SOURCES.map(g =>
     '<div class="src-group"><h3>' + (EN ? g.en : g.ro) + '</h3><ol>' +
     g.items.map(it => '<li><a href="' + it[2] + '" target="_blank" rel="noopener">' + (EN ? it[1] : it[0]) + ' <span aria-hidden="true">↗</span></a><p>' + (EN ? it[4] : it[3]) + '</p></li>').join('') +

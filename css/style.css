@@ -694,6 +694,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; }
 .src-group p { font-size: 13px; color: var(--mute); margin-top: 2px; }
 .method-card h3 { font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
 .method-list { margin-top: 12px; padding-left: 18px; display: grid; gap: 10px; font-size: 14px; color: var(--mute); line-height: 1.5; }
+#dataDl > p:not(.about-links) { margin-top: 12px; font-size: 14px; color: var(--mute); line-height: 1.5; }
+#dataDl .about-links { font-size: 14px; }
 .to-src { color: var(--acc); text-decoration: none; white-space: nowrap; margin-left: 4px; }
 .to-src:hover { text-decoration: underline; }
 

@@ -11,7 +11,16 @@ Munca în România, pe date oficiale: salarii pe județe pe o hartă 3D, cine mu
 - Din 2022, se întorc în fiecare an mai mulți români decât pleacă.
 
 ## Date și metodă
-Toate sursele (INS, Eurostat, Banca Mondială, ONU, European Labour Authority etc.) sunt listate cu linkuri pe site, în secțiunea **Surse și metodă**. Scripturile din [`scripts/`](scripts/README.md) descarcă datele brute și refac fiecare cifră.
+Toate sursele (INS, Eurostat, Banca Mondială, ONU, European Labour Authority etc.) sunt listate cu linkuri pe site, în secțiunea **Surse și metodă**.
+
+Cifrele sunt într-o bază de date SQLite, [`data/hartamuncii.sqlite`](data/README.md), și în tabele CSV, cu descrierea fiecărei coloane. Baza se reface din datele oficiale cu o singură comandă, iar site-ul își ia datele din ea:
+
+```bash
+pip install xlrd
+python scripts/update.py
+```
+
+Detalii în [`scripts/README.md`](scripts/README.md).
 
 Studiul de caz al proiectului: [CASE_STUDY.md](CASE_STUDY.md).
 
@@ -22,10 +31,11 @@ Studiul de caz al proiectului: [CASE_STUDY.md](CASE_STUDY.md).
 - `js/globe.js`: globul cu românii din toată lumea (d3-geo, încărcat la nevoie)
 - `js/charts.js`: graficele SVG și harta Europei
 - `js/migration.js`: capitolul „Plecare și întoarcere”
-- `js/data.js`, `js/data-extra.js`, `js/world.js`: datele
+- `js/data.js`: textele despre județe și domenii; `js/data-extra.js`: cifrele, generate din baza de date; `js/world.js`: datele globului
+- `data/`: baza de date, tabelele CSV și cifrele introduse de mână (`manual.json`)
 - `js/i18n.js`, `js/data-en.js`: varianta în engleză
 - `js/sources.js`: lista surselor și notele de metodă
 - `js/author.js`: datele autorului (nume, rol, linkuri)
-- `scripts/`: descărcarea și procesarea datelor (Python)
+- `scripts/`: descărcarea și prelucrarea datelor, baza de date (Python)
 
 Site static: nu are nevoie de server sau de build.

@@ -523,7 +523,7 @@
     $('#pName').textContent = d.n;
     animateNumber($('#pSal'), d.s, 0, 900);
     const g = $('#pGrowth');
-    g.textContent = (d.g >= 0 ? '▲ +' : '▼ ') + fmt(d.g, 1) + L('% față de 2023', '% vs. 2023');
+    g.textContent = (d.g >= 0 ? '▲ +' : '▼ ') + fmt(d.g, 1) + L('% față de ' + (D.nationalYear - 1), '% vs. ' + (D.nationalYear - 1));
     g.className = 'chip ' + (d.g >= 0 ? 'up' : 'down');
     const diff = (d.s / D.nationalNet - 1) * 100;
     $('#pVsAvg').textContent = (diff >= 0 ? '+' : '') + fmt(diff, 0) + L('% față de media pe țară', '% vs. national average');

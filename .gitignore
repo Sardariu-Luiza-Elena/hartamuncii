@@ -3,3 +3,6 @@
 Thumbs.db
 work/
 __pycache__/
+
+# fișier temporar al actualizării de date
+*.sqlite.new

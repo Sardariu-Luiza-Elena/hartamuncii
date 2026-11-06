@@ -3,7 +3,7 @@
 > **Ciornă.** Scrisă la persoana I, ca s-o poți folosi direct în portofoliu. Completează locurile marcate cu ✏️ și schimbă orice nu sună ca tine.
 
 **Site:** https://sardariu-luiza-elena.github.io/hartamuncii/ · **Cod:** https://github.com/Sardariu-Luiza-Elena/hartamuncii
-**Rol:** ✏️ numele tău, software developer · **Durată:** ✏️ · **Tehnologii:** JavaScript (fără framework), Three.js, d3-geo, SVG, Python, API-urile Eurostat, INS TEMPO, Banca Mondială și ONU
+**Rol:** ✏️ numele tău, software developer · **Durată:** ✏️ · **Tehnologii:** JavaScript (fără framework), Three.js, d3-geo, SVG, Python, SQLite, API-urile Eurostat, INS TEMPO, Banca Mondială și ONU
 
 ---
 
@@ -29,6 +29,7 @@ Un site de jurnalism de date despre munca în România, în română și englez�
 2. **Am verificat fiecare serie înainte s-o folosesc.** Câteva exemple sunt mai jos.
 3. **Am construit vizualizările** în JavaScript simplu: o hartă 3D a județelor (Three.js), un glob care se rotește (d3-geo), grafice SVG proprii și o hartă a Europei.
 4. **Am documentat tot.** Pe site există o secțiune „Surse și metodă”, cu link la fiecare set de date. În `scripts/` sunt scripturile care descarcă datele și refac fiecare cifră. Le-am rulat de la zero și dau exact datele de pe site.
+5. **Am pus datele într-o bază de date.** Toate cifrele sunt într-o bază SQLite cu 13 tabele, publicată și ca CSV, cu descrierea fiecărei coloane. Site-ul își generează datele din ea. O singură comandă descarcă datele noi, alege singură cel mai recent an, verifică dacă valorile au sens și arată ce s-a schimbat. Dacă o verificare eșuează, site-ul rămâne neatins.
 
 ## Probleme întâlnite și cum le-am rezolvat
 
