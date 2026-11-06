@@ -5,7 +5,6 @@
 */
 window.Globe = (function () {
   const D3_URL = 'https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js';
-  const RO = [24.97, 45.94];
   const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
   function load(src) {
@@ -43,7 +42,6 @@ window.Globe = (function () {
       let r = 0;
       f.c.p.forEach(poly => poly[0].forEach(pt => { const d = d3.geoDistance(f.ctr, pt); if (d > r) r = d; }));
       f.rad = r;
-      f.arc = { type: 'LineString', coordinates: [RO, f.ctr] };
     });
     const canvas = document.createElement('canvas');
     canvas.className = 'globe-canvas';
@@ -79,7 +77,7 @@ window.Globe = (function () {
 
     let hover = null, sel = null;
     // Desenare optimizată: țările sunt grupate pe culori (câteva umpleri în loc de 177), cele din spatele
-    // globului sunt sărite, iar arcele sunt grupate pe grosimi.
+    // globului sunt sărite.
     function draw() {
       if (!size) return;
       proj.translate([size / 2, size / 2]).scale(scale0 * zoom).rotate(rot);
@@ -97,23 +95,6 @@ window.Globe = (function () {
       });
       groups.forEach((list, color) => { ctx.beginPath(); list.forEach(f => path(f)); ctx.fillStyle = color; ctx.fill(); });
       ctx.beginPath(); vis.forEach(f => path(f)); ctx.strokeStyle = C.ocean; ctx.lineWidth = 0.5; ctx.stroke();
-      // arce de la România spre fiecare țară, grupate pe grosime (cercuri mari, tăiate la orizont)
-      const withData = feats.filter(f => f.id !== 642 && val(f.id) > 0);
-      const maxV = Math.max(...withData.map(f => val(f.id)));
-      const widths = new Map();
-      withData.forEach(f => {
-        if (sel && f === sel) return;
-        const w = Math.round((0.6 + Math.sqrt(val(f.id) / maxV) * 3.2) * 2) / 2;
-        if (!widths.has(w)) widths.set(w, []);
-        widths.get(w).push(f);
-      });
-      ctx.strokeStyle = C.hot; ctx.globalAlpha = sel ? 0.12 : 0.45;
-      widths.forEach((list, w) => { ctx.beginPath(); list.forEach(f => path(f.arc)); ctx.lineWidth = w; ctx.stroke(); });
-      if (sel) {
-        ctx.globalAlpha = 0.95; ctx.beginPath(); path(sel.arc);
-        ctx.lineWidth = 0.6 + Math.sqrt(val(sel.id) / maxV) * 3.2; ctx.stroke();
-      }
-      ctx.globalAlpha = 1;
       [sel, hover].forEach((f, i) => {
         if (!f) return;
         ctx.beginPath(); path(f); ctx.strokeStyle = C.ink; ctx.lineWidth = i ? 1 : 1.8; ctx.stroke();

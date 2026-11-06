@@ -5,7 +5,7 @@
   links:   [text, adresă]; lasă lista goală dacă nu vrei linkuri (ex. ['LinkedIn', 'https://www.linkedin.com/in/...'])
 */
 window.AUTHOR = {
-  name: 'Numele tău',
+  name: 'Sardariu Luiza-Elena',
   role: { ro: 'software developer, cu studii în informatică și experiență în IT', en: 'software developer with a computer science degree and IT experience' },
   links: [
     ['GitHub', 'https://github.com/Sardariu-Luiza-Elena/hartamuncii']

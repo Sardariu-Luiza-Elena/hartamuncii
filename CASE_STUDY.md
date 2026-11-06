@@ -3,7 +3,7 @@
 > **Ciornă.** Scrisă la persoana I, ca s-o poți folosi direct în portofoliu. Completează locurile marcate cu ✏️ și schimbă orice nu sună ca tine.
 
 **Site:** https://sardariu-luiza-elena.github.io/hartamuncii/ · **Cod:** https://github.com/Sardariu-Luiza-Elena/hartamuncii
-**Rol:** ✏️ numele tău, software developer · **Durată:** ✏️ · **Tehnologii:** JavaScript (fără framework), Three.js, d3-geo, SVG, Python, SQLite, API-urile Eurostat, INS TEMPO, Banca Mondială și ONU
+**Rol:** ✏️ Sardariu Luiza-Elena, software developer · **Durată:** ✏️ · **Tehnologii:** JavaScript (fără framework), Three.js, d3-geo, SVG, Python, SQLite, API-urile Eurostat, INS TEMPO, Banca Mondială și ONU
 
 ---
 
