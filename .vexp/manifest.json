@@ -1,17 +1,17 @@
 {
   "file_hashes": {
-    "CASE_STUDY.md": "0d0c675c4759bfe94f449ec16e391c0801e8510ea28a2f143d07b28ba1973d06",
+    "CASE_STUDY.md": "9597c0098cf1636f7e7996c6ef5eb9a1f0695268a78b1a0b870f3143ea5e6510",
     "README.md": "e6e260635f801939cd9dac706b4937580100639787cb00535381a697fc86a950",
     "css/style.css": "fe58fc57f40d86ba29f857134a2f1ef4362fed6a17f4c12b05c9605a7af02937",
     "data/README.md": "3a13a8e31290abe3a2e7814861d0ab8b1f27c6cfed5cc51a047db3ea447c0da9",
-    "js/author.js": "ffa98fbd94c110ff313e325437473d3c34b38b5cdebe3328a4f9ed123a738e08",
+    "js/author.js": "a0ad5d5e80ea805a19ee9f3319f72871391af9a3fa09e98360600755189b2c98",
     "js/charts.js": "450c50253cef2d9195780de06a1b88a669e496136d83d0a86e966e4e4da6a1d0",
     "js/data-en.js": "e406a3074878489b3bff650f282c52b202b82f86698ec3648de93a21de159b15",
     "js/data-extra.js": "2ae10078787f72a5f1ee7f66026979b31a1a2adde8b4ef14d8ecb35440ea3849",
     "js/data.js": "c863c6d169e546dd3b741de6981bc9a34028c23be83b6779a17d0eaf6cd4a7b9",
     "js/europe.js": "f561247acc6fb214932d4b708dccbe835e3d2cdf85530421e805ec1121315695",
     "js/geo.js": "356af0a1c1dcdfcb36a9f4bac1724c57dcc3a06d445f9da1b6e3edd651d335d1",
-    "js/globe.js": "3515b2b506178a4b0ab51be8a1439e16ea0b33b7f8c6bb96642a85551bb39bf4",
+    "js/globe.js": "cdb85a351c9925f4f88ca537d46fe4ff1d0abee936b778660a0b92cf60a5bf99",
     "js/i18n.js": "b59eacae3e7117bef94bc16e232f3493fa3df9dcf370fe741b14f5ebe2b9042c",
     "js/icons.js": "60deedd5a6becc3f15078215202dc4ed33e260858acdfb06d9da4dbd5faee738",
     "js/main.js": "055a86ca2d27b06b20379489f27122fb236fa27e899f232f2178aa83b2847ca0",
@@ -31,8 +31,8 @@
     "scripts/update.py": "02be9a1ffaba5a607a8e6bffea90c8b151344bbe1191b40c11e1653804808b77",
     "scripts/world.py": "dfb548cc730a5286866a1223b45101d7572c8b6556de373a5607006bf0a5d1d1"
   },
-  "indexed_at_commit": "6cdcd0210a43147888dccfd56a7821a66a7a346d",
-  "indexed_at_timestamp": "2026-11-06T12:18:07.111127100+00:00",
+  "indexed_at_commit": "a25dd8b4e22fa256b67d072a40a2e7b710165afc",
+  "indexed_at_timestamp": "2026-11-06T15:01:45.445388600+00:00",
   "languages": {
     "css": {
       "calls": 0,
@@ -47,14 +47,14 @@
       "nodes": 51
     },
     "python": {
-      "calls": 62,
+      "calls": 75,
       "nodes": 37
     }
   },
   "parser_version": "3.3.2",
   "schema_version": 3,
   "stats": {
-    "total_edges": 183,
+    "total_edges": 196,
     "total_files": 30,
     "total_nodes": 552
   },
